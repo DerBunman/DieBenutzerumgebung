@@ -1,8 +1,15 @@
 # Style
 
+## Theming and colors
 The GTK2/3 and icon theme are based on Numix and can be generated using ooxmox (see below).
 
 The colors are everywhere the same. (If I didn't miss anything.)
+
+## Fonts
+The main font face for __DieBenutzerumgebung__ is __Roboto__ (and Roboto Mono).
+__Roboto__ is mainly used in the styles regular and medium.
+
+Addionaly to these fonts is Roboto Mono patched with Nerdfont glyphs available for polybar and powerline and everything else that needs glyphs.
 
 # Current state
 
