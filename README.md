@@ -1,9 +1,8 @@
 ![DieBenutzerumgebung](logo.png)
 
+__DieBenutzerumgebung__ started as a innocent collection of dofiles and an script to manager these dotfiles.
 
-`DieBenutzerumgebung` started as a innocent collection of dofiles and an script to manager these dotfiles.
-
-However, `DieBenutzerumgebung` has now many more features, hence the name change.
+However, __DieBenutzerumgebung__ has now many more features, hence the name change. But beware, DieBenutzerumgebung is still in ALPHA state all these nice features still have corners and edges. So use at your own risk.
 
 # Features
 ## Easily setup or update hosts with the dotfiles script.
