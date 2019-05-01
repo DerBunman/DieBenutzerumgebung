@@ -4,6 +4,15 @@ __DieBenutzerumgebung__ started as a innocent collection of dofiles and an scrip
 
 However, __DieBenutzerumgebung__ has now many more features, hence the name change. But beware, DieBenutzerumgebung is still in ALPHA state all these nice features still have corners and edges. So use at your own risk.
 
+# Dependencies
+* Compatible distributions
+  - Debian 9 - 10
+  - Ubuntu 18.04 - 19.04
+  - Other Debian based distributions should work too, however, you have to compile polybar yourself.
+  - Other non Debian based distributions should work too, however, you have to install all needed packages without the script. _(for now)_
+* Needed packages to run the installeri are: git, curl, zsh
+* [Packages that the dotfiles script will install.](https://github.com/DerBunman/DieBenutzerumgebung/blob/v0.0.1-alpha1/dotfiles#L255)
+
 # Features
 ## Easily setup or update hosts with the dotfiles script.
 `dotfiles` is a zsh script by me, that will setup a homedir and install all the needed configuration files.
