@@ -15,16 +15,16 @@ Addionaly to these fonts is Roboto Mono patched with Nerdfont glyphs available f
 
 | Package | Type  | Comment              | Theme | Colorscheme |
 |---------|-------|----------------------|-------|-------------|
-| GTK2    | lib   | GTK legacy theme     |      |            |
-| GTK3    | lib   | GTK theme            |      |            |
-| i3      | X11   | the windowmanager    | -     |            |
-| polybar | X11   | i3bar replacement    |      |            |
-| urxvt   | X11   | the terminal         | -     |            |
-| rofi    | X11   | the launcher         |      |            |
-| dunst   | X11   | notification daemon  |      | TODO        |
-| gVIM    | GTK3  | VIM GTK3 gui         |      | TODO        |
-| VIM     | Shell | VIM cli              |      | TODO        |
-| tmux    | Shell | terminal multiplexer |      | TODO        |
+| GTK2    | lib   | GTK legacy theme     | OK    | OK          |
+| GTK3    | lib   | GTK theme            | OK    | OK          |
+| i3      | X11   | the windowmanager    | -     | OK          |
+| polybar | X11   | i3bar replacement    | OK    | OK          |
+| urxvt   | X11   | the terminal         | -     | OK          |
+| rofi    | X11   | the launcher         | OK    | OK          |
+| dunst   | X11   | notification daemon  | OK    | TODO        |
+| gVIM    | GTK3  | VIM GTK3 gui         | OK    | TODO        |
+| VIM     | Shell | VIM cli              | OK    | TODO        |
+| tmux    | Shell | terminal multiplexer | OK    | TODO        |
 
 # [ooxmox](https://github.com/themix-project/oomox)
 The GTK2/3 themes and the iconset have been generated using ooxmox.
