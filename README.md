@@ -39,6 +39,13 @@ This script will check if there are rules defined for the current active WM_CLAS
 #### GTK2 (left, Filezilla), GTK3 (right, oomox and nautilus)
 ![screenshot3](_docs/screenshot3.png)
 
+#### gVIM (GTK3), Firefox (README.md preview), and some terminals
+![screenshot3](_docs/screenshot4.png)
+
+#### gVIM (GTK3), Firefox (README.md preview), and urxvt running ranger (using urxvt pixmap support)
+![screenshot3](_docs/screenshot5.png)
+
+
 ## Preconfigured Packages:
 This list may be a bit outdated at the moment.
 ### Shell
