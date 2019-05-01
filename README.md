@@ -39,6 +39,13 @@ This script will check if there are rules defined for the current active WM_CLAS
 #### GTK2 (left, Filezilla), GTK3 (right, oomox and nautilus)
 ![screenshot3](_docs/screenshot3.png)
 
+#### gVIM (GTK3), Firefox (README.md preview), and some terminals
+![screenshot3](_docs/screenshot4.png)
+
+#### gVIM (GTK3), Firefox (README.md preview), and urxvt running ranger (using urxvt pixmap support)
+![screenshot3](_docs/screenshot5.png)
+
+
 ## Preconfigured Packages:
 This list may be a bit outdated at the moment.
 ### Shell
@@ -97,7 +104,7 @@ This list may be a bit outdated at the moment.
 # Installation
 ## Installation via SSH
 ```zsh
-apt install zsh git
+apt install zsh git curl
 mkdir -p ~/.repos \
 	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init [shell/shell_and_x11/nonroot_shell]
@@ -105,7 +112,7 @@ mkdir -p ~/.repos \
 
 ## Installation via HTTP
 ```zsh
-sudo apt install zsh git
+sudo apt install zsh git curl
 mkdir -p ~/.repos \
 	&& git clone --recursive https://github.com/DerBunman/dotfiles ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init [shell/shell_and_x11/nonroot_shell]
@@ -119,7 +126,7 @@ If it fails just remove the existing files and re-run the command ```dotfiles in
 Please note, that the dependencies have to be installed for nonroot mode.
 
 ```zsh
-sudo apt install zsh git
+sudo apt install zsh git curl
 mkdir -p ~/.repos \
 	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init nonroot_shell
@@ -131,7 +138,7 @@ Please relogin after init so all the updated configs are parsed.
 Please note, that the dependencies will be auto installed in the init process.
 
 ```zsh
-sudo apt install zsh git
+sudo apt install zsh git curl
 mkdir -p ~/.repos \
 	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init shell
@@ -143,7 +150,7 @@ Please relogin after init so all the updated configs are parsed.
 Please note, that the dependencies will be auto installed in the init process.
 
 ```zsh
-sudo apt install zsh git
+sudo apt install zsh git curl
 mkdir -p ~/.repos \
 	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init shell_and_x11

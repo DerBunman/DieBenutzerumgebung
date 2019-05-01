@@ -84,10 +84,7 @@ fi
 
 # check for needed binaries
 typeset -a deps
-deps=(git vim powerline grc ctags ag)
-if [ "${host_type}" = "shell_and_x11" ]; then
-	deps+=(i3 rofi polybar feh dconf)
-fi
+deps=(git curl)
 for bin in $deps; do
 	which "${bin}" > /dev/null || {
 		msg_warning "binary ${bin} not found in PATH."
@@ -99,22 +96,6 @@ for bin in $deps; do
 done
 unset deps
 
-# check for optional binaries
-typeset -a opts
-opts=(figlet)
-if [ "${host_type}" = "shell_and_x11" ]; then
-	opts+=(pavucontrol vim.gtk3)
-fi
-for bin in $opts; do
-	which "${bin}" > /dev/null || {
-		msg_warning "optional binary ${bin} not found in PATH."
-		msg_warning "Make sure to install via this script or manual if you need it."
-		if [ "${ASSUME_YES}" = false ]; then
-			yesno "continue?" || exit 1
-		fi
-	}
-done
-unset opts
 
 # symlink definitions
 typeset -a APT_PACKAGES
@@ -338,10 +319,12 @@ fi
 	export LANGUAGE=en_US.UTF-8
 	export LANG=en_US.UTF-8
 	export LC_ALL=en_US.UTF-8
-	locale-gen en_US.UTF-8
-	dpkg-reconfigure locales
-}
+	sudo locale-gen en_US.UTF-8
+	sudo dpkg-reconfigure locales
 
+	msg_info "Setting zsh as default shell."
+	sudo chsh -s /usr/bin/zsh $USER
+}
 
 # run additional scripts from the scripts folder
 # glob modifier:
@@ -353,6 +336,15 @@ if [[ ${host_type} =~ "x11" ]]; then
 	script_paths+=(scripts/x11/*(x.))
 fi
 for file in ${script_paths}; do
+	run_actions=$(grep "DOTFILES_RUN_ACTIONS" "${script_path:h}/${file}" \
+		| sed 's/^.*DOTFILES_RUN_ACTIONS: *//')
+
+	if [ "$run_actions" != "" ]; then
+		echo $run_actions \
+			| grep ${action} \
+			|| continue
+	fi
+
 	msg_info "Script: %{$fg_bold[yellow]%}${file}%{$reset_color%}"
 	msg_info "%{$fg_bold[white]%}About this script:"
 	msg_info "%{$fg_bold[white]%}=================="
@@ -373,4 +365,11 @@ done
 
 if [ "${action}" = "init" ]; then
 	echo "host_type=${host_type}" > "${script_path:h}/initialized"
+
+	msg_info "The init process is now finished."
+	msg_info "Please logout and relogin in i3."
+	msg_info "To start i3 click on the gear symbol when logging in"
+	msg_info "and select i3."
+	echo
+	msg_info "Enjoy."
 fi
