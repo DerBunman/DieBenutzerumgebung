@@ -1,0 +1,9 @@
+Export:
+=======
+
+key="$(dconf dump /org/gnome/terminal/legacy/profiles:/ | head -n1 | sed 's/[][]//g')"
+dconf dump /org/gnome/terminal/legacy/profiles:/${key}/ > ~/.repos/dotfiles/gnome-terminal.material-theme.dconf
+
+echo "Import CMD: dconf load /org/gnome/terminal/legacy/profiles:/${key}/ < ~/.repos/dotfiles/gnome-terminal.material-theme.dconf"
+
+Source: https://gist.github.com/reavon/0bbe99150810baa5623e5f601aa93afc

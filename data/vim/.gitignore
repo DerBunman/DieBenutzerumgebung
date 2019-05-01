@@ -1,0 +1,10 @@
+bundle/*
+!bundle/.gitkeep
+undodir/*
+!undodir/.gitkeep
+swapfiles/*
+!swapfiles/.gitkeep
+backups/*
+!backups/.gitkeep
+plugged/*
+!plugged/.gitkeep

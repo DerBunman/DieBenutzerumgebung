@@ -1,0 +1,376 @@
+#!/usr/bin/env zsh
+RUN_APT_COMMANDS=${${RUN_APT_COMMANDS}:-true}
+ASSUME_YES=${${ASSUME_YES}:-false}
+
+# change working directory to script home
+script_path=$0:A # :A follows symlinks
+cd ${script_path:h} # h dirname
+export DOTFILES_LIB_PATH="${script_path:h}/lib"
+
+DISTRIBUTION_ID=$(lsb_release -si)
+
+# include lib files
+for file in lib/*.zsh; do
+	. "$file"
+done
+
+#display logo
+print -P "%B%F{cyan}"
+ cat << "EOF"
+     _       _    __ _ _
+  __| | ___ | |_ / _(_) | ___  ___
+ / _` |/ _ \| __| |_| | |/ _ \/ __|
+| (_| | (_) | |_|  _| | |  __/\__ \
+ \__,_|\___/ \__|_| |_|_|\___||___/
+
+EOF
+print -P "%b%f"
+
+# read local config
+local_config="${script_path:h}/local/dotfiles.config.zsh"
+msg_info "importing local config ${local_config}"
+[ ! -f "${local_config}" ] && touch "${local_config}"
+source "${local_config}"
+
+# update || init
+action=${1:-unset}
+# shell || shell_and_x11 || nonroot_shell
+host_type=${2:-unset}
+
+# validate update parameter
+[ "${action}" = "update" ] \
+	&& [ -f "${script_path:h}/initialized" ] \
+	&& {
+		passed_host_type="${host_type}"
+		source "${script_path:h}/initialized"
+		[ "${passed_host_type}" != "unset" ] && [ "${host_type}" != "${passed_host_type}" ] && {
+			msg_error "This host is already initialized as: ${host_type}"
+			msg_info "Delete ${script_path:h}/initialized and re-run init to change host type."
+			exit 1
+		}
+}
+
+# abort when started in update mode without beeing initialized
+[ "${action}" = "update" ] && [ ! -f "${script_path:h}/initialized" ] && {
+	msg_error "This host is not yet initialized. Please init first."
+	exit 1
+}
+
+# check for updates
+if [ "${action}" = "check_updates" ]; then
+	git fetch
+	if [ "$(git log HEAD..origin/master --oneline | wc -l)" -gt 0 ]; then
+		msg_info "there are updates waiting for dotfiles."
+		git log HEAD..origin/master --oneline
+	else
+		msg_info "there are no updates waiting for dotfiles."
+	fi
+	exit
+fi
+
+typeset -a allowed_actions
+allowed_actions=(update init)
+
+typeset -a allowed_host_types
+allowed_host_types=(shell_and_x11 shell nonroot_shell)
+
+if [ ${(@)allowed_host_types[(I)$host_type]} -eq 0 ] || [ ${(@)allowed_actions[(I)$action]} -eq 0 ]; then
+	print "syntax: ${script_path:t} action host_type" # :t basename
+	print "action: init, update"
+	print "host_type: shell_and_x11, shell, nonroot_shell"
+	print "the action update doesn't take any parameters like host_type"
+	exit 1
+fi
+
+# check for needed binaries
+typeset -a deps
+deps=(git vim powerline grc ctags ag)
+if [ "${host_type}" = "shell_and_x11" ]; then
+	deps+=(i3 rofi polybar feh dconf)
+fi
+for bin in $deps; do
+	which "${bin}" > /dev/null || {
+		msg_warning "binary ${bin} not found in PATH."
+		msg_warning "Make sure to install via this script or manual."
+		if [ "${ASSUME_YES}" = false ]; then
+			yesno "continue?" || exit 1
+		fi
+	}
+done
+unset deps
+
+# check for optional binaries
+typeset -a opts
+opts=(figlet)
+if [ "${host_type}" = "shell_and_x11" ]; then
+	opts+=(pavucontrol vim.gtk3)
+fi
+for bin in $opts; do
+	which "${bin}" > /dev/null || {
+		msg_warning "optional binary ${bin} not found in PATH."
+		msg_warning "Make sure to install via this script or manual if you need it."
+		if [ "${ASSUME_YES}" = false ]; then
+			yesno "continue?" || exit 1
+		fi
+	}
+done
+unset opts
+
+# symlink definitions
+typeset -a APT_PACKAGES
+typeset -A links
+# key = link, value = target
+links=(
+	~/.Xresources               data/Xresources
+	~/.config/dunst             data/config/dunst
+	~/.config/gtk-3.0           data/config/gtk-3.0
+	~/.config/i3                data/config/i3
+	~/.config/mc                data/config/mc
+	~/.config/mpv               data/config/mpv
+	~/.config/oomox             data/config/oomox
+	~/.config/polybar           data/config/polybar
+	~/.config/ranger            data/config/ranger
+	~/.config/tridactyl         data/config/tridactyl
+	~/.gtkrc-2.0                data/gtkrc-2.0
+	~/.i3                       data/config/i3
+	~/.icons                    data/icons
+	~/.local/share/fonts        data/local/share/fonts
+	~/.profile                  data/profile
+	~/.ssh/config               data/ssh/config
+	~/.themes/oomox-BunmanTheme data/theme/oomox-BunmanTheme
+	~/.tmux.conf                data/tmux.conf
+	~/.todo                     data/todo
+	~/.toprc                    data/toprc
+	~/.urxvt                    data/urxvt
+	~/.vim                      data/vim
+	~/.xkeys                    data/xkeys
+	~/.xprofile                 data/xprofile
+	~/.zkbd                     data/zkbd
+	~/.zplug_local              data/zplug_local
+	~/.zsh-dircolors.config     data/zsh-dircolors.config
+	~/.zsh_autocomplete         data/zsh_autocomplete
+	~/.zshenv                   data/zshenv
+	~/.zshrc                    data/zshrc
+	~/.zshrc.d                  data/zshrc.d
+	~/bin/autostart/xkeys.zsh   data/bin/xkeys.zsh
+	~/bin/dotfiles              dotfiles
+	~/bin/gvim                  data/bin/gvim.zsh
+	~/bin/i3-applet-wrapper     data/bin/i3-applet-wrapper
+	~/bin/i3-autostart.zsh      data/bin/i3-autostart.zsh
+	~/bin/polybar-scripts       data/bin/polybar-scripts
+	~/bin/todofi.sh             submodules/todofi.sh/todofi.sh
+	~/bin/xkeys.zsh             data/bin/xkeys.zsh
+)
+
+# create i3 autostart dirs
+msg_info "creating the following dirs: ~/.themes ~/.local/share ~/.config ~/.ssh/conf.d"
+msg_info "creating autostart dirs ~/bin/autostart/[always]"
+msg_info "files in ~/bin/autostart/ will be executed on i3 startup"
+msg_info "files in ~/bin/autostart/always will be executed on i3 startup AND i3 config reload"
+mkdir -p \
+	~/.themes/ \
+	~/bin/autostart/always \
+	~/.local/share \
+	~/.config \
+	~/.ssh/conf.d
+
+# glob modifier:
+# x owner-executable files
+# . plain files
+for file in data/bin/autostart/**/*(x.); do
+	#test -d "${file}" && continue
+	link=${file/#data/~}
+	links+=("${link}" "${file}")
+	unset link
+done
+
+
+msg_info "checking symlinks"
+error=false
+for symlink symlink_target in ${(kv)links}; do
+	target="$(realpath -e "${script_path:h}")/$symlink_target"
+
+	# check for existing dotfiles not manage bit ${0}
+	if [ -e "${symlink}" ] && [ ! -L "${symlink}" ]; then
+		msg_error "file exist and is no link: ${symlink}"
+		[ "${ASSUME_YES}" = false ] && { 
+			yesno "move ${symlink} to ${script_path:h}/backups?" || {
+				print "\raborting ..."
+				exit 1
+			}
+		}
+		mv "${symlink}" "${script_path:h}/backups" || {
+			msg_error "could not move ${symlink} to backups"
+			exit 1
+		}
+		error=true
+		continue
+	
+	# check for symlinks with wrong targets
+	elif [ -L "${symlink}" ]; then
+		current_target="$(readlink "${symlink}")"
+		[ "${current_target}" != "${target}" ] && {
+			error=true
+			msg_error ""
+			msg_error "Link '${symlink}' exist but has the wrong target:"
+			msg_error "    ${current_target}"
+			msg_error "It should be:"
+			msg_error "    ${target}"
+			msg_error ""
+			[ "${ASSUME_YES}" = false ] && { 
+				yesno "relink?" || {
+					exit 1
+				}
+			}
+			rm "${symlink}"
+			continue
+		}
+	fi
+
+	# create non existing symlinks
+	if [ ! -e "${symlink}" ] && [ ! -L ${symlink} ]; then
+		msg_info "creating symlink: ${target} -> ${symlink}"
+		ln -s "${target}" "${symlink}" || error=true
+	fi
+	#msg_info "$symlink -> $(realpath -e "${script_path:h}")/$symlink_target"
+done
+
+if [ ${error} = true ]; then
+	msg_info "there were errors while checking the symlinks.";
+	msg_info "restarting ...";
+	exec "${0}" "$@"
+	exit $?
+fi
+
+msg_info "performing self update via git"
+md5hash="$(md5sum "${script_path}")"
+git pull --recurse-submodules || {
+	msg_error "could not self update"
+	exit 1
+}
+
+[ "$(md5sum "${script_path}")" != "${md5hash}" ] && {
+	msg_info "${script_path} itself has has been updated."
+	msg_info "restarting."
+	exec ${script_path} "$@"
+	exit $?
+}
+
+# stuff that needs root
+if [ "${host_type}" != "nonroot_shell" ]; then
+	# set RUN_APT_COMMANDS=false in local config to always skip these commands without asking
+	if [ "${RUN_APT_COMMANDS}" = true ]; then
+		if [ "${ASSUME_YES}" = false ]; then
+			yesno "run apt update and apt install commands?" || RUN_APT_COMMANDS=false
+			print "\r"
+		fi
+		if [ "${RUN_APT_COMMANDS}" = true ]; then
+			# install fingerprint tools and bluetooth on schleppi
+			[ "$(hostname -s)" = "schleppi" ] \
+				&& APT_PACKAGES=(${APT_PACKAGES} \
+					libpam-fprintd fprint-demo bluez \
+					obex-data-server blueman)
+
+			APT_PACKAGES=(${APT_PACKAGES} pwgen jq traceroute \
+				linux-tools-common curl powerline iotop vim mc detox fdupes \
+				menu pv figlet net-tools apt-file sysfsutils tmux p7zip-full \
+				unp rar unrar grc ctags silversearcher-ag todo-txt todotxt-cli \
+				mycli pgcli tmate asciinema lolcat odt2txt ranger \
+			) # todotxt-cli is for ubuntu and todo-txt is for debian
+
+			[ "${host_type}" = "shell_and_x11" ] && APT_PACKAGES=(${APT_PACKAGES} \
+				mate-polkit-bin vim-gtk3 pavucontrol rofi i3 \
+				arandr indicator-cpufreq fonts-roboto fonts-roboto-hinted \
+				xscreensaver-screensaver-webcollage xscreensaver \
+				xscreensaver-screensaver-bsod xscreensaver-gl-extra \
+				xscreensaver-gl xscreensaver-data-extra udiskie \
+				xscreensaver-screensaver-bsod feh dconf-cli xclip \
+				lxappearance rxvt rxvt-unicode-256color pulsemixer \
+				zathura-cb zathura zathura-djvu zathura-pdf-poppler zathura-ps \
+				xbindkeys xbindkeys-config xdotool x11-xserver-utils \
+			) # x11-xserver-utils are for xmodmap
+
+
+			sudo apt-get update
+
+			typeset -a apt_missing_packages
+			apt_missing_packages=()
+			for package in $APT_PACKAGES; do
+				dpkg -s ${package} 1> /dev/null 2>&1 | grep -q "Status: install ok installed" || {
+					apt-cache show ${package} 1> /dev/null 2>&1 && {
+						apt_missing_packages+=(${package})
+						msg_info "missing package ${package} will be installed."
+					}
+				}
+			done
+			[ ${#apt_missing_packages[@]} -gt 0 ] && sudo apt-get install --ignore-missing $apt_missing_packages
+		
+			
+			# install signal im
+			[ "${action}" = "init" ] && [ ! -f /etc/apt/sources.list.d/signal-xenial.list ] && {
+				yesno "install signal and its unofficial apt source?" && {
+					curl -s https://updates.signal.org/desktop/apt/keys.asc \
+						| sudo apt-key add -
+					echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" \
+						| sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
+					
+					sudo apt-get update
+					sudo apt-get install signal-desktop
+				}
+			}
+
+		fi
+	fi
+fi
+
+# gtk settings
+[ "${host_type}" = "shell_and_x11" ] && {
+	touch "${HOME}/.Xresources.local"
+	msg_info "setting gtk-theme to 'oomox-BunmanTheme'."
+	gsettings set org.gnome.desktop.interface gtk-theme "oomox-BunmanTheme"
+	gsettings set org.gnome.desktop.wm.preferences theme "oomox-BunmanTheme"
+
+}
+
+[ "${host_type}" != "nonroot_shell" ] && [ "${action}" = "init" ] && {
+	# configure locales
+	msg_info "configuring locale en_US.UTF-8"
+	export LANGUAGE=en_US.UTF-8
+	export LANG=en_US.UTF-8
+	export LC_ALL=en_US.UTF-8
+	locale-gen en_US.UTF-8
+	dpkg-reconfigure locales
+}
+
+
+# run additional scripts from the scripts folder
+# glob modifier:
+# x owner-executable files
+# . plain files
+typeset -a script_paths
+script_paths=(scripts/shell/*(x.))
+if [[ ${host_type} =~ "x11" ]]; then
+	script_paths+=(scripts/x11/*(x.))
+fi
+for file in ${script_paths}; do
+	msg_info "Script: %{$fg_bold[yellow]%}${file}%{$reset_color%}"
+	msg_info "%{$fg_bold[white]%}About this script:"
+	msg_info "%{$fg_bold[white]%}=================="
+	# show DOTFILES_INFO text
+	print -P "$(grep "DOTFILES_INFO" "${script_path:h}/${file}" \
+		| sed 's/^.*DOTFILES_INFO: *//' \
+		| sed "s/^/${INFO} /")"
+
+	grep --quiet "DOTFILES_FORCE_RUN" "${script_path:h}/${file}"
+	if [ $? -eq 0 ]; then
+		msg_info "%BDOTFILES_FORCE_RUN%b is set for this script so I'll just run it."
+	else
+		yesno "run this script?" || continue
+	fi
+
+	. "${script_path:h}/${file}" "${action}" "${host_type}"
+done
+
+if [ "${action}" = "init" ]; then
+	echo "host_type=${host_type}" > "${script_path:h}/initialized"
+fi

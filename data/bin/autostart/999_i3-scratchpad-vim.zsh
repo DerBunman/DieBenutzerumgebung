@@ -1,0 +1,1 @@
+/home/ichi/.repos/dotfiles/data/bin/autostart/i3-scratchpad-vim.zsh

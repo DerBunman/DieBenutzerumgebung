@@ -1,0 +1,9 @@
+[submodule "data/vim/vim-plug-repo"]
+	path = data/vim/vim-plug-repo
+	url = https://github.com/junegunn/vim-plug
+[submodule "submodules/todofi.sh"]
+	path = submodules/todofi.sh
+	url = https://github.com/hugokernel/todofi.sh
+[submodule "submodules/numix-cursor-theme"]
+	path = submodules/numix-cursor-theme
+	url = https://github.com/numixproject/numix-cursor-theme

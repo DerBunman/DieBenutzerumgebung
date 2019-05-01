@@ -1,0 +1,5 @@
+#!/ust/bin/env zsh
+# allow docker to connect to the local x11 server
+xhost +local:docker
+
+[[ -f ~/.zshenv ]] && source ~/.zshenv

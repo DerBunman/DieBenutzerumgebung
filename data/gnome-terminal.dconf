@@ -1,0 +1,17 @@
+[/]
+foreground-color='rgb(188,203,204)'
+text-blink-mode='never'
+visible-name='buntastic'
+palette=['rgb(38,37,37)', 'rgb(213,95,79)', 'rgb(133,153,0)', 'rgb(224,184,60)', 'rgb(38,139,210)', 'rgb(211,54,130)', 'rgb(42,161,152)', 'rgb(242,228,189)', 'rgb(64,61,61)', 'rgb(255,122,104)', 'rgb(140,201,92)', 'rgb(240,242,85)', 'rgb(91,204,232)', 'rgb(247,49,145)', 'rgb(37,197,185)', 'rgb(253,246,227)']
+bold-is-bright=true
+default-size-columns=80
+cursor-shape='block'
+use-system-font=false
+use-theme-colors=false
+font='RobotoMono Nerd Font 10'
+bold-color-same-as-fg=false
+bold-color='rgb(244,244,244)'
+background-color='rgb(0,0,0)'
+audible-bell=false
+cursor-blink-mode='system'
+scrollbar-policy='never'

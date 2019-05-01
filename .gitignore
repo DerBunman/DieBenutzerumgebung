@@ -1,0 +1,12 @@
+initialized
+tags
+data/local/share/fonts/.uuid
+data/config/gtk-3.0/bookmarks
+backups/*
+!backups/.gitkeep
+local/*
+!local/.gitkeep
+data/config/gtk-3.0/bookmarks
+data/config/ranger/bookmarks
+data/config/ranger/history
+data/config/mc/menu

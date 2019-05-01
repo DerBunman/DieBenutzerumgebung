@@ -1,0 +1,15 @@
+# change fontsize witch ctrl+plus/minus/zero
+"xdotool keyup --clearmodifiers 0 key --clearmodifiers alt+0 keyup --clearmodifiers alt"
+   Control + 0
+
+"xdotool keyup --clearmodifiers minus key --clearmodifiers alt+minus keyup --clearmodifiers alt"
+    m:0x4 + c:20
+    Control + minus
+
+"xdotool key --delay 150 --clearmodifiers alt+equal keyup --clearmodifiers alt"
+    m:0x4 + c:21
+    Control + equal
+
+"xdotool keyup --clearmodifiers plus key --clearmodifiers alt+equal keyup --clearmodifiers alt"
+    m:0x5 + c:21
+    Control+Shift + equal

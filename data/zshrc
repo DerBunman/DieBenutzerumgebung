@@ -1,0 +1,180 @@
+#zmodload zsh/zprof
+
+# overwrite compinit if we use sudo so we wont
+# get the compaudit messages
+if [ $UID -eq 0 ]; then
+	autoload -U compinit
+	compinit -i -u -d ~/.zplug/zcompdumpf
+	compinit() {
+		notify-send compinit -- "$*"
+	}
+fi
+
+function bcrypt2_hash() {
+	rounds=${2:-11}
+	htpasswd -bnBC $rounds "" $1
+}
+
+## supresses these dbus warnings
+# http://computing.help.inf.ed.ac.uk/accessibility-bus
+export NO_AT_BRIDGE=1
+
+# history size and location
+SAVEHIST=10000
+HISTSIZE=10000
+HISTFILE=~/.zsh_history
+
+# Report command running time if it is more than 3 seconds
+REPORTTIME=3
+
+# Do not print the directory stack after pushd or popd. 
+setopt PUSHD_SILENT
+# Add commands to history as they are entered, don't wait for shell to exit
+setopt INC_APPEND_HISTORY
+# Also remember command start time and duration
+setopt EXTENDED_HISTORY
+# Do not keep duplicate commands in history
+setopt HIST_IGNORE_ALL_DUPS
+# Do not remember commands that start with a whitespace
+setopt HIST_IGNORE_SPACE
+# remove superfluous blanks from history items
+setopt HIST_REDUCE_BLANKS
+# allow comments in interactive shells
+setopt INTERACTIVE_COMMENTS
+# Correct spelling of all arguments in the command line
+#setopt CORRECT_ALL
+# autodir/cd tools
+setopt AUTOCD AUTOPUSHD PUSHDIGNOREDUPS
+
+# Check if zplug is installed
+if [[ ! -d ~/.zplug ]]; then
+	git clone https://github.com/zplug/zplug ~/.zplug
+	source ~/.zplug/init.zsh && zplug update --self
+fi
+
+fpath=(~/.zsh_autocomplete $fpath)
+
+zstyle ':completion:*' menu select
+
+# Enable autocompletion
+zstyle ':completion:*' completer _complete _correct _approximate
+
+source ~/.zplug/init.zsh
+
+# Make sure to use double quotes
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-syntax-highlighting"
+
+# Disable updates using the "frozen" tag
+zplug "k4rthik/git-cal", as:command, frozen:1
+zplug "plugins/colorize", from:oh-my-zsh
+zplug "zlsun/solarized-man"
+zplug "horosgrisa/mysql-colorize", use:"mysql-colorize.plugin.zsh"
+zplug "plugins/history", from:oh-my-zsh
+zplug "plugins/tmux", from:oh-my-zsh
+zplug "plugins/systemd", from:oh-my-zsh
+zplug "plugins/docker", from:oh-my-zsh
+zplug "zpm-zsh/ssh"
+zplug "zpm-zsh/colors"
+zplug "joel-porquet/zsh-dircolors-solarized", use:"zsh-dircolors-solarized.plugin.zsh"
+zplug "jreese/zsh-titles"
+
+zplug "plugins/ssh-agent", from:oh-my-zsh
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+
+zplug "marzocchi/zsh-notify"
+zstyle ':notify:*' error-title "Command failed (in #{time_elapsed} seconds)"
+zstyle ':notify:*' success-title "Command finished (in #{time_elapsed} seconds)"
+# the icons have to be a real path, not some symlink or shit like that
+zstyle ':notify:*' error-icon "$HOME/.repos/dotfiles/data/icons/status/dialog-error.png"
+zstyle ':notify:*' success-icon "$HOME/.repos/dotfiles/data/icons/status/dialog-info.png"
+
+
+# manage local plugins
+[ -d ~/.zplug_local ] || mkdir ~/.zplug_local
+#zplug "~/.zplug_local", \
+#	from:local, \
+#	use:"./solarized-powerline/solarized-powerline.zsh-theme", \
+#	as:theme
+
+zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator ssh dir_writable virtualenv context dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs vi_mode)
+
+POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="white"
+#POWERLEVEL9K_MODE='awesome-fontconfig'
+POWERLEVEL9K_MODE='nerdfont-complete'
+
+POWERLEVEL9K_VI_INSERT_MODE_STRING=""
+POWERLEVEL9K_VI_COMMAND_MODE_STRING="\ue62b "
+#POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='245'
+POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='yellow'
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+	printf "Install? [y/N]: "
+	if read -q; then
+		echo; zplug install
+	fi
+fi
+
+zplug load #--verbose
+
+setupsolarized dircolors.ansi-universal
+source ~/.zplug/repos/joel-porquet/zsh-dircolors-solarized/zsh-dircolors-solarized.zsh
+
+[[ -d ~/.zshrc.d ]] && for file in ~/.zshrc.d/*zsh; do
+	source "${file}"
+done
+
+# Check if fzf is installed
+if [[ ! -d ~/.fzf ]]; then
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+	~/.fzf/install
+fi
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# autocomlete menu
+autoload -U colors vcs_info
+colors
+#compinit -i -u -C -d ~/.zplug/zcompdump
+
+
+# these are for backward-kill-word
+backward-kill-dir () {
+	#WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+	local WORDCHARS=${WORDCHARS/\/}
+	zle backward-kill-word
+}
+zle -N backward-kill-dir
+bindkey '\e^?' backward-kill-dir
+#bindkey '^[^?' backward-kill-dir
+
+# home and end
+bindkey  "^[[H"   beginning-of-line
+bindkey  "^[[F"   end-of-line
+
+# and ctrl-a/ctrl-e
+bindkey  "^a"   beginning-of-line
+bindkey  "^e"   end-of-line
+
+# ctrl left/right
+# urxvt/rxvt-unicode (and maybe others):
+bindkey "^[Od" backward-word
+bindkey "^[Oc" forward-word
+# terminator, konsole and xterm (and maybe others):
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+autoload -Uz history-beginning-search-menu
+zle -N history-beginning-search-menu
+bindkey '^X^X' history-beginning-search-menu
+
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line

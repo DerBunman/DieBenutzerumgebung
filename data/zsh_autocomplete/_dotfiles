@@ -1,0 +1,26 @@
+#compdef dotfiles
+_dotfiles(){
+	local -a commands
+	commands=(
+		'init:setup a new homedir'
+		'update:update a already initialized homedir'
+	)
+	local -a host_types
+	host_types=(
+		'shell:will setup only shell stuff'
+		'shell_and_x11:will also setup i3 and so on'
+		'nonroot_shell:for shells without root. as the name says'
+	)
+
+	if (( CURRENT == 2 )); then
+		_describe -t commands 'commands' commands
+	fi
+
+	if (( CURRENT == 3 )); then
+		_describe -t commands 'commands' host_types
+	fi
+
+	return 0
+}
+
+_dotfiles
