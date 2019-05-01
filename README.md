@@ -16,7 +16,7 @@ For example in my shell CTRL-a/CTRL-e will jump to beginning/end of the line.
 When editing in VIM these are mapped to increment (CTRL-a) and Scroll without moving cursor (CTRL-e).
 Since I don't use these shortcuts I remapped them to jump to beginning/end of the line.
 
-### [xkeys.sh](_docs/xkeys.sh.md): Keymapping like a boss!
+### [xkeys.zsh](_docs/xkeys.zsh.md): Keymapping like a boss!
 For being able to map all shortcuts like I want, I created [xkeys.zsh](_docs/xkeys.zsh.md).
 
 This script will check if there are rules defined for the current active WM_CLASS and then load xmodmap and/or xbindkeys configurations.
