@@ -84,10 +84,7 @@ fi
 
 # check for needed binaries
 typeset -a deps
-deps=(git vim powerline grc ctags ag)
-if [ "${host_type}" = "shell_and_x11" ]; then
-	deps+=(i3 rofi polybar feh dconf)
-fi
+deps=(git curl)
 for bin in $deps; do
 	which "${bin}" > /dev/null || {
 		msg_warning "binary ${bin} not found in PATH."

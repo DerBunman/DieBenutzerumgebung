@@ -104,7 +104,7 @@ This list may be a bit outdated at the moment.
 # Installation
 ## Installation via SSH
 ```zsh
-apt install zsh git
+apt install zsh git curl
 mkdir -p ~/.repos \
 	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init [shell/shell_and_x11/nonroot_shell]
@@ -112,7 +112,7 @@ mkdir -p ~/.repos \
 
 ## Installation via HTTP
 ```zsh
-sudo apt install zsh git
+sudo apt install zsh git curl
 mkdir -p ~/.repos \
 	&& git clone --recursive https://github.com/DerBunman/dotfiles ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init [shell/shell_and_x11/nonroot_shell]
@@ -126,7 +126,7 @@ If it fails just remove the existing files and re-run the command ```dotfiles in
 Please note, that the dependencies have to be installed for nonroot mode.
 
 ```zsh
-sudo apt install zsh git
+sudo apt install zsh git curl
 mkdir -p ~/.repos \
 	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init nonroot_shell
@@ -138,7 +138,7 @@ Please relogin after init so all the updated configs are parsed.
 Please note, that the dependencies will be auto installed in the init process.
 
 ```zsh
-sudo apt install zsh git
+sudo apt install zsh git curl
 mkdir -p ~/.repos \
 	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init shell
@@ -150,7 +150,7 @@ Please relogin after init so all the updated configs are parsed.
 Please note, that the dependencies will be auto installed in the init process.
 
 ```zsh
-sudo apt install zsh git
+sudo apt install zsh git curl
 mkdir -p ~/.repos \
 	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init shell_and_x11
