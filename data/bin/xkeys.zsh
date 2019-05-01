@@ -14,7 +14,7 @@ current_map=default
 msg_info = function() {
 	prefix="[$(date +%H:%M:%S)]"
 	echo "${prefix} $*"
-	notify-send \
+	false && notify-send \
 		--expire-time 800 \
 		-i ~/.icons/xkeys.svg \
 		"${prefix} $*"
