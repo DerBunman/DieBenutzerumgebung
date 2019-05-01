@@ -321,8 +321,10 @@ fi
 	export LC_ALL=en_US.UTF-8
 	sudo locale-gen en_US.UTF-8
 	sudo dpkg-reconfigure locales
-}
 
+	msg_info "Setting zsh as default shell."
+	sudo chsh -s /usr/bin/zsh $USER
+}
 
 # run additional scripts from the scripts folder
 # glob modifier:
@@ -363,4 +365,11 @@ done
 
 if [ "${action}" = "init" ]; then
 	echo "host_type=${host_type}" > "${script_path:h}/initialized"
+
+	msg_info "The init process is now finished."
+	msg_info "Please logout and relogin in i3."
+	msg_info "To start i3 click on the gear symbol when logging in"
+	msg_info "and select i3."
+	echo
+	msg_info "Enjoy."
 fi
