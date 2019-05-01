@@ -96,22 +96,6 @@ for bin in $deps; do
 done
 unset deps
 
-# check for optional binaries
-typeset -a opts
-opts=(figlet)
-if [ "${host_type}" = "shell_and_x11" ]; then
-	opts+=(pavucontrol vim.gtk3)
-fi
-for bin in $opts; do
-	which "${bin}" > /dev/null || {
-		msg_warning "optional binary ${bin} not found in PATH."
-		msg_warning "Make sure to install via this script or manual if you need it."
-		if [ "${ASSUME_YES}" = false ]; then
-			yesno "continue?" || exit 1
-		fi
-	}
-done
-unset opts
 
 # symlink definitions
 typeset -a APT_PACKAGES
