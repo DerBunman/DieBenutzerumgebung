@@ -353,6 +353,15 @@ if [[ ${host_type} =~ "x11" ]]; then
 	script_paths+=(scripts/x11/*(x.))
 fi
 for file in ${script_paths}; do
+	run_actions=$(grep "DOTFILES_RUN_ACTIONS" "${script_path:h}/${file}" \
+		| sed 's/^.*DOTFILES_RUN_ACTIONS: *//')
+
+	if [ "$run_actions" != "" ]; then
+		echo $run_actions \
+			| grep ${action} \
+			|| continue
+	fi
+
 	msg_info "Script: %{$fg_bold[yellow]%}${file}%{$reset_color%}"
 	msg_info "%{$fg_bold[white]%}About this script:"
 	msg_info "%{$fg_bold[white]%}=================="

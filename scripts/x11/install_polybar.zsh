@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 # DOTFILES_INFO: This script will install polybar
+# DOTFILES_RUN_ACTIONS: init
 . ${0:h}/../../lib/colorized_messages.zsh
 
 sudo apt install libmpdclient2 libxcb-composite0

@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 # DOTFILES_INFO: init:   clones some addons to ~/.todo/actions.d/
 # DOTFILES_INFO: update: updates these git repos
+# DOTFILES_RUN_ACTIONS: init
 
 if [ "$1" = "init" ]; then
 	mkdir -p ~/.todo/actions.d/
@@ -8,7 +9,7 @@ if [ "$1" = "init" ]; then
 
 	git clone https://github.com/timpulver/todo.txt-graph.git ~/.todo/actions.d/graph
 else
-	test -d ~/.todo/actions.d/ || exit
+	ls ~/.todo/actions.d/ | grep -v .gitkeep --quiet || exit
 	for repo in ~/.todo/actions.d/*; do
 		cd "${repo}" || continue
 		git pull

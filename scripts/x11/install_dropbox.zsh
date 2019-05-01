@@ -3,6 +3,8 @@
 # DOTFILES_INFO: to the following path: ~/.dropbox-dist/ and
 # DOTFILES_INFO: create a symlink to ~/bin/dropboxd and autostart
 # DOTFILES_INFO: The script will ask before each action
+# DOTFILES_RUN_ACTIONS: init
+
 . ${0:h}/../../lib/colorized_messages.zsh
 
 yesno "Download and install dropbox?" && {
