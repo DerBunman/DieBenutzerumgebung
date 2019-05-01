@@ -6,6 +6,7 @@ backups/*
 !backups/.gitkeep
 local/*
 !local/.gitkeep
+index.md
 data/config/gtk-3.0/bookmarks
 data/config/ranger/bookmarks
 data/config/ranger/history

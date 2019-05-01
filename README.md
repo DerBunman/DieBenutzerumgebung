@@ -1,9 +1,9 @@
-![dotfile manager](logo.png)
+![DieBenutzerumgebung](logo.png)
 
-# dotfiles manager
-Is the name still good?
 
-It is more than just a few dotfiles.
+`DieBenutzerumgebung` started as a innocent collection of dofiles and an script to manager these dotfiles.
+
+However, `DieBenutzerumgebung` has now many more features, hence the name change.
 
 # Features
 ## Easily setup or update hosts with the dotfiles script.
@@ -24,9 +24,21 @@ This script will check if there are rules defined for the current active WM_CLAS
 
 ## Unified [style](_docs/style.md) for:
 
+  - i3 & polybar
   - GTK2 (based on Numix)
   - GTK3 (based on Numix)
   - Shell/Terminal
+
+### Screenshots:
+
+#### Firefox, urxvt running zsh
+![screenshot1](_docs/screenshot1.png)
+
+#### gVIM (GTK3), urxt running neofetch and pukeskull
+![screenshot2](_docs/screenshot2.png)
+
+#### GTK2 (left, Filezilla), GTK3 (right, oomox and nautilus)
+![screenshot3](_docs/screenshot3.png)
 
 ## Preconfigured Packages:
 This list may be a bit outdated at the moment.
@@ -88,7 +100,7 @@ This list may be a bit outdated at the moment.
 ```zsh
 apt install zsh git
 mkdir -p ~/.repos \
-	&& git clone --recursive git@github.com:DerBunman/dotfiles.git ~/.repos/dotfiles \
+	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init [shell/shell_and_x11/nonroot_shell]
 ```
 
@@ -110,7 +122,7 @@ Please note, that the dependencies have to be installed for nonroot mode.
 ```zsh
 sudo apt install zsh git
 mkdir -p ~/.repos \
-	&& git clone --recursive git@github.com:DerBunman/dotfiles.git ~/.repos/dotfiles \
+	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init nonroot_shell
 ```
 Please relogin after init so all the updated configs are parsed.
@@ -122,7 +134,7 @@ Please note, that the dependencies will be auto installed in the init process.
 ```zsh
 sudo apt install zsh git
 mkdir -p ~/.repos \
-	&& git clone --recursive git@github.com:DerBunman/dotfiles.git ~/.repos/dotfiles \
+	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init shell
 ```
 Please relogin after init so all the updated configs are parsed.
@@ -134,7 +146,7 @@ Please note, that the dependencies will be auto installed in the init process.
 ```zsh
 sudo apt install zsh git
 mkdir -p ~/.repos \
-	&& git clone --recursive git@github.com:DerBunman/dotfiles.git ~/.repos/dotfiles \
+	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
 	&& ~/.repos/dotfiles/dotfiles init shell_and_x11
 ```
 Please relogin into i3 after init so all the updated configs are parsed.
