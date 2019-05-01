@@ -3,6 +3,7 @@
 # DOTFILES_RUN_ACTIONS: init
 . ${0:h}/../../lib/colorized_messages.zsh
 
+msg_info "installing dependencies: libmpdclient2 libxcb-composite0"
 sudo apt install libmpdclient2 libxcb-composite0
 
 echo
