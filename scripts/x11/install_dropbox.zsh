@@ -16,5 +16,7 @@ yesno "Download and install dropbox?" && {
 		ln -s ~/.dropbox-dist/dropboxd ~/bin/autostart/dropboxd
 	}
 
-	yesno "Run and setup dropbox?" && bin/dropboxd &
+	#msg_info "Please stop dropbox after configuring it,"
+	#msg_info "to continue the other install processes."
+	#yesno "Run and setup dropbox?" && bin/dropboxd 1>/dev/null 2>&1 &
 }
