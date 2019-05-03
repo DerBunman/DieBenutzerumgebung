@@ -1,6 +1,7 @@
 " setup gui
 guiset_quiet gui none
 guiset_quiet tabs always
+guiset_quiet navbar autohide
 guiset_quiet statuspanel left
 guiset_quiet hoverlink right
 
@@ -12,13 +13,13 @@ fixamo_quiet
 
 quickmark r https://old.reddit.com
 quickmark f https://blog.fefe.de
-quickmark g https://google,com
+quickmark g https://google.com
 
 " flush autocmds
-" unset autocmds
+unset autocmds
 
 " New reddit is bad
-autocmd DocStart ^http(s?)://www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
+" autocmd DocStart ^http(s?)://www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
 
 " Mosquito nets won't make themselves
 autocmd DocStart ^http(s?)://www.amazon.de js tri.excmds.urlmodify("-t", "www", "smile")
@@ -28,7 +29,7 @@ autocmd DocStart ^http(s?)://www.amazon.de js tri.excmds.urlmodify("-t", "www", 
 
 " This allows tridactyl to automatically create containers from your autocontain directives.
 " Note that they will be random icons and colors.
-set auconscreatecontainer true
+" set auconscreatecontainer true
 
 autocontain web.whatsapp.com whatsapp
 
