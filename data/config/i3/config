@@ -39,6 +39,8 @@ font pango:Roboto 11
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+mouse_warping none
+
 # doesn't work with ubuntu
 #focus_wrapping no
 
