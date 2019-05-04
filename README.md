@@ -1,4 +1,4 @@
-![DieBenutzerumgebung](logo.png)
+![DieBenutzerumgebung](_docs/logo.png)
 
 __DieBenutzerumgebung__ started as a innocent collection of dofiles and an script to manager these dotfiles.
 
