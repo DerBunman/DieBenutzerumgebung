@@ -1,8 +1,32 @@
-![DieBenutzerumgebung](_docs/logo.png)
+![DieBenutzerumgebung](_docs/images/logo.png)
 
 __DieBenutzerumgebung__ started as a innocent collection of dofiles and an script to manager these dotfiles.
 
-However, __DieBenutzerumgebung__ has now many more features, hence the name change. But beware, DieBenutzerumgebung is still in ALPHA state all these nice features still have corners and edges. So use at your own risk.
+However, __DieBenutzerumgebung__ has now many more features, hence the name change.
+But beware, __DieBenutzerumgebung__ is still in ALPHA state all these nice features still have corners and edges.
+Also, there may be changes to everything.
+
+So use at your own risk.
+
+
+# Table of Contents
+* [Dependencies](#dependencies)
+* [Features](#features)
+	* [Easily setup or update hosts with the dotfiles script.](#easily-setup-or-update-hosts-with-the-dotfiles-script)
+	* [Unified keymaps](#unified-keymaps)
+		* [xkeys.zsh: Keymapping like a boss!](#xkeyszsh-keymapping-like-a-boss)
+	* [Unified style](#unified-style-for)
+* [Videos](#videos)
+* [Screenshots](#screenshots)
+* [Preconfigured Packages](#preconfigured-packages)
+* [Installation](#installation)
+	* [Installation via SSH](#installation-via-ssh)
+	* [Installation via HTTP](#installation-via-http)
+	* [Examples](#examples)
+		* [Shell only (non root)](#shell-only-non-root)
+		* [Shell only (with root)](#shell-only-with-root)
+		* [Shell and x11 (with root)](#shell-and-x11-with-root)
+		* [Update (all modes)](#update-all-modes)
 
 # Dependencies
 * Compatible distributions
@@ -37,23 +61,27 @@ This script will check if there are rules defined for the current active WM_CLAS
   - GTK3 (based on Numix)
   - Shell/Terminal
 
-### Screenshots:
+## Videos:
+<a href="https://youtu.be/n_71Ccq8z8Q" target="_blank">
+	<img src="_docs/images/video_installation.png" />
+</a>
 
-#### Firefox, urxvt running zsh
-![screenshot1](_docs/screenshot1.png)
-
-#### gVIM (GTK3), urxt running neofetch and pukeskull
-![screenshot2](_docs/screenshot2.png)
-
-#### GTK2 (left, Filezilla), GTK3 (right, oomox and nautilus)
-![screenshot3](_docs/screenshot3.png)
-
-#### gVIM (GTK3), Firefox (README.md preview), and some terminals
-![screenshot3](_docs/screenshot4.png)
-
-#### gVIM (GTK3), Firefox (README.md preview), and urxvt running ranger (using urxvt pixmap support)
-![screenshot3](_docs/screenshot5.png)
-
+## Screenshots:
+<a href="_docs/images/screenshot1.png" target="_blank">
+	<img src="_docs/images/screenshot1.thumb.png" />
+</a>
+<a href="_docs/images/screenshot2.png" target="_blank">
+	<img src="_docs/images/screenshot2.thumb.png" />
+</a>
+<a href="_docs/images/screenshot3.png" target="_blank">
+	<img src="_docs/images/screenshot3.thumb.png" />
+</a>
+<a href="_docs/images/screenshot4.png" target="_blank">
+	<img src="_docs/images/screenshot4.thumb.png" />
+</a>
+<a href="_docs/images/screenshot5.png" target="_blank">
+	<img src="_docs/images/screenshot5.thumb.png" />
+</a>
 
 ## Preconfigured Packages:
 This list may be a bit outdated at the moment.

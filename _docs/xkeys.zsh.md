@@ -1,4 +1,4 @@
-![DieAutomatisierung](logo_xkeys.zsh.png)
+![DieAutomatisierung](images/logo_xkeys.zsh.png)
 
 # xkeys.zsh
 xkeys.zsh is a script which will check if there are rules defined for the current active WM_CLASS and then load xmodmap and/or xbindkeys configurations.
