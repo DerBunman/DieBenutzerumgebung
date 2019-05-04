@@ -8,7 +8,6 @@ Also, there may be changes to everything.
 
 So use at your own risk.
 
-
 # Table of Contents
 * [Dependencies](#dependencies)
 * [Features](#features)
@@ -67,21 +66,27 @@ This script will check if there are rules defined for the current active WM_CLAS
 </a>
 
 ## Screenshots:
-<a href="_docs/images/screenshot1.png" target="_blank">
-	<img src="_docs/images/screenshot1.thumb.png" />
+<a href="_docs/images/screenshot1.png" target="_blank" style="float: left; margin: 5px; border: 1px solid black">
+	<img src="_docs/images/screenshot1.thumb.png" /><br />
+	<small>Firefox, urxvt running zsh</small>
 </a>
-<a href="_docs/images/screenshot2.png" target="_blank">
-	<img src="_docs/images/screenshot2.thumb.png" />
+<a href="_docs/images/screenshot1.png" target="_blank" style="float: left; margin: 5px; border: 1px solid black">
+	<img src="_docs/images/screenshot1.thumb.png" /><br />
+	<small>gVIM (GTK3), urxt running neofetch and pukeskull</small>
 </a>
-<a href="_docs/images/screenshot3.png" target="_blank">
-	<img src="_docs/images/screenshot3.thumb.png" />
+<a href="_docs/images/screenshot1.png" target="_blank" style="float: left; margin: 5px; border: 1px solid black">
+	<img src="_docs/images/screenshot1.thumb.png" /><br />
+	<small>GTK2 (Filezilla), GTK3 (oomox, nautilus)</small>
 </a>
-<a href="_docs/images/screenshot4.png" target="_blank">
-	<img src="_docs/images/screenshot4.thumb.png" />
+<a href="_docs/images/screenshot1.png" target="_blank" style="float: left; margin: 5px; border: 1px solid black">
+	<img src="_docs/images/screenshot1.thumb.png" /><br />
+	<small>gVIM (GTK3), Firefox and some terminals</small>
 </a>
-<a href="_docs/images/screenshot5.png" target="_blank">
-	<img src="_docs/images/screenshot5.thumb.png" />
+<a href="_docs/images/screenshot1.png" target="_blank" style="float: left; margin: 5px; border: 1px solid black">
+	<img src="_docs/images/screenshot1.thumb.png" /><br />
+	<small>gVIM (GTK3), Firefox, and urxvt running ranger</small>
 </a>
+<br style="clear: both;" />
 
 ## Preconfigured Packages:
 This list may be a bit outdated at the moment.
