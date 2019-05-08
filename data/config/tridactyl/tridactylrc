@@ -1,7 +1,9 @@
 " setup gui
 guiset_quiet gui none
 guiset_quiet tabs always
-guiset_quiet navbar autohide
+guiset tabcounter on
+guiset tabcounters show
+guiset_quiet navbar always
 guiset_quiet statuspanel left
 guiset_quiet hoverlink right
 
