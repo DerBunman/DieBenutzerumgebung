@@ -192,11 +192,11 @@ let g:shebang#shebangs = {
 " autocmd FileType html,xml,smarty,twig inoremap <buffer> < <><LEFT>
 
 " quote strings in visual mode
-vnoremap " <RIGHT>c"<ESC>pi"<ESC>
-vnoremap ' <RIGHT>c'<ESC>pi'<ESC>
-vnoremap ( <RIGHT>c(<ESC>pi)<ESC>
-vnoremap [ <RIGHT>c[<ESC>pi]<ESC>
-vnoremap { <RIGHT>c{<ESC>pi}<ESC>
+" vnoremap " <RIGHT>c"<ESC>pi"<ESC>
+" vnoremap ' <RIGHT>c'<ESC>pi'<ESC>
+" vnoremap ( <RIGHT>c(<ESC>pi)<ESC>
+" vnoremap [ <RIGHT>c[<ESC>pi]<ESC>
+" vnoremap { <RIGHT>c{<ESC>pi}<ESC>
 
 " press F in visual mode to run text thru figlet for ascii art
 " vnoremap F :!toilet -F crop -f standard<cr>
