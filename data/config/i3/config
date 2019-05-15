@@ -22,19 +22,19 @@ set_from_resource $background  background  #000000
 set_from_resource $cursorcolor cursorColor #000000
 set_from_resource $bordercolor border      #000000
 
-#                       border       backgr.     text    indicator   child_border
+#                       border       backgr.     text    indicator    child_border
 client.focused          $bordercolor $blue1      $black1 $black1      $bordercolor
-client.unfocused        $black1      $black2     $white1 $black1      $black2
+client.unfocused        $black2      $black1     $white1 $black1      $black2
 client.urgent           $red1        $red2       $white1 $red2        $red2
-client.placeholder      $background  $black2     $white1 $background  $black2
-client.focused_inactive $black2      $background $white1 $bordercolor $black2
+client.placeholder      $black2      $black1     $white1 $black1      $black2
+client.focused_inactive $black2      $black2     $white1 $bordercolor $black2
 
 client.background       #ffffff
 
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Roboto 11
+font pango:Roboto 8
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -113,7 +113,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-#bindsym $mod+a focus parent
+bindsym $mod+Shift+p focus parent
 
 # focus the child container
 #bindsym $mod+d focus child

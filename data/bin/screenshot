@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+if [ $+commands[slop] -eq 0 ]; then
+	import png:- | xclip -selection c -t image/png
+else
+	slop=$(slop -f "%g" -r boxzoom) || exit 1
+	read -r G < <(echo $slop)
+	import -window root -crop $G png:- | xclip -selection c -t image/png
+fi

@@ -139,6 +139,7 @@ links=(
 	~/bin/i3-applet-wrapper     data/bin/i3-applet-wrapper
 	~/bin/i3-autostart.zsh      data/bin/i3-autostart.zsh
 	~/bin/polybar-scripts       data/bin/polybar-scripts
+	~/bin/screenshot            data/bin/screenshot
 	~/bin/todofi.sh             submodules/todofi.sh/todofi.sh
 	~/bin/xkeys.zsh             data/bin/xkeys.zsh
 )
@@ -269,6 +270,7 @@ if [ "${host_type}" != "nonroot_shell" ]; then
 				lxappearance rxvt rxvt-unicode-256color pulsemixer \
 				zathura-cb zathura zathura-djvu zathura-pdf-poppler zathura-ps \
 				xbindkeys xbindkeys-config xdotool x11-xserver-utils \
+				slop \
 			) # x11-xserver-utils are for xmodmap
 
 
