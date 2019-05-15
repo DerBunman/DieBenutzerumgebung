@@ -201,6 +201,17 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"; $exec_tint_red
 
+set $mode_move_workspace "move workspace [←↑→↓]"
+bindsym $mod+m mode $mode_move_workspace; $exec_tint_red;
+mode $mode_move_workspace {
+	bindsym Up        $mode_default    move workspace to output up;
+	bindsym Down      $mode_default    move workspace to output down;
+	bindsym Left      $mode_default    move workspace to output left;
+	bindsym Right     $mode_default    move workspace to output right;
+
+	bindsym Return    $mode_default
+	bindsym Escape    $mode_default
+}
 
 
 focus_follows_mouse no
