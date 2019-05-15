@@ -142,6 +142,7 @@ links=(
 	~/bin/screenshot            data/bin/screenshot
 	~/bin/todofi.sh             submodules/todofi.sh/todofi.sh
 	~/bin/xkeys.zsh             data/bin/xkeys.zsh
+	~/bin/tint_screen.zsh       data/bin/tint_screen.zsh
 )
 
 # create i3 autostart dirs

@@ -44,6 +44,10 @@ mouse_warping none
 # doesn't work with ubuntu
 #focus_wrapping no
 
+
+set $mode_default mode default; exec tint_screen.zsh off;
+set $exec_tint_red exec tint_screen.zsh red;
+
 # start a terminal
 bindsym $mod+Return exec urxvtcd
 
@@ -165,10 +169,10 @@ mode "test" {
 	bindsym 2 exec firefox http://heise.de
 
 	# back to normal: Enter or Escape
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+	bindsym Return $mode_default
+	bindsym Escape $mode_default
 }
-bindsym $mod+c mode "test"
+bindsym $mod+c mode "test"; $exec_tint_red
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -191,11 +195,11 @@ mode "resize" {
 	bindsym Right resize grow width 10 px or 10 ppt
 
 	# back to normal: Enter or Escape
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+	bindsym Return $mode_default
+	bindsym Escape $mode_default
 }
 
-bindsym $mod+r mode "resize"
+bindsym $mod+r mode "resize"; $exec_tint_red
 
 
 
