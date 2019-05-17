@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+[ $# -ne 0 ] && {
+	echo "Please just pipe into this script."
+	echo "eg:"
+	echo "echo Hello World | ${0}"
+	exit 1
+}
+cat | aosd_cat \
+	--font=RobotoMono\ Nerd\ Font\ 32 \
+	-w 0 \
+	--transparency=2 \
+	--y-offset=50 \
+	--padding=10 \
+	--position=0 \
+	--shadow-offset=3 \
+	--fore-color=#dea65f

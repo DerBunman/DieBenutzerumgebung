@@ -134,6 +134,8 @@ links=(
 	~/.zshrc                    data/zshrc
 	~/.zshrc.d                  data/zshrc.d
 	~/bin/autostart/xkeys.zsh   data/bin/xkeys.zsh
+	~/bin/bosd_cat              data/bin/bosd_cat
+	~/bin/compton-invert        data/bin/compton-invert
 	~/bin/dotfiles              dotfiles
 	~/bin/gvim                  data/bin/gvim.zsh
 	~/bin/i3-applet-wrapper     data/bin/i3-applet-wrapper
@@ -147,7 +149,7 @@ links=(
 )
 
 # create i3 autostart dirs
-msg_info "creating the following dirs: ~/.themes ~/.local/share ~/.config ~/.ssh/conf.d"
+msg_info "creating the following dirs: ~/.themes ~/.local/share ~/.config ~/.ssh/conf.d ~/.dotfiles"
 msg_info "creating autostart dirs ~/bin/autostart/[always]"
 msg_info "files in ~/bin/autostart/ will be executed on i3 startup"
 msg_info "files in ~/bin/autostart/always will be executed on i3 startup AND i3 config reload"
@@ -156,13 +158,13 @@ mkdir -p \
 	~/bin/autostart/always \
 	~/.local/share \
 	~/.config \
-	~/.ssh/conf.d
+	~/.ssh/conf.d \
+	~/.dotfiles
 
 # glob modifier:
 # x owner-executable files
 # . plain files
 for file in data/bin/autostart/**/*(x.); do
-	#test -d "${file}" && continue
 	link=${file/#data/~}
 	links+=("${link}" "${file}")
 	unset link
@@ -259,7 +261,7 @@ if [ "${host_type}" != "nonroot_shell" ]; then
 				linux-tools-common curl powerline iotop vim mc detox fdupes \
 				menu pv figlet net-tools apt-file sysfsutils tmux p7zip-full \
 				unp rar unrar grc ctags silversearcher-ag todo-txt todotxt-cli \
-				mycli pgcli tmate asciinema lolcat odt2txt ranger \
+				mycli pgcli tmate asciinema lolcat odt2txt ranger shellcheck \
 			) # todotxt-cli is for ubuntu and todo-txt is for debian
 
 			[ "${host_type}" = "shell_and_x11" ] && APT_PACKAGES=(${APT_PACKAGES} \
@@ -272,7 +274,7 @@ if [ "${host_type}" != "nonroot_shell" ]; then
 				lxappearance rxvt rxvt-unicode-256color pulsemixer \
 				zathura-cb zathura zathura-djvu zathura-pdf-poppler zathura-ps \
 				xbindkeys xbindkeys-config xdotool x11-xserver-utils \
-				slop \
+				slop aosd_cat compton \
 			) # x11-xserver-utils are for xmodmap
 
 
