@@ -143,6 +143,7 @@ links=(
 	~/bin/i3subscribe           data/bin/i3subscribe
 	~/bin/polybar-scripts       data/bin/polybar-scripts
 	~/bin/screenshot            data/bin/screenshot
+	~/bin/serve_via_http.sh     data/bin/serve_via_http.sh
 	~/bin/ssh_send_terminfo.zsh data/bin/ssh_send_terminfo.zsh
 	~/bin/todofi.sh             submodules/todofi.sh/todofi.sh
 	~/bin/xkeys.zsh             data/bin/xkeys.zsh
