@@ -26,6 +26,7 @@ So use at your own risk.
 		* [Shell only (with root)](#shell-only-with-root)
 		* [Shell and x11 (with root)](#shell-and-x11-with-root)
 		* [Update (all modes)](#update-all-modes)
+* [Inspirations and credits](_docs/inspirations_and_credits.md)
 
 # Dependencies
 * Compatible distributions
