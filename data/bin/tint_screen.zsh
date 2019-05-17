@@ -1,4 +1,7 @@
 #!/usr/bin/env zsh
+# inspiration:
+# https://www.reddit.com/r/i3wm/comments/bp02f8/howto_tint_the_whole_screen_red_when_you_enter_a/
+# by /u/tasinet
 
 if [[ "$@" = "red" ]]; then
 	GAMMA=4:2:2
