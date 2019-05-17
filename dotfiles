@@ -138,6 +138,7 @@ links=(
 	~/bin/gvim                  data/bin/gvim.zsh
 	~/bin/i3-applet-wrapper     data/bin/i3-applet-wrapper
 	~/bin/i3-autostart.zsh      data/bin/i3-autostart.zsh
+	~/bin/i3subscribe           data/bin/i3subscribe
 	~/bin/polybar-scripts       data/bin/polybar-scripts
 	~/bin/screenshot            data/bin/screenshot
 	~/bin/todofi.sh             submodules/todofi.sh/todofi.sh
