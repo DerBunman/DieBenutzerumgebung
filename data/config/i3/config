@@ -46,7 +46,7 @@ mouse_warping none
 
 
 set $mode_default mode default; exec tint_screen.zsh off;
-set $exec_tint_red exec tint_screen.zsh red;
+set $exec_tint_blue exec tint_screen.zsh blue;
 
 # start a terminal
 bindsym $mod+Return exec urxvtcd
@@ -164,18 +164,20 @@ bindsym $mod+z [con_mark="^zscratch$"] scratchpad show
 
 
 
-mode "test" {
-	bindsym 1 exec firefox http://reddit.de
-	bindsym 2 exec firefox http://heise.de
-
-	# back to normal: Enter or Escape
-	bindsym Return $mode_default
-	bindsym Escape $mode_default
-}
-bindsym $mod+c mode "test"; $exec_tint_red
+#mode "test" {
+#	bindsym 1 exec firefox http://reddit.de
+#	bindsym 2 exec firefox http://heise.de
+#
+#	# back to normal: Enter or Escape
+#	bindsym Return $mode_default
+#	bindsym Escape $mode_default
+#}
+#bindsym $mod+c mode "test"; $exec_tint_blue
 
 # resize window (you can also use the mouse for that)
-mode "resize" {
+set $mode_resize "resize [ ]"
+bindsym $mod+r mode $mode_resize; $exec_tint_blue; exec bosd_cat "mode: $mode_resize" &
+mode $mode_resize {
 	# These bindings trigger as soon as you enter the resize mode
 
 	# Pressing left will shrink the window’s width.
@@ -199,10 +201,8 @@ mode "resize" {
 	bindsym Escape $mode_default
 }
 
-bindsym $mod+r mode "resize"; $exec_tint_red
-
-set $mode_move_workspace "move workspace [←↑→↓]"
-bindsym $mod+m mode $mode_move_workspace; $exec_tint_red;
+set $mode_move_workspace "move workspace [ ]"
+bindsym $mod+m mode $mode_move_workspace; $exec_tint_blue;; exec bosd_cat "mode: $mode_move_workspace" &
 mode $mode_move_workspace {
 	bindsym Up        $mode_default    move workspace to output up;
 	bindsym Down      $mode_default    move workspace to output down;
