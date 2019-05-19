@@ -71,6 +71,7 @@ This script will check if there are rules defined for the current active WM_CLAS
 	<img src="_docs/images/screenshot1.thumb.png" />
 </a>
 
+
 <a href="_docs/images/screenshot1.png" target="_blank">
 	Firefox, urxvt running zsh
 </a>
@@ -79,6 +80,7 @@ This script will check if there are rules defined for the current active WM_CLAS
 <a href="_docs/images/screenshot2.png" target="_blank">
 	<img src="_docs/images/screenshot2.thumb.png" />
 </a>
+
 
 <a href="_docs/images/screenshot2.png" target="_blank">
 	gVIM (GTK3), urxt running neofetch and pukeskull
@@ -89,21 +91,26 @@ This script will check if there are rules defined for the current active WM_CLAS
 	<img src="_docs/images/screenshot3.thumb.png" />
 </a>
 
+
 <a href="_docs/images/screenshot3.png" target="_blank">
 	GTK2 (Filezilla), GTK3 (oomox, nautilus)
 </a>
+
 
 <a href="_docs/images/screenshot4.png" target="_blank">
 	<img src="_docs/images/screenshot4.thumb.png" />
 </a>
 
+
 <a href="_docs/images/screenshot4.png" target="_blank">
 	gVIM (GTK3), Firefox and some terminals
 </a>
 
+
 <a href="_docs/images/screenshot5.png" target="_blank">
 	<img src="_docs/images/screenshot5.thumb.png" />
 </a>
+
 
 <a href="_docs/images/screenshot5.png" target="_blank">
 	gVIM (GTK3), Firefox, and urxvt running ranger
