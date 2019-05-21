@@ -148,6 +148,7 @@ links=(
 	~/bin/todofi.sh             submodules/todofi.sh/todofi.sh
 	~/bin/xkeys.zsh             data/bin/xkeys.zsh
 	~/bin/tint_screen.zsh       data/bin/tint_screen.zsh
+	~/bin/luakit_adblock_update.zsh data/bin/luakit_adblock_update.zsh
 )
 
 # create i3 autostart dirs
