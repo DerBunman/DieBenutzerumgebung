@@ -265,6 +265,7 @@ if [ "${host_type}" != "nonroot_shell" ]; then
 				menu pv figlet net-tools apt-file sysfsutils tmux p7zip-full \
 				unp rar unrar grc ctags silversearcher-ag todo-txt todotxt-cli \
 				mycli pgcli tmate asciinema lolcat odt2txt ranger shellcheck \
+				pass \
 			) # todotxt-cli is for ubuntu and todo-txt is for debian
 
 			[ "${host_type}" = "shell_and_x11" ] && APT_PACKAGES=(${APT_PACKAGES} \
