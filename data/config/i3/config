@@ -232,6 +232,8 @@ for_window [instance="heat_signature.exe"] floating enable
 for_window [class="usbguard-applet-qt"] floating enable
 for_window [class="Display-im6.q16"] floating enable
 for_window [class="feh"] floating enable
+for_window [class="copyq"] floating enable
+
 
 assign [class="Signal"] 10
 assign [class="Steam"] 3
