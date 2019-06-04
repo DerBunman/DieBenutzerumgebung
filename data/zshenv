@@ -6,7 +6,7 @@ skip_global_compinit=1
 export __GL_SYNC_DISPLAY_DEVICE=DP-4
 export __VDPAU_NVIDIA_SYNC_DISPLAY_DEVICE=DP-4
 
-export PATH="$HOME/bin:$HOME/.local/bin:/usr/lib/ccache:$PATH:/usr/sbin:/sbin"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/usr/lib/ccache:$PATH:/usr/sbin:/sbin"
 
 export BROWSER="firefox"
 
