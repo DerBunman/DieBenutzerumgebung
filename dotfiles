@@ -247,6 +247,12 @@ git pull --recurse-submodules || {
 	exit $?
 }
 
+msg_info "Updating submodules"
+git submodule update --init --recursive || {
+	msg_error "could not update submodules"
+	exit 1
+}
+
 # stuff that needs root
 if [ "${host_type}" != "nonroot_shell" ]; then
 	# set RUN_APT_COMMANDS=false in local config to always skip these commands without asking
