@@ -122,6 +122,9 @@ bindsym $mod+Shift+p focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+# i3 layout manager from https://github.com/klaxalk/i3-layout-manager
+bindsym $mod+Escape exec ~/bin/layout_manager.sh
+
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -184,11 +187,10 @@ mode $mode_resize {
 	# Pressing right will grow the window’s width.
 	# Pressing up will shrink the window’s height.
 	# Pressing down will grow the window’s height.
-	bindsym j resize shrink width 10 px or 10 ppt
-	bindsym k resize grow height 10 px or 10 ppt
-	bindsym l resize shrink height 10 px or 10 ppt
-	bindsym odiaeresis resize grow width 10 px or 10 ppt
-	bindsym semicolon resize grow width 10 px or 10 ppt
+	bindsym h resize shrink width 10 px or 10 ppt
+	bindsym j resize grow height 10 px or 10 ppt
+	bindsym k resize shrink height 10 px or 10 ppt
+	bindsym l resize grow width 10 px or 10 ppt
 
 	# same bindings, but for the arrow keys
 	bindsym Left resize shrink width 10 px or 10 ppt
