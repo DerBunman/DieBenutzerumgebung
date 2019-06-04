@@ -359,7 +359,8 @@ let g:NERDTreeShowHidden      = 1
 " Automaticly open Onlinesystem Bookmark
 autocmd StdinReadPre * let s:std_in=1
 
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" open nerdtree if there are no other buffers
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 if ! has("gui_running")
 	let NERDTreeDirArrows=0
