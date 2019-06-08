@@ -10,22 +10,30 @@ if [ $UID -eq 0 ]; then
 	}
 fi
 
-function bcrypt2_hash() {
-	rounds=${2:-11}
-	htpasswd -bnBC $rounds "" $1
-}
-
 ## supresses these dbus warnings
 # http://computing.help.inf.ed.ac.uk/accessibility-bus
 export NO_AT_BRIDGE=1
 
-# history size and location
+#   _     _     _
+#  | |__ (_)___| |_ ___  _ __ _   _
+#  | '_ \| / __| __/ _ \| '__| | | |
+#  | | | | \__ \ || (_) | |  | |_| |
+#  |_| |_|_|___/\__\___/|_|   \__, |
+#                             |___/
+# size and location
 SAVEHIST=10000
 HISTSIZE=10000
 HISTFILE=~/.zsh_history
 
 # Report command running time if it is more than 3 seconds
 REPORTTIME=3
+
+#            _              _
+#   ___  ___| |_ ___  _ __ | |_ ___
+#  / __|/ _ \ __/ _ \| '_ \| __/ __|
+#  \__ \  __/ || (_) | |_) | |_\__ \
+#  |___/\___|\__\___/| .__/ \__|___/
+#                    |_|
 
 # Do not print the directory stack after pushd or popd. 
 setopt PUSHD_SILENT
@@ -46,6 +54,24 @@ setopt INTERACTIVE_COMMENTS
 # autodir/cd tools
 setopt AUTOCD AUTOPUSHD PUSHDIGNOREDUPS
 
+#               _                                  _      _
+#    __ _ _   _| |_ ___   ___ ___  _ __ ___  _ __ | | ___| |_ ___
+#   / _` | | | | __/ _ \ / __/ _ \| '_ ` _ \| '_ \| |/ _ \ __/ _ \
+#  | (_| | |_| | || (_) | (_| (_) | | | | | | |_) | |  __/ ||  __/
+#   \__,_|\__,_|\__\___/ \___\___/|_| |_| |_| .__/|_|\___|\__\___|
+#                                           |_|
+zstyle ':completion:*' menu select
+# Enable autocompletion
+zstyle ':completion:*' completer _complete _correct _approximate
+
+
+#             _
+#   _____ __ | |_   _  __ _
+#  |_  / '_ \| | | | |/ _` |
+#   / /| |_) | | |_| | (_| |
+#  /___| .__/|_|\__,_|\__, |
+#      |_|            |___/
+
 # Check if zplug is installed
 if [[ ! -d ~/.zplug ]]; then
 	git clone https://github.com/zplug/zplug ~/.zplug
@@ -53,11 +79,6 @@ if [[ ! -d ~/.zplug ]]; then
 fi
 
 fpath=(~/.zsh_autocomplete $fpath)
-
-zstyle ':completion:*' menu select
-
-# Enable autocompletion
-zstyle ':completion:*' completer _complete _correct _approximate
 
 source ~/.zplug/init.zsh
 
@@ -122,13 +143,22 @@ fi
 
 zplug load #--verbose
 
-setupsolarized dircolors.ansi-universal
-source ~/.zplug/repos/joel-porquet/zsh-dircolors-solarized/zsh-dircolors-solarized.zsh
-
+#               _        _                 _           _                   _
+#    __ _ _   _| |_ ___ | | ___   __ _  __| |  _______| |__  _ __ ___   __| |
+#   / _` | | | | __/ _ \| |/ _ \ / _` |/ _` | |_  / __| '_ \| '__/ __| / _` |
+#  | (_| | |_| | || (_) | | (_) | (_| | (_| |  / /\__ \ | | | | | (__ | (_| |
+#   \__,_|\__,_|\__\___/|_|\___/ \__,_|\__,_| /___|___/_| |_|_|  \___(_)__,_|
+#  
 [[ -d ~/.zshrc.d ]] && for file in ~/.zshrc.d/*zsh; do
 	source "${file}"
 done
 
+#    __ _____ __
+#   / _|__  // _|
+#  | |_  / /| |_
+#  |  _|/ /_|  _|
+#  |_| /____|_|
+#
 # Check if fzf is installed
 if [[ ! -d ~/.fzf ]]; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -136,11 +166,21 @@ if [[ ! -d ~/.fzf ]]; then
 fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# autocomlete menu
+#               _        _                 _
+#    __ _ _   _| |_ ___ | | ___   __ _  __| |
+#   / _` | | | | __/ _ \| |/ _ \ / _` |/ _` |
+#  | (_| | |_| | || (_) | | (_) | (_| | (_| |
+#   \__,_|\__,_|\__\___/|_|\___/ \__,_|\__,_|
+#
 autoload -U colors vcs_info
 colors
-#compinit -i -u -C -d ~/.zplug/zcompdump
 
+#   _                   _        __  _
+#  (_)_ __  _ __  _   _| |_     / / | | _____ _   _ ___
+#  | | '_ \| '_ \| | | | __|   / /  | |/ / _ \ | | / __|
+#  | | | | | |_) | |_| | |_   / /   |   <  __/ |_| \__ \
+#  |_|_| |_| .__/ \__,_|\__| /_/    |_|\_\___|\__, |___/
+#          |_|                                |___/
 
 # these are for backward-kill-word
 backward-kill-dir () {
