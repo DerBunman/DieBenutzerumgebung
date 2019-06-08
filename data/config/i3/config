@@ -1,5 +1,16 @@
+#                       _ _  __ _
+#   _ __ ___   ___   __| (_)/ _(_) ___ _ __
+#  | '_ ` _ \ / _ \ / _` | | |_| |/ _ \ '__|
+#  | | | | | | (_) | (_| | |  _| |  __/ |
+#  |_| |_| |_|\___/ \__,_|_|_| |_|\___|_|
+#
 set $mod Mod4
 
+#    __ _ _ __  _ __   ___ _ __ __ _ _ __   ___ ___
+#   / _` | '_ \| '_ \ / _ \ '__/ _` | '_ \ / __/ _ \
+#  | (_| | |_) | |_) |  __/ | | (_| | | | | (_|  __/
+#   \__,_| .__/| .__/ \___|_|  \__,_|_| |_|\___\___|
+#        |_|   |_|
 set_from_resource $red1     color1  #000000
 set_from_resource $red2     color9  #000000
 set_from_resource $green1   color2  #000000
@@ -31,13 +42,31 @@ client.focused_inactive $black2      $black2     $white1 $bordercolor $black2
 
 client.background       #ffffff
 
-
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
+# Font for window titles.
 font pango:Roboto 8
+
+# 2px border for all windows
+for_window [class="^.*"] border pixel 2
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
+
+#   _ _____   _          _                 _
+#  (_)___ /  | |__   ___| |__   __ ___   _(_) ___  _   _ _ __
+#  | | |_ \  | '_ \ / _ \ '_ \ / _` \ \ / / |/ _ \| | | | '__|
+#  | |___) | | |_) |  __/ | | | (_| |\ V /| | (_) | |_| | |
+#  |_|____/  |_.__/ \___|_| |_|\__,_| \_/ |_|\___/ \__,_|_|
+#
+set $mode_default mode default; exec tint_screen.zsh off;
+set $exec_tint_blue exec tint_screen.zsh blue;
+
+focus_follows_mouse no
+workspace_auto_back_and_forth yes
+
+hide_edge_borders smart
+
+# don't autofocus popups
+no_focus [window_role="pop-up"]
 
 mouse_warping none
 
@@ -45,8 +74,12 @@ mouse_warping none
 #focus_wrapping no
 
 
-set $mode_default mode default; exec tint_screen.zsh off;
-set $exec_tint_blue exec tint_screen.zsh blue;
+#                       __   _
+#   _ __ _   _ _ __    / /__| |_ ___  _ __     __ _ _ __  _ __  ___
+#  | '__| | | | '_ \  / / __| __/ _ \| '_ \   / _` | '_ \| '_ \/ __|
+#  | |  | |_| | | | |/ /\__ \ || (_) | |_) | | (_| | |_) | |_) \__ \
+#  |_|   \__,_|_| |_/_/ |___/\__\___/| .__/   \__,_| .__/| .__/|___/
+#                                    |_|           |_|   |_|
 
 # start a terminal
 bindsym $mod+Return exec urxvtcd
@@ -58,11 +91,16 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+d exec "rofi -combi-modi drun,run -show combi -modi combi"
 bindsym $mod+d exec "rofi -show run"
 
-
 bindsym $mod+x exec xscreensaver-command -lock
 
 bindsym $mod+t exec todofi.sh -c ${HOME}/.todo/todofish.conf
 
+#                      _ _         _
+#   _ __ ___   ___  __| (_) __ _  | | _____ _   _ ___
+#  | '_ ` _ \ / _ \/ _` | |/ _` | | |/ / _ \ | | / __|
+#  | | | | | |  __/ (_| | | (_| | |   <  __/ |_| \__ \
+#  |_| |_| |_|\___|\__,_|_|\__,_| |_|\_\___|\__, |___/
+#                                           |___/
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
@@ -72,6 +110,18 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20
 
+#        _                                       _           _
+#    ___| |__   __ _ _ __   __ _  ___  __      _(_)_ __   __| | _____      __
+#   / __| '_ \ / _` | '_ \ / _` |/ _ \ \ \ /\ / / | '_ \ / _` |/ _ \ \ /\ / /
+#  | (__| | | | (_| | | | | (_| |  __/  \ V  V /| | | | | (_| | (_) \ V  V /
+#   \___|_| |_|\__,_|_| |_|\__, |\___|   \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/
+#                          |___/
+#    __
+#   / _| ___   ___ _   _ ___
+#  | |_ / _ \ / __| | | / __|
+#  |  _| (_) | (__| |_| \__ \
+#  |_|  \___/ \___|\__,_|___/
+#
 # change focused window
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -84,6 +134,15 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+#                                       _           _
+#   _ __ ___   _____   _____  __      _(_)_ __   __| | _____      __
+#  | '_ ` _ \ / _ \ \ / / _ \ \ \ /\ / / | '_ \ / _` |/ _ \ \ /\ / /
+#  | | | | | | (_) \ V /  __/  \ V  V /| | | | | (_| | (_) \ V  V /
+#  |_| |_| |_|\___/ \_/ \___|   \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/
+#
 # move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
@@ -95,6 +154,14 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+
+#   _                         _
+#  | | __ _ _   _  ___  _   _| |_
+#  | |/ _` | | | |/ _ \| | | | __|
+#  | | (_| | |_| | (_) | |_| | |_
+#  |_|\__,_|\__, |\___/ \__,_|\__|
+#           |___/
 
 # split in horizontal orientation
 bindsym $mod+p split h
@@ -113,9 +180,6 @@ bindsym $mod+e layout toggle split
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
 # focus the parent container
 bindsym $mod+Shift+p focus parent
 
@@ -125,6 +189,12 @@ bindsym $mod+Shift+p focus parent
 # i3 layout manager from https://github.com/klaxalk/i3-layout-manager
 bindsym $mod+Escape exec ~/bin/layout_manager.sh
 
+#                      _
+#  __      _____  _ __| | _____ _ __   __ _  ___ ___  ___
+#  \ \ /\ / / _ \| '__| |/ / __| '_ \ / _` |/ __/ _ \/ __|
+#   \ V  V / (_) | |  |   <\__ \ |_) | (_| | (_|  __/\__ \
+#    \_/\_/ \___/|_|  |_|\_\___/ .__/ \__,_|\___\___||___/
+#                              |_|
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -149,6 +219,12 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+#                                            _ _____
+#   _ __ ___   __ _ _ __   __ _  __ _  ___  (_)___ /
+#  | '_ ` _ \ / _` | '_ \ / _` |/ _` |/ _ \ | | |_ \
+#  | | | | | | (_| | | | | (_| | (_| |  __/ | |___) |
+#  |_| |_| |_|\__,_|_| |_|\__,_|\__, |\___| |_|____/
+#                               |___/
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -156,6 +232,13 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
+
+#                      _       _                     _
+#   ___  ___ _ __ __ _| |_ ___| |__  _ __   __ _  __| |___
+#  / __|/ __| '__/ _` | __/ __| '_ \| '_ \ / _` |/ _` / __|
+#  \__ \ (__| | | (_| | || (__| | | | |_) | (_| | (_| \__ \
+#  |___/\___|_|  \__,_|\__\___|_| |_| .__/ \__,_|\__,_|___/
+#                                   |_|
 bindsym $mod+Shift+G mark"mainscratch", move scratchpad
 bindsym $mod+g [con_mark="^mainscratch$"] scratchpad show
 bindsym $mod+q [con_mark="^mainscratch$"] scratchpad show
@@ -177,7 +260,12 @@ bindsym $mod+z [con_mark="^zscratch$"] scratchpad show
 #}
 #bindsym $mod+c mode "test"; $exec_tint_blue
 
-# resize window (you can also use the mouse for that)
+#                 _                    _           _
+#   _ __ ___  ___(_)_______  __      _(_)_ __   __| | _____      __
+#  | '__/ _ \/ __| |_  / _ \ \ \ /\ / / | '_ \ / _` |/ _ \ \ /\ / /
+#  | | |  __/\__ \ |/ /  __/  \ V  V /| | | | | (_| | (_) \ V  V /
+#  |_|  \___||___/_/___\___|   \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/
+#
 set $mode_resize "resize [ ]"
 bindsym $mod+r mode $mode_resize; $exec_tint_blue; exec bosd_cat "mode: $mode_resize" &
 mode $mode_resize {
@@ -188,42 +276,61 @@ mode $mode_resize {
 	# Pressing up will shrink the window’s height.
 	# Pressing down will grow the window’s height.
 	bindsym h resize shrink width 10 px or 10 ppt
-	bindsym j resize grow height 10 px or 10 ppt
+	bindsym j resize grow   height 10 px or 10 ppt
 	bindsym k resize shrink height 10 px or 10 ppt
-	bindsym l resize grow width 10 px or 10 ppt
+	bindsym l resize grow   width 10 px or 10 ppt
 
 	# same bindings, but for the arrow keys
-	bindsym Left resize shrink width 10 px or 10 ppt
-	bindsym Down resize grow height 10 px or 10 ppt
-	bindsym Up resize shrink height 10 px or 10 ppt
-	bindsym Right resize grow width 10 px or 10 ppt
+	bindsym Left  resize shrink width 10 px or 10 ppt
+	bindsym Down  resize grow   height 10 px or 10 ppt
+	bindsym Up    resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow   width 10 px or 10 ppt
 
 	# back to normal: Enter or Escape
 	bindsym Return $mode_default
 	bindsym Escape $mode_default
 }
 
+#   _ __ ___   _____   _____
+#  | '_ ` _ \ / _ \ \ / / _ \
+#  | | | | | | (_) \ V /  __/
+#  |_| |_| |_|\___/ \_/ \___|
+#                      _
+#  __      _____  _ __| | _____ _ __   __ _  ___ ___
+#  \ \ /\ / / _ \| '__| |/ / __| '_ \ / _` |/ __/ _ \
+#   \ V  V / (_) | |  |   <\__ \ |_) | (_| | (_|  __/
+#    \_/\_/ \___/|_|  |_|\_\___/ .__/ \__,_|\___\___|
+#                              |_|
 set $mode_move_workspace "move workspace [ ]"
 bindsym $mod+m mode $mode_move_workspace; $exec_tint_blue;; exec bosd_cat "mode: $mode_move_workspace" &
 mode $mode_move_workspace {
-	bindsym Up        $mode_default    move workspace to output up;
-	bindsym Down      $mode_default    move workspace to output down;
 	bindsym Left      $mode_default    move workspace to output left;
+	bindsym Down      $mode_default    move workspace to output down;
+	bindsym Up        $mode_default    move workspace to output up;
 	bindsym Right     $mode_default    move workspace to output right;
+
+	bindsym h         $mode_default    move workspace to output left;
+	bindsym j         $mode_default    move workspace to output down;
+	bindsym k         $mode_default    move workspace to output up;
+	bindsym l         $mode_default    move workspace to output right;
 
 	bindsym Return    $mode_default
 	bindsym Escape    $mode_default
 }
 
 
-focus_follows_mouse no
-workspace_auto_back_and_forth yes
-
-for_window [class="^.*"] border pixel 2
-hide_edge_borders smart
-
-no_focus [window_role="pop-up"]
-
+#                     _ _           _   _
+#    __ _ _ __  _ __ | (_) ___ __ _| |_(_) ___  _ __
+#   / _` | '_ \| '_ \| | |/ __/ _` | __| |/ _ \| '_ \
+#  | (_| | |_) | |_) | | | (_| (_| | |_| | (_) | | | |
+#   \__,_| .__/| .__/|_|_|\___\__,_|\__|_|\___/|_| |_|
+#        |_|   |_|
+#                       _  __ _                   _
+#   ___ _ __   ___  ___(_)/ _(_) ___   _ __ _   _| | ___  ___
+#  / __| '_ \ / _ \/ __| | |_| |/ __| | '__| | | | |/ _ \/ __|
+#  \__ \ |_) |  __/ (__| |  _| | (__  | |  | |_| | |  __/\__ \
+#  |___/ .__/ \___|\___|_|_| |_|\___| |_|   \__,_|_|\___||___/
+#      |_|
 #for_window [class="Firefox"] border pixel 2
 #for_window [class="Chromium-browser"] border pixel 2
 for_window [class="VirtualBox Machine"] floating enable
@@ -236,25 +343,33 @@ for_window [class="Display-im6.q16"] floating enable
 for_window [class="feh"] floating enable
 for_window [class="copyq"] floating enable
 
-
+#                 _
+#    __ _ ___ ___(_) __ _ _ __
+#   / _` / __/ __| |/ _` | '_ \
+#  | (_| \__ \__ \ | (_| | | | |
+#   \__,_|___/___/_|\__, |_| |_|
+#                   |___/
+#                      _
+#  __      _____  _ __| | _____ _ __   __ _  ___ ___  ___
+#  \ \ /\ / / _ \| '__| |/ / __| '_ \ / _` |/ __/ _ \/ __|
+#   \ V  V / (_) | |  |   <\__ \ |_) | (_| | (_|  __/\__ \
+#    \_/\_/ \___/|_|  |_|\_\___/ .__/ \__,_|\___\___||___/
+#                              |_|
+assign [class="scratchpad_gvim"] 9
 assign [class="Signal"] 10
 assign [class="Steam"] 3
 assign [class="Rhythmbox"] 2
 
-exec pidgin &
 
+#               _            _             _
+#    __ _ _   _| |_ ___  ___| |_ __ _ _ __| |_
+#   / _` | | | | __/ _ \/ __| __/ _` | '__| __|
+#  | (_| | |_| | || (_) \__ \ || (_| | |  | |_
+#   \__,_|\__,_|\__\___/|___/\__\__,_|_|   \__|
 exec --no-startup-id xscreensaver -nosplash &
-exec --no-startup-id ~/bin/144.sh &
-#exec --no-startup-id /usr/bin/feh --randomize --bg-fill ~/.repos/dotfiles/data/wallpapers/solarized
-
 exec --no-startup-id xset m 0 0 &
-
-exec --no-startup-id xrdb ~/.Xresources
-
-
+exec_always --no-startup-id /usr/lib/gnome-settings-daemon &
+exec_always --no-startup-id ~/bin/polybar-scripts/polybar_wrapper.sh &
 
 exec --no-startup-id ~/bin/i3-autostart.zsh ~/bin/autostart &
-
 exec_always --no-startup-id ~/bin/i3-autostart.zsh ~/bin/autostart/always &
-exec_always --no-startup-id /usr/lib/gnome-settings-daemon &
-exec_always --no-startup-id ~/bin/polybar-scripts/polybar_wrapper.sh

@@ -1,3 +1,4 @@
 #!/usr/bin/env zsh
-gvim "$@"
-i3-msg '[instance=gvim] mark vimscratch, move scratchpad'
+gvim --class scratchpad_gvim "$@"
+sleep 1
+i3-msg '[class=scratchpad_gvim] mark mainscratch, move scratchpad'
