@@ -1,0 +1,38 @@
+#!/usr/bin/env zsh
+
+STORAGE="$HOME/.config/dotfiles"
+test -d "$STORAGE" || mkdir -p "$STORAGE"
+
+help=$({
+	echo "Syntax:"
+	echo " $0 command some/key"
+	echo "Examples:"
+	echo " add a key:"
+	echo "  echo de_DE | $0 put system/keymap"
+	echo " fetch a key:"
+	echo "  $0 get system/keymap"
+})
+
+if [ "$1" = "get" ]; then
+	if [ "$2" = "" ]; then
+		echo "Error: provide key name"
+		echo $help
+		exit 1
+	fi
+	test -f "$STORAGE/$2" || exit 1
+	cat "$STORAGE/$2"
+	exit
+
+elif [ "$1" = "put" ]; then
+	if [ "$2" = "" ]; then
+		echo "Error: provide key name"
+		echo $help
+		exit 1
+	fi
+	mkdir -p "$STORAGE/${2:h}"
+	cat - > "$STORAGE/$2" || exit 1
+	exit
+
+else
+	echo $help
+fi

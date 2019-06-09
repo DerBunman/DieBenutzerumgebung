@@ -113,6 +113,7 @@ links=(
 	~/.config/polybar               data/config/polybar
 	~/.config/ranger                data/config/ranger
 	~/.config/tridactyl             data/config/tridactyl
+	~/.dialogrc                     data/dialogrc
 	~/.gtkrc-2.0                    data/gtkrc-2.0
 	~/.i3                           data/config/i3
 	~/.icons                        data/icons
@@ -134,6 +135,7 @@ links=(
 	~/.zshenv                       data/zshenv
 	~/.zshrc                        data/zshrc
 	~/.zshrc.d                      data/zshrc.d
+	~/bin/dotfiles_config           data/bin/dotfiles_config
 	~/bin/autostart/xkeys.zsh       data/bin/xkeys.zsh
 	~/bin/bosd_cat                  data/bin/bosd_cat
 	~/bin/compton-invert            data/bin/compton-invert
@@ -262,13 +264,8 @@ if [ "${host_type}" != "nonroot_shell" ]; then
 			print "\r"
 		fi
 		if [ "${RUN_APT_COMMANDS}" = true ]; then
-			# install fingerprint tools and bluetooth on schleppi
-			[ "$(hostname -s)" = "schleppi" ] \
-				&& APT_PACKAGES=(${APT_PACKAGES} \
-					libpam-fprintd fprint-demo bluez \
-					obex-data-server blueman)
 
-			APT_PACKAGES=(${APT_PACKAGES} pwgen jq traceroute \
+			APT_PACKAGES=(${APT_PACKAGES} pwgen jq traceroute dialog \
 				linux-tools-common curl powerline iotop vim mc detox fdupes \
 				menu pv figlet net-tools apt-file sysfsutils tmux p7zip-full \
 				unp rar unrar grc ctags silversearcher-ag mycli tmate asciinema \
