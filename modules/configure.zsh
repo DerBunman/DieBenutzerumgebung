@@ -9,7 +9,7 @@
 #                |_|                                                  |_|
 MKTEMP_BIN="$(which mktemp)"
 tempfiles="$(mktemp)"
-function mktemp(){
+function mktemp() {
 	local filename="$($MKTEMP_BIN "${@}")"
 	echo "$filename" >> "$tempfiles"
 	echo "$filename"
@@ -42,8 +42,8 @@ mainmenu_items=(
 	"host_flags" "Host specific configs. Eg has root/has x11"
 	"features"   "Enable/disable features."
 	"behavior"   "Change dotfiles manager behavior."
-	"input"      "Configure input devices (keyboard)."
-	"i18n"       "Language and locale options."
+	"input"      "Configure input devices. (keyboard)"
+	"desktop"    "i3 and X application specific configuration."
 )
 
 # host flags
@@ -207,8 +207,8 @@ function dialog_input() {
 			conf get setxkbmap/old/${keys[$i]} | conf put setxkbmap/${keys[$i]}
 		done
 
+		# generate error message
 		local tmp_text=$(mktemp)
-
 		cat <<-EOF > $tmp_text
 		A error occured while trying to apply your new configuration.
 		The new configuration has NOT BEEN SAVED!
