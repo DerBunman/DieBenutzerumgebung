@@ -13,10 +13,18 @@
 #   \__,_|\___|_|  \__,_|\__,_|_|\__|   \_/ \__,_|_|\__,_|\___||___/
 typeset -a mainmenu_items
 mainmenu_items=(
-	"features" "Enable/Disable features."
-	"behavior" "Change dotfiles manager behavior."
-	"input"    "Configure input devices (keyboard)."
-	"i18n"     "Language and locale options."
+	"host_flags" "Host specific configs. Eg has root/has x11"
+	"features"   "Enable/Disable features."
+	"behavior"   "Change dotfiles manager behavior."
+	"input"      "Configure input devices (keyboard)."
+	"i18n"       "Language and locale options."
+)
+
+# host flags
+typeset -A host_flags
+host_flags=(
+	"has_root" "User is able to run root cmds via sudo."
+	"has_x11"  "Install X11 specific tools too."
 )
 
 # toggleable features
@@ -31,7 +39,8 @@ features=(
 # toggleable behaviors
 typeset -A behaviors
 behaviors=(
-	"apt-ask" "Disable to assume yes on all apt commands."
+	"apt-ask"      "Disable to assume yes on all apt commands."
+	"i3-autostart" "Run scripts in ~/bin/autostart/ on i3 startup"
 )
 
 # default keyboard configuration
@@ -157,6 +166,53 @@ function dialog_input() {
 
 	# TODO: validate config before saving
 }
+
+#   _               _        __ _
+#  | |__   ___  ___| |_     / _| | __ _  __ _ ___
+#  | '_ \ / _ \/ __| __|   | |_| |/ _` |/ _` / __|
+#  | | | | (_) \__ \ |_    |  _| | (_| | (_| \__ \
+#  |_| |_|\___/|___/\__|___|_| |_|\__,_|\__, |___/
+#                     |_____|           |___/
+function dialog_host_flags() {
+	local tmp=$(mktemp)
+	local active_elements=( $(conf get dotfiles/host_flags_enabled) )
+
+	local text
+	read -r -d '' text <<-'EOF'
+	This menu allows you to toggle some host_flags of DieBenutzerumgebung.
+	EOF
+
+	local list=()
+	for host_flag description in ${(kv)host_flags}; do
+		state=off
+		if (($active_elements[(Ie)$host_flag])); then
+			state=on
+		fi
+		
+		# auto enable host_flags that weren't known yet
+		conf get "dotfiles/host_flags_known/$host_flag" || {
+			state=on
+			echo $host_flag | conf put "dotfiles/host_flags_known/$host_flag"
+			active_elements+=( $host_flag )
+			echo "$active_elements" | conf put dotfiles/host_flags_enabled
+		}
+		list+=( "$host_flag" "$description" "$state" )
+	done
+
+	$DIALOG_BIN \
+		--backtitle "$backtitle" \
+		--title     "Toggle host_flags" \
+		--checklist "$text" \
+			${dialog_sizes[height]} ${dialog_sizes[width]} ${dialog_sizes[rows]} \
+			"${list[@]}" 2> $tmp
+
+	local retval=$?
+
+	[ $retval -eq 0 ] \
+		&& cat "$tmp" \
+		| conf put dotfiles/host_flags_enabled
+}
+
 
 #    __            _
 #   / _| ___  __ _| |_ _   _ _ __ ___  ___
