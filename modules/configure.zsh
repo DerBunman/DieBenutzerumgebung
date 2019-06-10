@@ -1,6 +1,32 @@
 #!/usr/bin/env zsh
 . ${0:h}/../lib/config.zsh
 
+#   _                      __ _ _             _
+#  | |_ _ __ ___  _ __    / _(_) | ___    ___| | ___  __ _ _ __  _   _ _ __
+#  | __| '_ ` _ \| '_ \  | |_| | |/ _ \  / __| |/ _ \/ _` | '_ \| | | | '_ \
+#  | |_| | | | | | |_) | |  _| | |  __/ | (__| |  __/ (_| | | | | |_| | |_) |
+#   \__|_| |_| |_| .__/  |_| |_|_|\___|  \___|_|\___|\__,_|_| |_|\__,_| .__/
+#                |_|                                                  |_|
+MKTEMP_BIN="$(which mktemp)"
+tempfiles="$(mktemp)"
+function mktemp(){
+	local filename="$($MKTEMP_BIN "${@}")"
+	echo "$filename" >> "$tempfiles"
+	echo "$filename"
+}
+function on_exit() {
+	test -f "$tempfiles" && {
+		#echo "starting on_exit cleanup"
+		while read file; do
+			#echo removing $file
+			test -f "$file" && rm -f "$file"
+		done < "$tempfiles"
+		#echo "removing $tempfiles (tempfile list)"
+		test -f "$tempfiles" && rm -f "$tempfiles"
+	}
+}
+trap on_exit EXIT INT TERM
+
 #                                                    _
 #   _ __ ___   ___ _ __  _   _ ___    __ _ _ __   __| |
 #  | '_ ` _ \ / _ \ '_ \| | | / __|  / _` | '_ \ / _` |
@@ -14,7 +40,7 @@
 typeset -a mainmenu_items
 mainmenu_items=(
 	"host_flags" "Host specific configs. Eg has root/has x11"
-	"features"   "Enable/Disable features."
+	"features"   "Enable/disable features."
 	"behavior"   "Change dotfiles manager behavior."
 	"input"      "Configure input devices (keyboard)."
 	"i18n"       "Language and locale options."
@@ -23,8 +49,8 @@ mainmenu_items=(
 # host flags
 typeset -A host_flags
 host_flags=(
-	"has_root" "User is able to run root cmds via sudo."
-	"has_x11"  "Install X11 specific tools too."
+	"has_root"     "User is able to run root cmds via sudo."
+	"has_x11"      "Install X11 specific tools too."
 )
 
 # toggleable features
@@ -41,6 +67,7 @@ typeset -A behaviors
 behaviors=(
 	"apt-ask"      "Disable to assume yes on all apt commands."
 	"i3-autostart" "Run scripts in ~/bin/autostart/ on i3 startup"
+	"xkeys.zsh"    "Run the xkeys.zsh keymapper/keyboard layout daemon."
 )
 
 # default keyboard configuration
@@ -98,8 +125,8 @@ function dialog_mainmenu() {
 	local retval=$?
 
 	[ $retval -ne 0 ] && {
-		reset
 		echo "received non-zero exit code. aborting ..."
+		on_exit
 		exit
 	}
 
@@ -160,11 +187,50 @@ function dialog_input() {
 	)
 	local i=1
 	while read row; do
+		# backup old config
+		conf get setxkbmap/${keys[$i]} | conf put setxkbmap/old/${keys[$i]}
+		# store new config
 		echo "$row" | conf put setxkbmap/${keys[$i]}
 		i=$((i + 1))
 	done < "$tmp"
 
-	# TODO: validate config before saving
+	local tmp_setxkbmap=$(mktemp)
+	"$HOME/bin/autostart/always/setxkbmap.zsh" 1>$tmp_setxkbmap 2>&1 || {
+		#  _                     _ _
+		# | |__   __ _ _ __   __| | | ___    ___ _ __ _ __ ___  _ __
+		# | '_ \ / _` | '_ \ / _` | |/ _ \  / _ \ '__| '__/ _ \| '__|
+		# | | | | (_| | | | | (_| | |  __/ |  __/ |  | | | (_) | |
+		# |_| |_|\__,_|_| |_|\__,_|_|\___|  \___|_|  |_|  \___/|_|
+		#
+		# revert to old config
+		for i in {1..4}; do
+			conf get setxkbmap/old/${keys[$i]} | conf put setxkbmap/${keys[$i]}
+		done
+
+		local tmp_text=$(mktemp)
+
+		cat <<-EOF > $tmp_text
+		A error occured while trying to apply your new configuration.
+		The new configuration has NOT BEEN SAVED!
+
+		The script "$HOME/bin/autostart/always/setxkbmap.zsh" quit
+		with the following error message:
+
+		EOF
+		# append script output
+		cat $tmp_setxkbmap >> $tmp_text
+		# remove tabs
+		sed -i 's/^\s*//' $tmp_text
+		# max line length
+		local tmp_text_final=$(mktemp)
+		fold -s -w70 $tmp_text > $tmp_text_final
+
+		$DIALOG_BIN \
+			--clear \
+			--title "ERROR" "$@"\
+			--textbox "$tmp_text_final" \
+			${dialog_sizes[height]} ${dialog_sizes[width]}
+	}
 }
 
 #   _               _        __ _
