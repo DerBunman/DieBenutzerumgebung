@@ -14,6 +14,19 @@ for file in lib/*.zsh; do
 	. "$file"
 done
 
+# update || init
+action=${1:-unset}
+# shell || shell_and_x11 || nonroot_shell
+host_type=${2:-unset}
+
+# wrapper for modules like the config store and the
+# configure dialog
+[ -f "${script_path:h}/modules/${action}.zsh" ] && {
+	shift
+	"${script_path:h}/modules/${action}.zsh" "$@"
+	exit
+}
+
 #display logo
 print -P "%B%F{cyan}"
  cat << "EOF"
@@ -31,11 +44,6 @@ local_config="${script_path:h}/local/dotfiles.config.zsh"
 msg_info "importing local config ${local_config}"
 [ ! -f "${local_config}" ] && touch "${local_config}"
 source "${local_config}"
-
-# update || init
-action=${1:-unset}
-# shell || shell_and_x11 || nonroot_shell
-host_type=${2:-unset}
 
 # validate update parameter
 [ "${action}" = "update" ] \
