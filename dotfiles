@@ -273,24 +273,24 @@ if [ "${host_type}" != "nonroot_shell" ]; then
 		fi
 		if [ "${RUN_APT_COMMANDS}" = true ]; then
 
-			APT_PACKAGES=(${APT_PACKAGES} pwgen jq traceroute dialog \
-				linux-tools-common curl powerline iotop vim mc detox fdupes \
-				menu pv figlet net-tools apt-file sysfsutils tmux p7zip-full \
-				unp rar unrar grc ctags silversearcher-ag mycli tmate asciinema \
-				lolcat odt2txt ranger shellcheck pass \
+			APT_PACKAGES=(${APT_PACKAGES} pwgen jq traceroute dialog
+				linux-tools-common curl powerline iotop vim mc detox fdupes
+				menu pv figlet net-tools apt-file sysfsutils tmux p7zip-full
+				unp rar unrar grc ctags silversearcher-ag mycli tmate asciinema
+				lolcat odt2txt ranger shellcheck pass
 			)
 
-			[ "${host_type}" = "shell_and_x11" ] && APT_PACKAGES=(${APT_PACKAGES} \
-				mate-polkit-bin vim-gtk3 pavucontrol rofi i3 \
-				arandr indicator-cpufreq fonts-roboto fonts-roboto-hinted \
-				xscreensaver-screensaver-webcollage xscreensaver \
-				xscreensaver-screensaver-bsod xscreensaver-gl-extra \
-				xscreensaver-gl xscreensaver-data-extra udiskie \
-				xscreensaver-screensaver-bsod feh dconf-cli xclip \
-				lxappearance rxvt rxvt-unicode-256color pulsemixer \
-				zathura-cb zathura zathura-djvu zathura-pdf-poppler zathura-ps \
-				xbindkeys xbindkeys-config xdotool x11-xserver-utils \
-				slop aosd_cat compton copyq copyq-plugins libnotify-bin \
+			[ "${host_type}" = "shell_and_x11" ] && APT_PACKAGES=(${APT_PACKAGES}
+				mate-polkit-bin vim-gtk3 pavucontrol rofi i3
+				arandr indicator-cpufreq fonts-roboto fonts-roboto-hinted
+				xscreensaver-screensaver-webcollage xscreensaver
+				xscreensaver-screensaver-bsod xscreensaver-gl-extra
+				xscreensaver-gl xscreensaver-data-extra udiskie
+				xscreensaver-screensaver-bsod feh dconf-cli xclip
+				lxappearance rxvt rxvt-unicode-256color pulsemixer
+				zathura-cb zathura zathura-djvu zathura-pdf-poppler zathura-ps
+				xbindkeys xbindkeys-config xdotool x11-xserver-utils
+				slop aosd_cat compton copyq copyq-plugins libnotify-bin
 			) # x11-xserver-utils are for xmodmap
 
 			sudo apt-get update
