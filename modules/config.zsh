@@ -5,12 +5,12 @@ test -d "$STORAGE" || mkdir -p "$STORAGE"
 
 help=$({
 	echo "Syntax:"
-	echo " $0 command some/key"
+	echo " dotfiles config command some/key"
 	echo "Examples:"
-	echo " add a key:"
-	echo "  echo de_DE | $0 put system/keymap"
-	echo " fetch a key:"
-	echo "  $0 get system/keymap"
+	echo " put a key:"
+	echo "  echo de_DE | dotfiles config put system/keymap"
+	echo " get a key:"
+	echo "  dotfiles config get system/keymap"
 })
 
 if [ "$1" = "get" ]; then
