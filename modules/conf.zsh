@@ -1,59 +1,57 @@
 #!/usr/bin/env zsh
 
-STORAGE="$HOME/.config/dotfiles"
-test -d "$STORAGE" || mkdir -p "$STORAGE"
+storage_path="$HOME/.config/dotfiles"
+test -d "$storage_path" || mkdir -p "$storage_path"
 
 help=$({
-	echo "Syntax:"
-	echo " dotfiles config command some/key"
-	echo "Examples:"
-	echo " put a key:"
-	echo "  echo de_DE | dotfiles config put system/keymap"
-	echo " get a key:"
-	echo "  dotfiles config get system/keymap"
-	echo " edit a key in \$EDITOR (will create if non existant):"
-	echo "  dotfiles config edit system/keymap"
+	cat <<-'EOF'
+	Syntax:
+	  conf command some/key
+	
+	  the key has to be a valid path without leading slash
+
+	Examples:
+	  put a key:
+	    echo de_DE | dotfiles config put system/keymap
+	  get a key:
+	    conf get system/keymap
+	  edit a key in $EDITOR (will create if non existant):
+	    conf edit system/keymap
+	EOF
+
 })
 
-if [ "$1" = "get" ]; then
-	if [ "$2" = "" ]; then
-		echo "Error: provide key name"
-		echo $help
-		exit 1
-	fi
-	test -f "$STORAGE/$2" || exit 1
-	cat "$STORAGE/$2"
-	exit
+if [ "$2" = "" ]; then
+	echo "Error: provide key name"
+	echo $help
+	exit 1
 fi
 
-[ -d "$STORAGE/$2" ] && {
-	echo "Error: $STORAGE/$2 exists but is a directory."
+key_path="$storage_path/$2"
+
+[ -d "$key_path" ] && {
+	echo "Error: $key_path exists but is a directory."
 	exit 1
 }
 
-if [ "$1" = "edit" ]; then
-	if [ "$2" = "" ]; then
-		echo "Error: provide key name"
-		echo $help
-		exit 1
-	fi
-	mkdir -p "$STORAGE/${2:h}"
-	if ! (( $+commands[$EDITOR] )) ; then
-		EDITOR=vim
-	fi
-	$EDITOR "$STORAGE/$2" || exit 1
+if [ "$1" = "get" ]; then
+	test -f "$key_path" || exit 1
+	cat "$key_path"
 	exit
 fi
 
+if [ "$1" = "edit" ]; then
+	mkdir -p "${key_path:h}"
+	if ! (( $+commands[$EDITOR] )); then
+		EDITOR=vim
+	fi
+	$EDITOR "$key_path" || exit 1
+	exit
+fi
 
 if [ "$1" = "put" ]; then
-	if [ "$2" = "" ]; then
-		echo "Error: provide key name"
-		echo $help
-		exit 1
-	fi
-	mkdir -p "$STORAGE/${2:h}"
-	cat - > "$STORAGE/$2" || exit 1
+	mkdir -p "${key_path:h}"
+	cat - > "$key_path" || exit 1
 	exit
 fi
 
