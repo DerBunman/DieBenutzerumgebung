@@ -77,14 +77,9 @@ fi
 typeset -a allowed_actions
 allowed_actions=(update init)
 
-typeset -a allowed_host_types
-allowed_host_types=(shell_and_x11 shell nonroot_shell)
-
-if [ ${(@)allowed_host_types[(I)$host_type]} -eq 0 ] || [ ${(@)allowed_actions[(I)$action]} -eq 0 ]; then
-	print "syntax: ${script_path:t} action host_type" # :t basename
+if [ ${(@)allowed_actions[(I)$action]} -eq 0 ]; then
+	print "syntax: ${script_path:t} action"
 	print "action: init, update"
-	print "host_type: shell_and_x11, shell, nonroot_shell"
-	print "the action update doesn't take any parameters like host_type"
 	exit 1
 fi
 
