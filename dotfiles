@@ -37,7 +37,7 @@ host_type=${2:-unset}
 #   \__,_|_|___/ .__/|_|\__,_|\__, | |_|\___/ \__, |\___/
 #              |_|            |___/           |___/
 print -P "%B%F{cyan}" # bold font in cyan
- cat << "EOF"
+cat << "EOF"
      _       _    __ _ _
   __| | ___ | |_ / _(_) | ___  ___
  / _` |/ _ \| __| |_| | |/ _ \/ __|
@@ -51,13 +51,24 @@ print -P "%b%f" # reset font and color
 [ "${action}" = "init" ] && conf get "host/initialized" >/dev/null && {
 	msg_error "This host is already initialized."
 	msg_info "Run the following commands to change host flags and reinit:"
-	msg_info "dotfiles configure init_wizard"
+	msg_info "conf rm host/initialized"
+	msg_info "conf rm host/preconfigured"
 	msg_info "dotfiles init"
 	exit 1
 }
 
+# don't allow init for hosts that are not yet preconfigured for init
+[ "${action}" = "init" ] && ! conf get "host/preconfigured" >/dev/null && {
+	msg_error "This host is not yet preconfigured."
+	msg_info "Starting configuration wizard ..."
+	"$0" configure init_wizard && "$0" "$@"
+	exit
+}
+
+#echo $action && [ "${action}" = "update" ] && echo $action; exit
+
 # abort when started in update mode without beeing initialized
-[ "${action}" = "update" ] && conf get "host/initialized" >/dev/null || {
+[ "${action}" = "update" ] && ! conf get "host/initialized" >/dev/null && {
 	msg_error "This host is not yet initialized. Please init first."
 	exit 1
 }
