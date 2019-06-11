@@ -14,8 +14,6 @@ RUN_APT_COMMANDS=${${RUN_APT_COMMANDS}:-true}
 
 # update || init
 action=${1:-unset}
-# shell || shell_and_x11 || nonroot_shell
-host_type=${2:-unset}
 
 #                       _       _
 #   _ __ ___   ___   __| |_   _| | ___  ___
@@ -61,11 +59,9 @@ print -P "%b%f" # reset font and color
 [ "${action}" = "init" ] && ! conf get "host/preconfigured" >/dev/null && {
 	msg_error "This host is not yet preconfigured."
 	msg_info "Starting configuration wizard ..."
-	"$0" configure init_wizard && "$0" "$@"
+	"$0" configure init_wizard && reset && "$0" "$@"
 	exit
 }
-
-#echo $action && [ "${action}" = "update" ] && echo $action; exit
 
 # abort when started in update mode without beeing initialized
 [ "${action}" = "update" ] && ! conf get "host/initialized" >/dev/null && {
