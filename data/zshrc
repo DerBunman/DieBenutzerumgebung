@@ -4,7 +4,7 @@
 # get the compaudit messages
 if [ $UID -eq 0 ]; then
 	autoload -U compinit
-	compinit -i -u -d ~/.zplug/zcompdumpf
+	compinit -i -u -d ~/.zplug/zcompdump
 	compinit() {
 		notify-send compinit -- "$*"
 	}
@@ -55,7 +55,10 @@ setopt INTERACTIVE_COMMENTS
 #setopt CORRECT_ALL
 # autodir/cd tools
 setopt AUTOCD AUTOPUSHD PUSHDIGNOREDUPS
-
+# Whenever a command completion or spelling correction is attempted,
+# make sure the entire command path is hashed first. This makes the first
+# completion slower but avoids false reports of spelling errors.
+setopt HASH_LIST_ALL
 #               _                                  _      _
 #    __ _ _   _| |_ ___   ___ ___  _ __ ___  _ __ | | ___| |_ ___
 #   / _` | | | | __/ _ \ / __/ _ \| '_ ` _ \| '_ \| |/ _ \ __/ _ \
@@ -92,7 +95,7 @@ zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting"
 
 # Disable updates using the "frozen" tag
-zplug "k4rthik/git-cal", as:command, frozen:1
+zplug "k4rthik/git-cal", as:command
 zplug "plugins/colorize", from:oh-my-zsh
 zplug "zlsun/solarized-man"
 zplug "horosgrisa/mysql-colorize", use:"mysql-colorize.plugin.zsh"
