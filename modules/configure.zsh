@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-. ${0:h}/../lib/config.zsh
+. ${0:h}/../lib/conf.zsh
 
 #   _                      __ _ _             _
 #  | |_ _ __ ___  _ __    / _(_) | ___    ___| | ___  __ _ _ __  _   _ _ __
@@ -27,7 +27,18 @@ function on_exit() {
 }
 trap on_exit EXIT INT TERM
 
-
+#       _ _       _
+#    __| (_) __ _| | ___   __ _
+#   / _` | |/ _` | |/ _ \ / _` |
+#  | (_| | | (_| | | (_) | (_| |
+#   \__,_|_|\__,_|_|\___/ \__, |
+#                         |___/
+#             _ _                   _
+#    _____  _(_) |_    ___ ___   __| | ___  ___
+#   / _ \ \/ / | __|  / __/ _ \ / _` |/ _ \/ __|
+#  |  __/>  <| | |_  | (_| (_) | (_| |  __/\__ \
+#   \___/_/\_\_|\__|  \___\___/ \__,_|\___||___/
+#  
 : ${DIALOG_OK=0}
 : ${DIALOG_CANCEL=1}
 : ${DIALOG_HELP=2}
@@ -77,7 +88,7 @@ mainmenu_items=(
 	"host_flags" "Host specific configs. Eg has root/has x11"
 	"features"   "Enable/disable features."
 	"behavior"   "Change dotfiles manager behavior."
-	"input"      "Configure keyboard. (setxkbmap)"
+	"setxkbmap"  "Configure keyboard. (setxkbmap)"
 	"desktop"    "i3 and X application specific configuration."
 )
 
@@ -105,7 +116,6 @@ features=(
 typeset -A behaviors
 behaviors=(
 	"apt-ask"      "Disable to assume yes on all apt commands."
-	"i3-autostart" "Run scripts in ~/bin/autostart/ on i3 startup"
 	"xkeys.zsh"    "Run the xkeys.zsh keymapper/keyboard layout daemon."
 )
 
@@ -135,6 +145,31 @@ dialog_sizes=(
 function dialog_init_wizard() {
 	# this function will be run when initializing a new system
 	# it will setup all necessary config parameters
+	
+	# check if host is not already initialized
+	conf get host/initialized && {
+		read -r -d '' text <<-'EOF'
+		It seems like this host has already been initialized.
+		Are you sure that you want to continue?
+		EOF
+		$DIALOG_BIN \
+			--clear \
+			--backtitle "$backtitle" \
+			--title "Warning" "$@" \
+			--yesno "$text" \
+			${dialog_sizes[height]} ${dialog_sizes[width]} || {
+			echo "Aborted. Have a nice day."
+			exit
+		}
+	}
+	# run the following dialogs:
+	dialog_host_flags || exit 1
+	dialog_behavior || exit 1
+	conf_chk_host_flag has_root && echo has_root || echo no_root
+	conf_chk_host_flag has_x11 && echo has_x11 || echo no_x11
+
+	# mark homedir as preconfigured and ready for init
+	date --iso-8601=seconds | conf put host/preconfigured
 }
 
 #                   _
@@ -163,21 +198,26 @@ function dialog_mainmenu() {
 
 	# Get the exit status
 	local return_value=$?
+	local choice="$(cat "$tmp")"
+
 	# Act on it
 	case $return_value in
 		$DIALOG_HELP)
-			echo "Help pressed.";;
-		$DIALOG_ITEM_HELP)
-			echo "Item-help button pressed.";;
+			echo "Help pressed."
+			echo choice $choice
+			echo "No help for you. Also good bye!"
+			exit
+			;;
 		$DIALOG_CANCEL)
-			echo "Cancel pressed."
-			exit;;
+			echo "Exit button activated. Have a nice day."
+			exit
+			;;
 		$DIALOG_ESC)
-			echo "ESC pressed."
-			exit;;
+			echo "ESC pressed. Have a nice day."
+			exit
+			;;
 	esac
 
-	local choice="$(cat "$tmp")"
 	# check if dialog choice exists and then run it
 	typeset -f dialog_$choice > /dev/null
 	if [ $? -eq 0 ]; then
@@ -190,15 +230,29 @@ function dialog_mainmenu() {
 	fi
 }
 
-#   _                   _
-#  (_)_ __  _ __  _   _| |_
-#  | | '_ \| '_ \| | | | __|
-#  | | | | | |_) | |_| | |_
-#  |_|_| |_| .__/ \__,_|\__|
-#          |_|
-function dialog_input() {
+#            _        _    _
+#   ___  ___| |___  _| | _| |__  _ __ ___   __ _ _ __
+#  / __|/ _ \ __\ \/ / |/ / '_ \| '_ ` _ \ / _` | '_ \
+#  \__ \  __/ |_ >  <|   <| |_) | | | | | | (_| | |_) |
+#  |___/\___|\__/_/\_\_|\_\_.__/|_| |_| |_|\__,_| .__/
+#                                               |_|
+function dialog_setxkbmap() {
 	local tmp=$(mktemp)
+	local tmp_text=$(mktemp)
 	local tmp_setxkbmap_script=$(mktemp)
+
+	cat > "$tmp_text" <<-'EOF'
+	The following dialog will spawn a editor
+	where you can put setxkbmap commands.
+	Technically you could put any commands in there
+	as it is parsed by zsh on i3 startup.
+	EOF
+	$DIALOG_BIN \
+		--exit-label "Ok" \
+		--title "Keyboard setxkbmap script" \
+		--backtitle "$backtitle" \
+		--textbox "$tmp_text" \
+		${dialog_sizes[height]} ${dialog_sizes[width]}
 
 	# check if conf is set or put default
 	conf get setxkbmap/script \
@@ -208,7 +262,7 @@ function dialog_input() {
 
 	$DIALOG_BIN \
 		--ok-label "Save" \
-		--title "Keyboard layout script" \
+		--title "Keyboard setxkbmap script" \
 		--backtitle "$backtitle" \
 		--editbox "$tmp_setxkbmap_script" \
 		${dialog_sizes[height]} ${dialog_sizes[width]} 2> "$tmp"
@@ -286,11 +340,20 @@ function dialog_host_flags() {
 			${dialog_sizes[height]} ${dialog_sizes[width]} ${dialog_sizes[rows]} \
 			"${list[@]}" 2> $tmp
 
-	local retval=$?
+	local return_value=$?
 
-	[ $retval -eq 0 ] \
-		&& cat "$tmp" \
-		| conf put dotfiles/host_flags_enabled
+	# Act on it
+	case $return_value in
+		$DIALOG_OK)
+			cat "$tmp" | conf put dotfiles/host_flags_enabled
+			return 0
+			;;
+		$DIALOG_ESC | $DIALOG_CANCEL)
+			echo "Exit button activated. Have a nice day."
+			return 1
+			;;
+	esac
+
 }
 
 
