@@ -43,10 +43,10 @@ if [ "$1" = "get" ]; then
 fi
 
 if [ "$1" = "edit" ]; then
-	mkdir -p "${key_path:h}"
 	if ! (( $+commands[$EDITOR] )); then
 		EDITOR=vim
 	fi
+	mkdir -p "${key_path:h}"
 	$EDITOR "$key_path" || exit 1
 	exit
 fi
