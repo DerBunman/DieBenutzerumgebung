@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-. ${0:A:h}/../../lib/config.zsh
+. ${0:A:h}/../../lib/conf.zsh
 
 #       _                            _
 # __  _| | _____ _   _ ___   _______| |__
