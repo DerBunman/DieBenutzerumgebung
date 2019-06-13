@@ -1,24 +1,19 @@
 #!/usr/bin/env zsh
-RUN_APT_COMMANDS=${${RUN_APT_COMMANDS}:-true}
-ASSUME_YES=${${ASSUME_YES}:-false}
 
 # change working directory to script home
 script_path=$0:A # :A follows symlinks
 cd ${script_path:h} # h dirname
-export DOTFILES_LIB_PATH="${script_path:h}/lib"
-
-DISTRIBUTION_ID=$(lsb_release -si)
 
 # include lib files
 for file in lib/*.zsh; do
 	. "$file"
 done
 
+ASSUME_YES=$(conf_chk_behavior apt-ask && echo false || echo true)
+RUN_APT_COMMANDS=${${RUN_APT_COMMANDS}:-true}
 
 # update || init
 action=${1:-unset}
-# shell || shell_and_x11 || nonroot_shell
-host_type=${2:-unset}
 
 #                       _       _
 #   _ __ ___   ___   __| |_   _| | ___  ___
@@ -40,7 +35,7 @@ host_type=${2:-unset}
 #   \__,_|_|___/ .__/|_|\__,_|\__, | |_|\___/ \__, |\___/
 #              |_|            |___/           |___/
 print -P "%B%F{cyan}" # bold font in cyan
- cat << "EOF"
+cat << "EOF"
      _       _    __ _ _
   __| | ___ | |_ / _(_) | ___  ___
  / _` |/ _ \| __| |_| | |/ _ \/ __|
@@ -50,32 +45,26 @@ print -P "%B%F{cyan}" # bold font in cyan
 EOF
 print -P "%b%f" # reset font and color
 
-#              _ _     _       _                         _       _
-#  __   ____ _| (_) __| | __ _| |_ ___   _   _ _ __   __| | __ _| |_ ___
-#  \ \ / / _` | | |/ _` |/ _` | __/ _ \ | | | | '_ \ / _` |/ _` | __/ _ \
-#   \ V / (_| | | | (_| | (_| | ||  __/ | |_| | |_) | (_| | (_| | ||  __/
-#    \_/ \__,_|_|_|\__,_|\__,_|\__\___|  \__,_| .__/ \__,_|\__,_|\__\___|
-#                                             |_|
-#                                        _
-#   _ __   __ _ _ __ __ _ _ __ ___   ___| |_ ___ _ __ ___
-#  | '_ \ / _` | '__/ _` | '_ ` _ \ / _ \ __/ _ \ '__/ __|
-#  | |_) | (_| | | | (_| | | | | | |  __/ ||  __/ |  \__ \
-#  | .__/ \__,_|_|  \__,_|_| |_| |_|\___|\__\___|_|  |___/
-#  |_|
-[ "${action}" = "update" ] \
-	&& [ -f "${script_path:h}/initialized" ] \
-	&& {
-		passed_host_type="${host_type}"
-		source "${script_path:h}/initialized"
-		[ "${passed_host_type}" != "unset" ] && [ "${host_type}" != "${passed_host_type}" ] && {
-			msg_error "This host is already initialized as: ${host_type}"
-			msg_info "Delete ${script_path:h}/initialized and re-run init to change host type."
-			exit 1
-		}
+# don't allow init for initialized hosts
+[ "${action}" = "init" ] && conf get "host/initialized" >/dev/null && {
+	msg_error "This host is already initialized."
+	msg_info "Run the following commands to change host flags and reinit:"
+	msg_info "conf rm host/initialized"
+	msg_info "conf rm host/preconfigured"
+	msg_info "dotfiles init"
+	exit 1
+}
+
+# don't allow init for hosts that are not yet preconfigured for init
+[ "${action}" = "init" ] && ! conf get "host/preconfigured" >/dev/null && {
+	msg_error "This host is not yet preconfigured."
+	msg_info "Starting configuration wizard ..."
+	"$0" configure init_wizard && reset && "$0" "$@"
+	exit
 }
 
 # abort when started in update mode without beeing initialized
-[ "${action}" = "update" ] && [ ! -f "${script_path:h}/initialized" ] && {
+[ "${action}" = "update" ] && ! conf get "host/initialized" >/dev/null && {
 	msg_error "This host is not yet initialized. Please init first."
 	exit 1
 }
@@ -95,20 +84,15 @@ fi
 typeset -a allowed_actions
 allowed_actions=(update init)
 
-typeset -a allowed_host_types
-allowed_host_types=(shell_and_x11 shell nonroot_shell)
-
-if [ ${(@)allowed_host_types[(I)$host_type]} -eq 0 ] || [ ${(@)allowed_actions[(I)$action]} -eq 0 ]; then
-	print "syntax: ${script_path:t} action host_type" # :t basename
+if [ ${(@)allowed_actions[(I)$action]} -eq 0 ]; then
+	print "syntax: ${script_path:t} action"
 	print "action: init, update"
-	print "host_type: shell_and_x11, shell, nonroot_shell"
-	print "the action update doesn't take any parameters like host_type"
 	exit 1
 fi
 
 # check for needed binaries
 typeset -a deps
-deps=(git curl)
+deps=(git curl dialog)
 for bin in $deps; do
 	which "${bin}" > /dev/null || {
 		msg_warning "binary ${bin} not found in PATH."
@@ -169,11 +153,11 @@ links=(
 	~/.zshenv                       data/zshenv
 	~/.zshrc                        data/zshrc
 	~/.zshrc.d                      data/zshrc.d
-	~/bin/dotfiles_config           data/bin/dotfiles_config
 	~/bin/autostart/xkeys.zsh       data/bin/xkeys.zsh
 	~/bin/bosd_cat                  data/bin/bosd_cat
 	~/bin/compton-invert            data/bin/compton-invert
 	~/bin/dotfiles                  dotfiles
+	~/bin/conf                      modules/conf.zsh
 	~/bin/gvim                      data/bin/gvim.zsh
 	~/bin/i3-applet-wrapper         data/bin/i3-applet-wrapper
 	~/bin/i3-autostart.zsh          data/bin/i3-autostart.zsh
@@ -194,17 +178,24 @@ links=(
 #   / __| '__/ _ \/ _` | __/ _ \  / _` | | '__/ __|
 #  | (__| | |  __/ (_| | ||  __/ | (_| | | |  \__ \
 #   \___|_|  \___|\__,_|\__\___|  \__,_|_|_|  |___/
-msg_info "creating the following dirs: ~/.themes ~/.local/share ~/.config ~/.ssh/conf.d ~/.dotfiles"
-msg_info "creating autostart dirs ~/bin/autostart/[always]"
+typeset -a default_dirs
+default_dirs=(
+	~/.themes/
+	~/bin/autostart/always
+	~/.local/share
+	~/.config
+	~/.ssh/conf.d
+	~/.dotfiles
+)
+msg_info "creating the following dirs: $default_dirs"
 msg_info "files in ~/bin/autostart/ will be executed on i3 startup"
 msg_info "files in ~/bin/autostart/always will be executed on i3 startup AND i3 config reload"
-mkdir -p \
-	~/.themes/ \
-	~/bin/autostart/always \
-	~/.local/share \
-	~/.config \
-	~/.ssh/conf.d \
-	~/.dotfiles
+mkdir -p $default_dirs
+
+test -f "${HOME}/.Xresources.local" || {
+	msg_info "creating empty ${HOME}/.Xresources.local"
+	touch "${HOME}/.Xresources.local"
+}
 
 
 #   _ __  _ __ ___ _ __   __ _ _ __ ___
@@ -328,8 +319,7 @@ git submodule update --init --recursive || {
 #  | | | (_) | (_) | |_
 #  |_|  \___/ \___/ \__|
 #
-if [ "${host_type}" != "nonroot_shell" ]; then
-	# set RUN_APT_COMMANDS=false in local config to always skip these commands without asking
+if conf_chk_host_flag "has_root"; then
 	if [ "${RUN_APT_COMMANDS}" = true ]; then
 		if [ "${ASSUME_YES}" = false ]; then
 			yesno "run apt update and apt install commands?" || RUN_APT_COMMANDS=false
@@ -340,11 +330,10 @@ if [ "${host_type}" != "nonroot_shell" ]; then
 			APT_PACKAGES=(${APT_PACKAGES} pwgen jq traceroute dialog
 				linux-tools-common curl powerline iotop vim mc detox fdupes
 				menu pv figlet net-tools apt-file sysfsutils tmux p7zip-full
-				unp rar unrar grc ctags silversearcher-ag mycli tmate asciinema
-				lolcat odt2txt ranger shellcheck pass
+				unp unrar grc ctags silversearcher-ag ranger shellcheck pass
 			)
 
-			[ "${host_type}" = "shell_and_x11" ] && APT_PACKAGES=(${APT_PACKAGES}
+			conf_chk_host_flag "has_x11" && APT_PACKAGES=(${APT_PACKAGES}
 				mate-polkit-bin vim-gtk3 pavucontrol rofi i3
 				arandr indicator-cpufreq fonts-roboto fonts-roboto-hinted
 				xscreensaver-screensaver-webcollage xscreensaver
@@ -369,7 +358,8 @@ if [ "${host_type}" != "nonroot_shell" ]; then
 					}
 				}
 			done
-			[ ${#apt_missing_packages[@]} -gt 0 ] && sudo apt-get install --ignore-missing $apt_missing_packages
+			[ ${#apt_missing_packages[@]} -gt 0 ] \
+				&& sudo apt-get install --ignore-missing $apt_missing_packages
 		
 			
 			# install signal im
@@ -395,22 +385,19 @@ fi
 #  | (_| | |_|   <  \__ \  __/ |_| |_| | | | | (_| \__ \
 #   \__, |\__|_|\_\ |___/\___|\__|\__|_|_| |_|\__, |___/
 #   |___/                                     |___/
-[ "${host_type}" = "shell_and_x11" ] && {
-	touch "${HOME}/.Xresources.local"
+conf_chk_host_flag "has_x11" && {
 	msg_info "setting gtk-theme to 'oomox-BunmanTheme'."
 	gsettings set org.gnome.desktop.interface gtk-theme "oomox-BunmanTheme"
 	gsettings set org.gnome.desktop.wm.preferences theme "oomox-BunmanTheme"
-
 }
 
-[ "${host_type}" != "nonroot_shell" ] && [ "${action}" = "init" ] && {
+conf_chk_host_flag "has_root" && [ "${action}" = "init" ] && {
 	# configure locales
 	msg_info "configuring locale en_US.UTF-8"
 	export LANGUAGE=en_US.UTF-8
 	export LANG=en_US.UTF-8
 	export LC_ALL=en_US.UTF-8
 	sudo locale-gen en_US.UTF-8
-	#sudo dpkg-reconfigure locales
 
 	msg_info "Setting zsh as default shell."
 	sudo chsh -s /usr/bin/zsh $USER
@@ -422,9 +409,11 @@ fi
 # . plain files
 typeset -a script_paths
 script_paths=(scripts/shell/*(x.))
-if [[ ${host_type} =~ "x11" ]]; then
+
+if conf_chk_host_flag "has_x11"; then
 	script_paths+=(scripts/x11/*(x.))
 fi
+
 for file in ${script_paths}; do
 	run_actions=$(grep "DOTFILES_RUN_ACTIONS" "${script_path:h}/${file}" \
 		| sed 's/^.*DOTFILES_RUN_ACTIONS: *//')
@@ -450,7 +439,7 @@ for file in ${script_paths}; do
 		yesno "run this script?" || continue
 	fi
 
-	. "${script_path:h}/${file}" "${action}" "${host_type}"
+	. "${script_path:h}/${file}" "${action}"
 done
 
 #   _       _ _      __ _       _     _              _
@@ -460,7 +449,7 @@ done
 #  |_|_| |_|_|\__| |_| |_|_| |_|_|___/_| |_|\___|\__,_|
 #
 if [ "${action}" = "init" ]; then
-	echo "host_type=${host_type}" > "${script_path:h}/initialized"
+	date --iso-8601=seconds | conf put "host/initialized"
 
 	msg_info "The init process is now finished."
 	msg_info "Please logout and relogin in i3."

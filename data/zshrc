@@ -4,7 +4,7 @@
 # get the compaudit messages
 if [ $UID -eq 0 ]; then
 	autoload -U compinit
-	compinit -i -u -d ~/.zplug/zcompdumpf
+	compinit -i -u -d ~/.zplug/zcompdump
 	compinit() {
 		notify-send compinit -- "$*"
 	}
@@ -37,6 +37,8 @@ REPORTTIME=3
 
 # Do not print the directory stack after pushd or popd. 
 setopt PUSHD_SILENT
+# Share history between shells
+setopt SHARE_HISTORY
 # Add commands to history as they are entered, don't wait for shell to exit
 setopt INC_APPEND_HISTORY
 # Also remember command start time and duration
@@ -53,7 +55,10 @@ setopt INTERACTIVE_COMMENTS
 #setopt CORRECT_ALL
 # autodir/cd tools
 setopt AUTOCD AUTOPUSHD PUSHDIGNOREDUPS
-
+# Whenever a command completion or spelling correction is attempted,
+# make sure the entire command path is hashed first. This makes the first
+# completion slower but avoids false reports of spelling errors.
+setopt HASH_LIST_ALL
 #               _                                  _      _
 #    __ _ _   _| |_ ___   ___ ___  _ __ ___  _ __ | | ___| |_ ___
 #   / _` | | | | __/ _ \ / __/ _ \| '_ ` _ \| '_ \| |/ _ \ __/ _ \
@@ -83,13 +88,14 @@ fpath=(~/.zsh_autocomplete $fpath)
 source ~/.zplug/init.zsh
 
 # Make sure to use double quotes
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting"
 
 # Disable updates using the "frozen" tag
-zplug "k4rthik/git-cal", as:command, frozen:1
+zplug "k4rthik/git-cal", as:command
 zplug "plugins/colorize", from:oh-my-zsh
 zplug "zlsun/solarized-man"
 zplug "horosgrisa/mysql-colorize", use:"mysql-colorize.plugin.zsh"
@@ -120,18 +126,19 @@ zstyle ':notify:*' success-icon "$HOME/.repos/dotfiles/data/icons/status/dialog-
 #	use:"./solarized-powerline/solarized-powerline.zsh-theme", \
 #	as:theme
 
-zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator ssh dir_writable virtualenv context dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs vi_mode)
+zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, at:next
 
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="white"
-#POWERLEVEL9K_MODE='awesome-fontconfig'
-POWERLEVEL9K_MODE='nerdfont-complete'
+P9K_LEFT_PROMPT_ELEMENTS=(root_indicator ssh dir_writable virtualenv context dir vcs)
+P9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs vi_mode)
 
-POWERLEVEL9K_VI_INSERT_MODE_STRING=""
-POWERLEVEL9K_VI_COMMAND_MODE_STRING="\ue62b "
-#POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='245'
-POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='yellow'
+P9K_CONTEXT_DEFAULT_FOREGROUND="white"
+#P9K_MODE='awesome-fontconfig'
+P9K_MODE='nerdfont-complete'
+
+P9K_VI_MODE_INSERT_STRING=""
+P9K_VI_MODE_NORMAL_STRING="\ue62b "
+#P9K_VI_MODE_NORMAL_BACKGROUND='245'
+P9K_VI_MODE_NORMAL_FOREGROUND='yellow'
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then

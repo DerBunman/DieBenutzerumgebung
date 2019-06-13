@@ -1,4 +1,6 @@
 #!/usr/bin/env zsh
+. ${0:A:h}/../../lib/conf.zsh
+
 [ $# -eq 0 ] && {
 	echo "please provide folder with scripts"
 }

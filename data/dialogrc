@@ -11,13 +11,13 @@ button_inactive_color = dialog_color
 button_key_inactive_color = dialog_color
 button_label_inactive_color = dialog_color
 
-button_active_color = (black,blue,on)
+button_active_color = (black,yellow,on)
 button_key_active_color = button_active_color
-button_label_active_color = (black,blue,on)
-tag_key_selected_color = (cyan,black,on)
+button_label_active_color = (black,yellow,on)
+tag_key_selected_color = (black,yellow,on)
 item_selected_color = tag_key_selected_color
 
-form_text_color = (black,green,on)
+form_text_color = (black,blue,off)
 form_item_readonly_color = (green,black,on)
 
 itemhelp_color = (white,cyan,off)
