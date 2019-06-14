@@ -1,5 +1,14 @@
 #!/usr/bin/env zsh
 . ${0:h}/../lib/conf.zsh
+. ${0:h}/../lib/colorized_messages.zsh
+
+# check wether dialog is installed or not
+if ! (( $+commands[dialog] )); then
+	msg_error "Command dialog not found in PATH."
+	msg_info "Please install: apt-get install dialog"
+	exit 1
+fi
+
 
 #   _                      __ _ _             _
 #  | |_ _ __ ___  _ __    / _(_) | ___    ___| | ___  __ _ _ __  _   _ _ __
@@ -27,6 +36,7 @@ function on_exit() {
 }
 trap on_exit EXIT INT TERM
 
+
 #       _ _       _
 #    __| (_) __ _| | ___   __ _
 #   / _` | |/ _` | |/ _ \ / _` |
@@ -38,39 +48,13 @@ trap on_exit EXIT INT TERM
 #   / _ \ \/ / | __|  / __/ _ \ / _` |/ _ \/ __|
 #  |  __/>  <| | |_  | (_| (_) | (_| |  __/\__ \
 #   \___/_/\_\_|\__|  \___\___/ \__,_|\___||___/
-#  
-: ${DIALOG_OK=0}
-: ${DIALOG_CANCEL=1}
-: ${DIALOG_HELP=2}
-: ${DIALOG_EXTRA=3}
-: ${DIALOG_ITEM_HELP=4}
-: ${DIALOG_ESC=255}
-
-
 #
-## Get the exit status
-#return_value=$?
-#
-## Act on it
-#case $return_value in
-#  $DIALOG_OK)
-#    echo "Result: `cat $tmp_file`";;
-#  $DIALOG_CANCEL)
-#    echo "Cancel pressed.";;
-#  $DIALOG_HELP)
-#    echo "Help pressed.";;
-#  $DIALOG_EXTRA)
-#    echo "Extra button pressed.";;
-#  $DIALOG_ITEM_HELP)
-#    echo "Item-help button pressed.";;
-#  $DIALOG_ESC)
-#    if test -s $tmp_file ; then
-#      cat $tmp_file
-#    else
-#      echo "ESC pressed."
-#    fi
-#    ;;
-#esac
+DIALOG_OK=0
+DIALOG_CANCEL=1
+DIALOG_HELP=2
+DIALOG_EXTRA=3
+DIALOG_ITEM_HELP=4
+DIALOG_ESC=255
 
 
 #                                                    _
