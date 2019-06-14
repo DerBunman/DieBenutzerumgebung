@@ -146,8 +146,6 @@ links=(
 	~/.vim                          data/vim
 	~/.xkeys                        data/xkeys
 	~/.xprofile                     data/xprofile
-	~/.zkbd                         data/zkbd
-	~/.zplug_local                  data/zplug_local
 	~/.zsh-dircolors.config         data/zsh-dircolors.config
 	~/.zsh_autocomplete             data/zsh_autocomplete
 	~/.zshenv                       data/zshenv
@@ -169,7 +167,6 @@ links=(
 	~/bin/todofi.sh                 submodules/todofi.sh/todofi.sh
 	~/bin/xkeys.zsh                 data/bin/xkeys.zsh
 	~/bin/tint_screen.zsh           data/bin/tint_screen.zsh
-	~/bin/luakit_adblock_update.zsh data/bin/luakit_adblock_update.zsh
 	~/bin/layout_manager.sh         submodules/i3-layout-manager/layout_manager.sh
 )
 
