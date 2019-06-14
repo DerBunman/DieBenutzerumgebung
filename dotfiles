@@ -120,55 +120,55 @@ typeset -a APT_PACKAGES
 typeset -A links
 # key = link, value = target
 links=(
-	~/.Xresources                   data/Xresources
-	~/.profile                      data/profile
-	~/.config/dunst                 data/config/dunst
-	~/.config/gtk-3.0               data/config/gtk-3.0
-	~/.config/i3                    data/config/i3
-	~/.config/mc                    data/config/mc
-	~/.config/mpv                   data/config/mpv
-	~/.config/oomox                 data/config/oomox
-	~/.config/polybar               data/config/polybar
-	~/.config/ranger                data/config/ranger
-	~/.config/tridactyl             data/config/tridactyl
-	~/.config/compton.conf          data/config/compton.conf
-	~/.dialogrc                     data/dialogrc
-	~/.gtkrc-2.0                    data/gtkrc-2.0
-	~/.i3                           data/config/i3
-	~/.icons                        data/icons
-	~/.local/share/fonts            data/local/share/fonts
-	~/.profile                      data/profile
-	~/.ssh/config                   data/ssh/config
-	~/.themes/oomox-BunmanTheme     data/theme/oomox-BunmanTheme
-	~/.tmux.conf                    data/tmux.conf
-	~/.todo                         data/todo
-	~/.toprc                        data/toprc
-	~/.urxvt                        data/urxvt
-	~/.vim                          data/vim
-	~/.xkeys                        data/xkeys
-	~/.xprofile                     data/xprofile
-	~/.zsh-dircolors.config         data/zsh-dircolors.config
-	~/.zsh_autocomplete             data/zsh_autocomplete
-	~/.zshenv                       data/zshenv
-	~/.zshrc                        data/zshrc
-	~/.zshrc.d                      data/zshrc.d
-	~/bin/autostart/xkeys.zsh       data/bin/xkeys.zsh
-	~/bin/bosd_cat                  data/bin/bosd_cat
-	~/bin/compton-invert            data/bin/compton-invert
-	~/bin/dotfiles                  dotfiles
-	~/bin/conf                      modules/conf.zsh
-	~/bin/gvim                      data/bin/gvim.zsh
-	~/bin/i3-applet-wrapper         data/bin/i3-applet-wrapper
-	~/bin/i3-autostart.zsh          data/bin/i3-autostart.zsh
-	~/bin/i3subscribe               data/bin/i3subscribe
-	~/bin/polybar-scripts           data/bin/polybar-scripts
-	~/bin/screenshot                data/bin/screenshot
-	~/bin/serve_via_http.sh         data/bin/serve_via_http.sh
-	~/bin/ssh_send_terminfo.zsh     data/bin/ssh_send_terminfo.zsh
-	~/bin/todofi.sh                 submodules/todofi.sh/todofi.sh
-	~/bin/xkeys.zsh                 data/bin/xkeys.zsh
-	~/bin/tint_screen.zsh           data/bin/tint_screen.zsh
-	~/bin/layout_manager.sh         submodules/i3-layout-manager/layout_manager.sh
+	~/.Xresources               data/Xresources
+	~/.profile                  data/profile
+	~/.config/dunst             data/config/dunst
+	~/.config/gtk-3.0           data/config/gtk-3.0
+	~/.config/i3                data/config/i3
+	~/.config/mc                data/config/mc
+	~/.config/mpv               data/config/mpv
+	~/.config/oomox             data/config/oomox
+	~/.config/polybar           data/config/polybar
+	~/.config/ranger            data/config/ranger
+	~/.config/tridactyl         data/config/tridactyl
+	~/.config/compton.conf      data/config/compton.conf
+	~/.dialogrc                 data/dialogrc
+	~/.gtkrc-2.0                data/gtkrc-2.0
+	~/.i3                       data/config/i3
+	~/.icons                    data/icons
+	~/.local/share/fonts        data/local/share/fonts
+	~/.profile                  data/profile
+	~/.ssh/config               data/ssh/config
+	~/.themes/oomox-BunmanTheme data/theme/oomox-BunmanTheme
+	~/.tmux.conf                data/tmux.conf
+	~/.todo                     data/todo
+	~/.toprc                    data/toprc
+	~/.urxvt                    data/urxvt
+	~/.vim                      data/vim
+	~/.xkeys                    data/xkeys
+	~/.xprofile                 data/xprofile
+	~/.zsh-dircolors.config     data/zsh-dircolors.config
+	~/.zsh_autocomplete         data/zsh_autocomplete
+	~/.zshenv                   data/zshenv
+	~/.zshrc                    data/zshrc
+	~/.zshrc.d                  data/zshrc.d
+	~/bin/autostart/xkeys.zsh   data/bin/xkeys.zsh
+	~/bin/bosd_cat              data/bin/bosd_cat
+	~/bin/compton-invert        data/bin/compton-invert
+	~/bin/dotfiles              dotfiles
+	~/bin/conf                  modules/conf.zsh
+	~/bin/gvim                  data/bin/gvim.zsh
+	~/bin/i3-applet-wrapper     data/bin/i3-applet-wrapper
+	~/bin/i3-autostart.zsh      data/bin/i3-autostart.zsh
+	~/bin/i3subscribe           data/bin/i3subscribe
+	~/bin/polybar-scripts       data/bin/polybar-scripts
+	~/bin/screenshot            data/bin/screenshot
+	~/bin/serve_via_http.sh     data/bin/serve_via_http.sh
+	~/bin/ssh_send_terminfo.zsh data/bin/ssh_send_terminfo.zsh
+	~/bin/todofi.sh             submodules/todofi.sh/todofi.sh
+	~/bin/xkeys.zsh             data/bin/xkeys.zsh
+	~/bin/tint_screen.zsh       data/bin/tint_screen.zsh
+	~/bin/layout_manager.sh     submodules/i3-layout-manager/layout_manager.sh
 )
 
 #                       _             _ _
@@ -183,7 +183,6 @@ default_dirs=(
 	~/.local/share
 	~/.config
 	~/.ssh/conf.d
-	~/.dotfiles
 )
 msg_info "creating the following dirs: $default_dirs"
 msg_info "files in ~/bin/autostart/ will be executed on i3 startup"
