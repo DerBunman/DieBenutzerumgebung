@@ -131,6 +131,7 @@ links=(
 	~/.config/polybar               data/config/polybar
 	~/.config/ranger                data/config/ranger
 	~/.config/tridactyl             data/config/tridactyl
+	~/.config/compton.conf          data/config/compton.conf
 	~/.dialogrc                     data/dialogrc
 	~/.gtkrc-2.0                    data/gtkrc-2.0
 	~/.i3                           data/config/i3
