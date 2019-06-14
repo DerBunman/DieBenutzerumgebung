@@ -66,6 +66,14 @@ print -P "%b%f" # reset font and color
 # abort when started in update mode without beeing initialized
 [ "${action}" = "update" ] && ! conf get "host/initialized" >/dev/null && {
 	msg_error "This host is not yet initialized. Please init first."
+
+	[ -f $HOME/.repos/dotfiles/initialized ] && {
+		msg_info "However, there is an file $HOME/.repos/dotfiles/initialized"
+		msg_info "So it seems, that you already installed some older version that used this config path."
+		msg_info "Please run the following command to re-init this installation:"
+		msg_info "dotfiles init"
+	}
+
 	exit 1
 }
 
@@ -130,7 +138,6 @@ links=(
 	~/.config/oomox             data/config/oomox
 	~/.config/polybar           data/config/polybar
 	~/.config/ranger            data/config/ranger
-	~/.config/tridactyl         data/config/tridactyl
 	~/.config/compton.conf      data/config/compton.conf
 	~/.dialogrc                 data/dialogrc
 	~/.gtkrc-2.0                data/gtkrc-2.0
@@ -400,6 +407,13 @@ conf_chk_host_flag "has_root" && [ "${action}" = "init" ] && {
 	sudo chsh -s /usr/bin/zsh $USER
 }
 
+
+#                 _       _
+#   ___  ___ _ __(_)_ __ | |_ ___
+#  / __|/ __| '__| | '_ \| __/ __|
+#  \__ \ (__| |  | | |_) | |_\__ \
+#  |___/\___|_|  |_| .__/ \__|___/
+#                  |_|
 # run additional scripts from the scripts folder
 # glob modifier:
 # x owner-executable files
