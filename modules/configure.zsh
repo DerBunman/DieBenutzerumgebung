@@ -49,12 +49,12 @@ trap on_exit EXIT INT TERM
 #  |  __/>  <| | |_  | (_| (_) | (_| |  __/\__ \
 #   \___/_/\_\_|\__|  \___\___/ \__,_|\___||___/
 #
-DIALOG_OK=0
-DIALOG_CANCEL=1
-DIALOG_HELP=2
-DIALOG_EXTRA=3
-DIALOG_ITEM_HELP=4
-DIALOG_ESC=255
+readonly DIALOG_OK=0
+readonly DIALOG_CANCEL=1
+readonly DIALOG_HELP=2
+readonly DIALOG_EXTRA=3
+readonly DIALOG_ITEM_HELP=4
+readonly DIALOG_ESC=255
 
 
 #                                                    _
@@ -70,15 +70,16 @@ DIALOG_ESC=255
 typeset -a mainmenu_items
 mainmenu_items=(
 	"host_flags" "Host specific configs. Eg has root/has x11"
-	"features"   "Enable/disable features."
+	#"features"   "Enable/disable features."
 	"behavior"   "Change dotfiles manager behavior."
 	"setxkbmap"  "Configure keyboard. (setxkbmap)"
-	"desktop"    "i3 and X application specific configuration."
+	#"desktop"    "i3 and X application specific configuration."
 )
 
-desktop_menu_items=(
-	"i3-autostart" "Manage i3-autostart entries"
-)
+# TODO:
+#desktop_menu_items=(
+#	"i3-autostart" "Manage i3-autostart entries"
+#)
 
 # host flags
 typeset -A host_flags
@@ -110,15 +111,18 @@ setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
 #setxkbmap -option 'caps:swapescape'
 EOF
 
-backtitle="DieBenutzerumgebung"
-
-DIALOG_BIN="$(which dialog)"
-
+# default dialog sizes
 typeset -A dialog_sizes
 dialog_sizes=(
 	height 20
 	width  80
 	rows   10
+)
+
+DIALOG_BIN=(
+	$(which dialog)
+	--backtitle "DieBenutzerumgebung"
+	--clear
 )
 
 #   _       _ _              _                  _
@@ -137,8 +141,6 @@ function dialog_init_wizard() {
 		Are you sure that you want to continue?
 		EOF
 		$DIALOG_BIN \
-			--clear \
-			--backtitle "$backtitle" \
 			--title "Warning" "$@" \
 			--yesno "$text" \
 			${dialog_sizes[height]} ${dialog_sizes[width]} || {
@@ -149,8 +151,8 @@ function dialog_init_wizard() {
 	# run the following dialogs:
 	dialog_host_flags || exit 1
 	dialog_behavior || exit 1
-	conf_chk_host_flag has_root && echo has_root || echo no_root
-	conf_chk_host_flag has_x11 && echo has_x11 || echo no_x11
+	#conf_chk_host_flag has_root && echo has_root || echo no_root
+	#conf_chk_host_flag has_x11 && echo has_x11 || echo no_x11
 
 	# mark homedir as preconfigured and ready for init
 	date --iso-8601=seconds | conf put host/preconfigured
@@ -171,7 +173,6 @@ function dialog_mainmenu() {
 	Choose your destiny:
 	EOF
 	$DIALOG_BIN \
-		--backtitle    "$backtitle" \
 		--title        "Main Menu" \
 		--help-button \
 		--cancel-label "Exit" \
@@ -234,7 +235,6 @@ function dialog_setxkbmap() {
 	$DIALOG_BIN \
 		--exit-label "Ok" \
 		--title "Keyboard setxkbmap script" \
-		--backtitle "$backtitle" \
 		--textbox "$tmp_text" \
 		${dialog_sizes[height]} ${dialog_sizes[width]}
 
@@ -247,7 +247,6 @@ function dialog_setxkbmap() {
 	$DIALOG_BIN \
 		--ok-label "Save" \
 		--title "Keyboard setxkbmap script" \
-		--backtitle "$backtitle" \
 		--editbox "$tmp_setxkbmap_script" \
 		${dialog_sizes[height]} ${dialog_sizes[width]} 2> "$tmp"
 
@@ -274,8 +273,6 @@ function dialog_setxkbmap() {
 	cat "$tmp_check" >> "$tmp_text"
 
 	$DIALOG_BIN \
-		--clear \
-		--backtitle "$backtitle" \
 		--title "Error" "$@" \
 		--exit-label "OK" \
 		--textbox "$tmp_text" \
@@ -318,7 +315,6 @@ function dialog_host_flags() {
 	done
 
 	$DIALOG_BIN \
-		--backtitle "$backtitle" \
 		--title     "Toggle host_flags" \
 		--checklist "$text" \
 			${dialog_sizes[height]} ${dialog_sizes[width]} ${dialog_sizes[rows]} \
@@ -373,7 +369,6 @@ function dialog_features() {
 	done
 
 	$DIALOG_BIN \
-		--backtitle "$backtitle" \
 		--title     "Toggle features" \
 		--checklist "$text" \
 			${dialog_sizes[height]} ${dialog_sizes[width]} ${dialog_sizes[rows]} \
@@ -417,7 +412,6 @@ function dialog_behavior() {
 	done
 
 	$DIALOG_BIN \
-		--backtitle "$backtitle" \
 		--title     "Toggle behaviors" \
 		--checklist "$text" \
 			${dialog_sizes[height]} ${dialog_sizes[width]} ${dialog_sizes[rows]} \
@@ -430,7 +424,12 @@ function dialog_behavior() {
 		| conf put dotfiles/behaviors_enabled
 }
 
-# startup
+#       _             _
+#   ___| |_ __ _ _ __| |_ _   _ _ __
+#  / __| __/ _` | '__| __| | | | '_ \
+#  \__ \ || (_| | |  | |_| |_| | |_) |
+#  |___/\__\__,_|_|   \__|\__,_| .__/
+#                              |_|
 typeset -f dialog_$1 > /dev/null
 if [ $? -eq 0 ]; then
 	dialog_$1
