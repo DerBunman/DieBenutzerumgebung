@@ -261,6 +261,9 @@ zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 bindkey "^v" edit-command-line
 
+# used by vim-companion
+bindkey '^P' up-history
+bindkey '^N' down-history
 
 #   _     _     _
 #  | |__ (_)___| |_ ___  _ __ _   _
