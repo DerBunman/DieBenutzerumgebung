@@ -215,7 +215,7 @@ let g:shebang#shebangs = {
 
 map <C-x> :exec "!tmux send-keys -t vim-companion C-p C-j" <CR><CR>
 map <C-a> <Home>
-nmap <C-e> <End>
+map <C-e> <End>
 imap <C-a> <Home>
 imap <C-e> <End>
 
