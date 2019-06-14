@@ -27,6 +27,11 @@ if [ $behaviors_enabled[(Ie)xkeys.zsh] -eq 0 ]; then
 	exit
 fi
 
+# if there is no default.xmodmap file we create
+# one containing the current keymap
+test -f ~/.xkeys/default.xmodmap \
+	|| xmodmap -pke >~/.xkeys/default.xmodmap
+
 last_class="none"
 current_map=default
 
@@ -51,7 +56,9 @@ diff "${HOME}/.xkeys/default.xmodmap" "${tmp}" \
 xmodmap "$restore"
 
 xprop -spy -root _NET_ACTIVE_WINDOW | while read line; do
-	class="$(xprop WM_CLASS -id ${line##* } | cut -d= -f2 | sed 's/[" ]//g' | sed 's/^.*,//')"
+	#class=${${${(s.= .)x}[2]//[\" ]/}##*,}
+	#class="$(xprop WM_CLASS -id ${line##* } | cut -d= -f2 | sed 's/[" ]//g' | sed 's/^.*,//')"
+	class="${${$(xprop WM_CLASS -id ${line##* })##*,}//[\" ]/}"
 	echo "[$(date +%H:%M:%S)] Class: ${class}"
 	if [ "${class}" != "${last_class}" ]; then
 		last_class="${class}"
