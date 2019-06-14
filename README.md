@@ -121,63 +121,25 @@ This script will check if there are rules defined for the current active WM_CLAS
 * [gtk3 theme](https://www.gtk.org/)
 
 # Installation
-## Installation via SSH
-```zsh
-apt install zsh git curl
-mkdir -p ~/.repos \
-	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
-	&& ~/.repos/dotfiles/dotfiles init [shell/shell_and_x11/nonroot_shell]
-```
 
-## Installation via HTTP
-```zsh
-sudo apt install zsh git curl
-mkdir -p ~/.repos \
-	&& git clone --recursive https://github.com/DerBunman/dotfiles ~/.repos/dotfiles \
-	&& ~/.repos/dotfiles/dotfiles init [shell/shell_and_x11/nonroot_shell]
-```
+## Hints
+The init process may fail in the first stage (symlink check) because there are already some dotfiles in your homedir.
+In most cases the dotfiles script will be able to fix it by itself. Just follow the instructions on the screen.
 
-## Examples
-The init process will most likely fail in the first stage (symlink check) because there are already some dotfiles in your homedir.
-If it fails just remove the existing files and re-run the command ```dotfiles init nonroot_shell```
-### Shell only (non root)
-#### Initial setup
+### Initial setup
+The init command will also run a dialog wizard which will help you tune the configuration to your needs.
+
 Please note, that the dependencies have to be installed for nonroot mode.
 
 ```zsh
-sudo apt install zsh git curl
+sudo apt install zsh git curl dialog
 mkdir -p ~/.repos \
 	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
-	&& ~/.repos/dotfiles/dotfiles init nonroot_shell
+	&& ~/.repos/dotfiles/dotfiles init
 ```
 Please relogin after init so all the updated configs are parsed.
 
-### Shell only (with root)
-#### Initial setup
-Please note, that the dependencies will be auto installed in the init process.
-
-```zsh
-sudo apt install zsh git curl
-mkdir -p ~/.repos \
-	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
-	&& ~/.repos/dotfiles/dotfiles init shell
-```
-Please relogin after init so all the updated configs are parsed.
-
-### Shell and x11 (with root)
-#### Initial setup
-Please note, that the dependencies will be auto installed in the init process.
-
-```zsh
-sudo apt install zsh git curl
-mkdir -p ~/.repos \
-	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
-	&& ~/.repos/dotfiles/dotfiles init shell_and_x11
-```
-Please relogin into i3 after init so all the updated configs are parsed.
-
-
-### Update (all modes)
+### Update
 Dotfiles is now in your PATH so you can run the following command to update:
 ```zsh
 dotfiles update
