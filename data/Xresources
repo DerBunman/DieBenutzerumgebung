@@ -192,6 +192,7 @@ rofi.bw: 3
 /* Navigation */
 rofi.kb-move-word-back: Control+Left
 rofi.kb-move-word-forward: Control+Right
+rofi.kb-accept-alt: space
 
 /* Misc */
 rofi.font: RobotoMono Nerd Font Regular 10

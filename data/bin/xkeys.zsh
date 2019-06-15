@@ -1,4 +1,6 @@
 #!/usr/bin/env zsh
+. ${0:A:h}/../../lib/conf.zsh
+
 #       _                            _
 # __  _| | _____ _   _ ___   _______| |__
 # \ \/ / |/ / _ \ | | / __| |_  / __| '_ \
@@ -6,10 +8,32 @@
 # /_/\_\_|\_\___|\__, |___(_)___|___/_| |_|
 #                |___/
 
+
+behaviors_enabled=( $(conf get dotfiles/behaviors_enabled) )
+# enable xkeys.zsh if it wasn't yet known to this config
+conf get dotfiles/behaviors_known/xkeys.zsh > /dev/null || {
+	echo "xkeys.zsh is not yet known to this installations configuration."
+	echo "it will now be added and enabled."
+	echo xkeys.zsh | conf put dotfiles/behaviors_known/xkeys.zsh
+	behaviors_enabled+=( xkeys.zsh )
+	echo $behaviors_enabled | conf put dotfiles/behaviors_enabled
+}
+
+# check wether xkeys.zsh is enabled in the configuration
+if [ $behaviors_enabled[(Ie)xkeys.zsh] -eq 0 ]; then
+	echo "xkeys.zsh is currently not enabled"
+	echo "you can enable it with the command: dotfiles configure"
+	echo "in the submenu behavior"
+	exit
+fi
+
+# if there is no default.xmodmap file we create
+# one containing the current keymap
+test -f ~/.xkeys/default.xmodmap \
+	|| xmodmap -pke >~/.xkeys/default.xmodmap
+
 last_class="none"
 current_map=default
-
-#xmodmap -pke > "${HOME}/.xkeys/default.xmodmap"
 
 msg_info = function() {
 	prefix="[$(date +%H:%M:%S)]"
@@ -32,7 +56,9 @@ diff "${HOME}/.xkeys/default.xmodmap" "${tmp}" \
 xmodmap "$restore"
 
 xprop -spy -root _NET_ACTIVE_WINDOW | while read line; do
-	class="$(xprop WM_CLASS -id ${line##* } | cut -d= -f2 | sed 's/[" ]//g' | sed 's/^.*,//')"
+	#class=${${${(s.= .)x}[2]//[\" ]/}##*,}
+	#class="$(xprop WM_CLASS -id ${line##* } | cut -d= -f2 | sed 's/[" ]//g' | sed 's/^.*,//')"
+	class="${${$(xprop WM_CLASS -id ${line##* })##*,}//[\" ]/}"
 	echo "[$(date +%H:%M:%S)] Class: ${class}"
 	if [ "${class}" != "${last_class}" ]; then
 		last_class="${class}"
