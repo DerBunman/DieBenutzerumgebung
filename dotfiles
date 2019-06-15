@@ -347,7 +347,7 @@ if conf_chk_host_flag "has_root"; then
 				lxappearance rxvt rxvt-unicode-256color pulsemixer
 				zathura-cb zathura zathura-djvu zathura-pdf-poppler zathura-ps
 				xbindkeys xbindkeys-config xdotool x11-xserver-utils
-				slop aosd_cat compton copyq copyq-plugins libnotify-bin
+				slop aosd-cat compton copyq copyq-plugins libnotify-bin
 			) # x11-xserver-utils are for xmodmap
 
 			sudo apt-get update
