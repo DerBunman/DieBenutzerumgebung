@@ -138,6 +138,8 @@ function dialog_init_wizard() {
 	conf get host/initialized && {
 		read -r -d '' text <<-'EOF'
 		It seems like this host has already been initialized.
+		If you continue this host will be marked as uninitialized.
+
 		Are you sure that you want to continue?
 		EOF
 		$DIALOG_BIN \
@@ -147,6 +149,7 @@ function dialog_init_wizard() {
 			echo "Aborted. Have a nice day."
 			exit
 		}
+		conf rm host/initialized
 	}
 	# run the following dialogs:
 	dialog_host_flags || exit 1
@@ -266,7 +269,7 @@ function dialog_setxkbmap() {
 	local tmp_text=$(mktemp)
 	
 	cat > "$tmp_text" <<-'EOF'
-	There was an error running your setxbmap script.
+	There was an error running your setxkbmap script.
 	The script has not been saved.
 
 	EOF
@@ -289,6 +292,7 @@ function dialog_setxkbmap() {
 #  |_| |_|\___/|___/\__|___|_| |_|\__,_|\__, |___/
 #                     |_____|           |___/
 function dialog_host_flags() {
+	# TODO: warn user that changes will force to rerun init
 	local tmp=$(mktemp)
 	local active_elements=( $(conf get dotfiles/host_flags_enabled) )
 
