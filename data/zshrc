@@ -37,28 +37,38 @@ REPORTTIME=3
 
 # Do not print the directory stack after pushd or popd. 
 setopt PUSHD_SILENT
+
 # Share history between shells
 setopt SHARE_HISTORY
+
 # Add commands to history as they are entered, don't wait for shell to exit
 setopt INC_APPEND_HISTORY
+
 # Also remember command start time and duration
 setopt EXTENDED_HISTORY
+
 # Do not keep duplicate commands in history
 setopt HIST_IGNORE_ALL_DUPS
+
 # Do not remember commands that start with a whitespace
 setopt HIST_IGNORE_SPACE
+
 # remove superfluous blanks from history items
 setopt HIST_REDUCE_BLANKS
+
 # allow comments in interactive shells
 setopt INTERACTIVE_COMMENTS
+
 # Correct spelling of all arguments in the command line
 #setopt CORRECT_ALL
 # autodir/cd tools
 setopt AUTOCD AUTOPUSHD PUSHDIGNOREDUPS
+
 # Whenever a command completion or spelling correction is attempted,
 # make sure the entire command path is hashed first. This makes the first
 # completion slower but avoids false reports of spelling errors.
 setopt HASH_LIST_ALL
+
 #               _                                  _      _
 #    __ _ _   _| |_ ___   ___ ___  _ __ ___  _ __ | | ___| |_ ___
 #   / _` | | | | __/ _ \ / __/ _ \| '_ ` _ \| '_ \| |/ _ \ __/ _ \
@@ -69,6 +79,18 @@ zstyle ':completion:*' menu select
 # Enable autocompletion
 zstyle ':completion:*' completer _complete _correct _approximate
 
+# use cache
+test -d .zsh/cache || mkdir -p ~/.zsh/cache
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+
+# Fuzzy matching of completions for when you mistype them:
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+# Ignore completion functions for commands you don’t have:
+zstyle ':completion:*:functions' ignored-patterns '_*'
 
 #             _
 #   _____ __ | |_   _  __ _
@@ -137,7 +159,6 @@ P9K_MODE='nerdfont-complete'
 
 P9K_VI_MODE_INSERT_STRING=""
 P9K_VI_MODE_NORMAL_STRING="\ue62b "
-#P9K_VI_MODE_NORMAL_BACKGROUND='245'
 P9K_VI_MODE_NORMAL_FOREGROUND='yellow'
 
 # Install plugins if there are plugins that have not been installed
@@ -155,10 +176,105 @@ zplug load #--verbose
 #   / _` | | | | __/ _ \| |/ _ \ / _` |/ _` | |_  / __| '_ \| '__/ __| / _` |
 #  | (_| | |_| | || (_) | | (_) | (_| | (_| |  / /\__ \ | | | | | (__ | (_| |
 #   \__,_|\__,_|\__\___/|_|\___/ \__,_|\__,_| /___|___/_| |_|_|  \___(_)__,_|
-#  
+# all .zsh files in ~/.zshrc.d will be executed
 [[ -d ~/.zshrc.d ]] && for file in ~/.zshrc.d/*zsh; do
 	source "${file}"
 done
+
+
+#               _        _                 _
+#    __ _ _   _| |_ ___ | | ___   __ _  __| |
+#   / _` | | | | __/ _ \| |/ _ \ / _` |/ _` |
+#  | (_| | |_| | || (_) | | (_) | (_| | (_| |
+#   \__,_|\__,_|\__\___/|_|\___/ \__,_|\__,_|
+#
+autoload -U colors vcs_info
+colors
+
+
+#         _   __  __           _
+#  __   _(_) |  \/  | ___   __| | ___
+#  \ \ / / | | |\/| |/ _ \ / _` |/ _ \
+#   \ V /| | | |  | | (_) | (_| |  __/
+#    \_/ |_| |_|  |_|\___/ \__,_|\___|
+# enable vi mode
+bindkey -v
+
+## unbind escape ...
+bindkey -r '\e'
+
+## ... bind to jj ...
+bindkey jj vi-cmd-mode
+
+## change keytimeout to 20 ms
+export KEYTIMEOUT=20
+
+## Better searching in command mode
+bindkey -M vicmd '?' history-incremental-search-backward
+bindkey -M vicmd '/' history-incremental-search-forward
+bindkey -M vicmd "k" up-line-or-beginning-search
+bindkey -M vicmd "j" down-line-or-beginning-search
+bindkey -M vicmd "k" up-line-or-beginning-search
+bindkey -M vicmd "j" down-line-or-beginning-search
+
+#   _                   _        __  _
+#  (_)_ __  _ __  _   _| |_     / / | | _____ _   _ ___
+#  | | '_ \| '_ \| | | | __|   / /  | |/ / _ \ | | / __|
+#  | | | | | |_) | |_| | |_   / /   |   <  __/ |_| \__ \
+#  |_|_| |_| .__/ \__,_|\__| /_/    |_|\_\___|\__, |___/
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+# these are for backward-kill-word
+backward-kill-dir () {
+	#WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+	local WORDCHARS=${WORDCHARS/\/}
+	zle backward-kill-word
+}
+zle -N backward-kill-dir
+# e^? = esc (then release esc) backspace
+bindkey '\e^?' backward-kill-dir
+# ^H = ctrl-backspace
+bindkey '^H' backward-kill-dir
+
+# home and end
+bindkey  "^[[H" beginning-of-line
+bindkey  "^[[F" end-of-line
+
+# and ctrl-a/ctrl-e
+bindkey  "^a" beginning-of-line
+bindkey  "^e" end-of-line
+
+# ctrl left/right
+# urxvt/rxvt-unicode (and maybe others):
+bindkey "^[Od" backward-word
+bindkey "^[Oc" forward-word
+# terminator, konsole and xterm (and maybe others):
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+
+
+# edit commandline in vim
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+bindkey "^v" edit-command-line
+
+# used by vim-companion
+bindkey '^P' up-history
+bindkey '^N' down-history
+
+#   _     _     _
+#  | |__ (_)___| |_ ___  _ __ _   _
+#  | '_ \| / __| __/ _ \| '__| | | |
+#  | | | | \__ \ || (_) | |  | |_| |
+#  |_| |_|_|___/\__\___/|_|   \__, |
+#                             |___/
+bindkey '^r' history-incremental-search-backward
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
 
 #    __ _____ __
 #   / _|__  // _|
@@ -172,56 +288,3 @@ if [[ ! -d ~/.fzf ]]; then
 	~/.fzf/install
 fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-#               _        _                 _
-#    __ _ _   _| |_ ___ | | ___   __ _  __| |
-#   / _` | | | | __/ _ \| |/ _ \ / _` |/ _` |
-#  | (_| | |_| | || (_) | | (_) | (_| | (_| |
-#   \__,_|\__,_|\__\___/|_|\___/ \__,_|\__,_|
-#
-autoload -U colors vcs_info
-colors
-
-#   _                   _        __  _
-#  (_)_ __  _ __  _   _| |_     / / | | _____ _   _ ___
-#  | | '_ \| '_ \| | | | __|   / /  | |/ / _ \ | | / __|
-#  | | | | | |_) | |_| | |_   / /   |   <  __/ |_| \__ \
-#  |_|_| |_| .__/ \__,_|\__| /_/    |_|\_\___|\__, |___/
-#          |_|                                |___/
-
-# these are for backward-kill-word
-backward-kill-dir () {
-	#WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-	local WORDCHARS=${WORDCHARS/\/}
-	zle backward-kill-word
-}
-zle -N backward-kill-dir
-bindkey '\e^?' backward-kill-dir
-#bindkey '^[^?' backward-kill-dir
-
-# home and end
-bindkey  "^[[H"   beginning-of-line
-bindkey  "^[[F"   end-of-line
-
-# and ctrl-a/ctrl-e
-bindkey  "^a"   beginning-of-line
-bindkey  "^e"   end-of-line
-
-# ctrl left/right
-# urxvt/rxvt-unicode (and maybe others):
-bindkey "^[Od" backward-word
-bindkey "^[Oc" forward-word
-# terminator, konsole and xterm (and maybe others):
-bindkey "^[[1;5D" backward-word
-bindkey "^[[1;5C" forward-word
-
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-
-autoload -Uz history-beginning-search-menu
-zle -N history-beginning-search-menu
-bindkey '^X^X' history-beginning-search-menu
-
-autoload -z edit-command-line
-zle -N edit-command-line
-bindkey "^X^E" edit-command-line

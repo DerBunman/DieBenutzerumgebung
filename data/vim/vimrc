@@ -195,27 +195,10 @@ let g:shebang#shebangs = {
 	\ 'php': '',
 	\ }
 
-" Auto-Braces and quotes
-" autocmd FileType javascript,php,python,text,html,xml,smarty,css,twig inoremap <buffer> { {}<LEFT>
-" autocmd FileType javascript,php,python,text,html,xml,smarty,css,twig inoremap <buffer> [ []<LEFT>
-" autocmd FileType javascript,php,python,text,html,xml,smarty,css,twig inoremap <buffer> ( ()<LEFT>
-" autocmd FileType javascript,php,python,text,html,xml,smarty,css,twig inoremap <buffer> " ""<LEFT>
-" autocmd FileType javascript,php,python,text,html,xml,smarty,css,twig inoremap <buffer> ' ''<LEFT>
-" autocmd FileType html,xml,smarty,twig inoremap <buffer> < <><LEFT>
-
-" quote strings in visual mode
-" vnoremap " <RIGHT>c"<ESC>pi"<ESC>
-" vnoremap ' <RIGHT>c'<ESC>pi'<ESC>
-" vnoremap ( <RIGHT>c(<ESC>pi)<ESC>
-" vnoremap [ <RIGHT>c[<ESC>pi]<ESC>
-" vnoremap { <RIGHT>c{<ESC>pi}<ESC>
-
-" press F in visual mode to run text thru figlet for ascii art
-" vnoremap F :!toilet -F crop -f standard<cr>
-
+" run last command in vim-companion
 map <C-x> :exec "!tmux send-keys -t vim-companion C-p C-j" <CR><CR>
 map <C-a> <Home>
-nmap <C-e> <End>
+map <C-e> <End>
 imap <C-a> <Home>
 imap <C-e> <End>
 
