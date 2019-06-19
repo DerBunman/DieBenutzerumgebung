@@ -158,7 +158,7 @@ URxvt*scrollWithBuffer: true
 URxvt*scrollTtyKeypress: true
 
 URxvt.transparent: false
-URxvt*fading:  20
+URxvt*fading:  30
 
 URxvt.borderless:true
 URxvt.colorMode: on
