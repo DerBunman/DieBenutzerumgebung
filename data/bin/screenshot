@@ -5,7 +5,7 @@ notify_info(){
 }
 
 [ $+commands[slop] -ne 0 ] \
-	&& slop=$(slop -f "%g" -r boxzoom) \
+	&& slop=$(slop -f "%g") \
 	&& read -r G < <(echo $slop) \
 	&& import -window root -crop $G png:- | xclip -selection c -t image/png \
 	&& notify_info "using slop" \
