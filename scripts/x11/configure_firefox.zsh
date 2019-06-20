@@ -44,21 +44,21 @@ yesno "Install Text Contrast for Dark Themes" && {
 	firefox -url "https://addons.mozilla.org/firefox/downloads/file/1721952/"
 }
 
-msg_warning "Install tridactyl form remote url:"
-msg_info " https://tridactyl.cmcaine.co.uk/betas/tridactyl-latest.xpi"
-yesno "" && {
-	tmp_file=$(mktemp --suffix=.xpi)
-	curl -fsSl https://tridactyl.cmcaine.co.uk/betas/tridactyl-latest.xpi > "${tmp_file}"
-	firefox -url "file://${tmp_file}"
-}
+#msg_warning "Install tridactyl form remote url:"
+#msg_info " https://tridactyl.cmcaine.co.uk/betas/tridactyl-latest.xpi"
+#yesno "" && {
+#	tmp_file=$(mktemp --suffix=.xpi)
+#	curl -fsSl https://tridactyl.cmcaine.co.uk/betas/tridactyl-latest.xpi > "${tmp_file}"
+#	firefox -url "file://${tmp_file}"
+#}
 
-msg_warning "Install tridactyl native support form remote url:"
-msg_info " https://raw.githubusercontent.com/tridactyl/tridactyl/master/native/install.sh"
-yesno "" && {
-	tmp_file=$(mktemp)
-	curl -fsSl https://raw.githubusercontent.com/tridactyl/tridactyl/master/native/install.sh > "${tmp_file}"
-	less "${tmp_file}"
-	yesno "Run this script?" && {
-		bash < "${tmp_file}"
-	}
-}
+#msg_warning "Install tridactyl native support form remote url:"
+#msg_info " https://raw.githubusercontent.com/tridactyl/tridactyl/master/native/install.sh"
+#yesno "" && {
+#	tmp_file=$(mktemp)
+#	curl -fsSl https://raw.githubusercontent.com/tridactyl/tridactyl/master/native/install.sh > "${tmp_file}"
+#	less "${tmp_file}"
+#	yesno "Run this script?" && {
+#		bash < "${tmp_file}"
+#	}
+#}
