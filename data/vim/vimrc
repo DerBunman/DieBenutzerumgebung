@@ -205,6 +205,10 @@ imap <C-e> <End>
 " unset search highlight
 map <CR> :nohl<CR>
 
+" remap F1 to ESC because I keep hitting F1 instead of ESC
+map <F1> <Esc>
+imap <F1> <Esc>
+
 "  ___           _            _        _   _
 " |_ _|_ __   __| | ___ _ __ | |_ __ _| |_(_) ___  _ __
 "  | || '_ \ / _` |/ _ \ '_ \| __/ _` | __| |/ _ \| '_ \
