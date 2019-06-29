@@ -40,8 +40,8 @@ Plug 'drmikehenry/vim-fontsize'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'vim-scripts/EnhCommentify.vim' " dependency for my figlet script
 
-if v:version > 704
-	Plug 'ludovicchabant/vim-gutentags'
-endif
+"if v:version > 704
+"	Plug 'ludovicchabant/vim-gutentags'
+"endif
 
 call plug#end()
