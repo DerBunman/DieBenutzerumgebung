@@ -38,9 +38,6 @@ REPORTTIME=3
 # Do not print the directory stack after pushd or popd. 
 setopt PUSHD_SILENT
 
-# Share history between shells
-setopt SHARE_HISTORY
-
 # Add commands to history as they are entered, don't wait for shell to exit
 setopt INC_APPEND_HISTORY
 
