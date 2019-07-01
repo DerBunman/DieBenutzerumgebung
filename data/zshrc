@@ -35,6 +35,10 @@ REPORTTIME=3
 #  |___/\___|\__\___/| .__/ \__|___/
 #                    |_|
 
+# prevent > redirection from truncating the given file if it already exists
+# use >! or >>! to force
+setopt NOCLOBBER
+
 # Do not print the directory stack after pushd or popd. 
 setopt PUSHD_SILENT
 
