@@ -1,12 +1,3 @@
-[Added Associations]
-text/x-log=gvim.desktop
-audio/mpeg=mpv.desktop
-application/pgp-encrypted=gvim.desktop
-text/markdown=gvim.desktop
-image/png=feh.desktop
-text/x-python=gvim.desktop
-
-[Default Applications]
 x-scheme-handler/http=firefox.desktop
 x-scheme-handler/https=firefox.desktop
 text/html=firefox.desktop

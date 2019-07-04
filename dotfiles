@@ -181,7 +181,7 @@ links=(
 	~/.local/share/applications/mimeapps.list data/config/mimeapps.list
 	~/.local/share/applications/defaults.list data/config/mimeapps.list
 	# desktop file so xdg-open can start firefox
-	~/.local/share/applications/firefox.desktop data/local/share/applications
+	~/.local/share/applications/firefox.desktop data/local/share/applications/firefox.desktop
 )
 
 if (( $+command[xdg-user-dirs-update] )); then
@@ -345,6 +345,7 @@ if conf_chk_host_flag "has_root"; then
 				linux-tools-common curl powerline iotop vim mc detox fdupes
 				menu pv figlet net-tools apt-file sysfsutils tmux p7zip-full
 				unp unrar grc ctags silversearcher-ag ranger shellcheck pass
+				xdg-utils
 			)
 
 			conf_chk_host_flag "has_x11" && APT_PACKAGES=(${APT_PACKAGES}
