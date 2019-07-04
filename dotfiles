@@ -174,9 +174,19 @@ links=(
 	~/bin/serve_via_http.sh     data/bin/serve_via_http.sh
 	~/bin/ssh_send_terminfo.zsh data/bin/ssh_send_terminfo.zsh
 	~/bin/tint_screen.zsh       data/bin/tint_screen.zsh
-	~/bin/todofi.sh             submodules/todofi.sh/todofi.sh
 	~/bin/xkeys.zsh             data/bin/xkeys.zsh
+	# mimetypes for xdg-open
+	~/.config/mimeapps.list     data/config/mimeapps.list
+	# depreacted mimetype paths for old apps
+	~/.local/share/applications/mimeapps.list data/config/mimeapps.list
+	~/.local/share/applications/defaults.list data/config/mimeapps.list
+	# desktop file so xdg-open can start firefox
+	~/.local/share/applications/firefox.desktop data/local/share/applications
 )
+
+if (( $+command[xdg-user-dirs-update] )); then
+	links+=( ~/bin/autostart/xdg-user-dirs-update "$(which xdg-user-dirs-update)" )
+fi
 
 #                       _             _ _
 #    ___ _ __ ___  __ _| |_ ___    __| (_)_ __ ___
