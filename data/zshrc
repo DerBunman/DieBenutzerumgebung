@@ -149,18 +149,19 @@ zstyle ':notify:*' success-icon "$HOME/.repos/dotfiles/data/icons/status/dialog-
 #	use:"./solarized-powerline/solarized-powerline.zsh-theme", \
 #	as:theme
 
-zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, at:next
+#zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, at:next
+zplug "romkatv/powerlevel10k", use:powerlevel10k.zsh-theme
 
-P9K_LEFT_PROMPT_ELEMENTS=(root_indicator ssh dir_writable virtualenv context dir vcs)
-P9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs vi_mode)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator ssh dir_writable virtualenv context dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs vi_mode)
 
-P9K_CONTEXT_DEFAULT_FOREGROUND="white"
-#P9K_MODE='awesome-fontconfig'
-P9K_MODE='nerdfont-complete'
+POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="white"
+#POWERLEVEL9K_MODE='awesome-fontconfig'
+POWERLEVEL9K_MODE='nerdfont-complete'
 
-P9K_VI_MODE_INSERT_STRING=""
-P9K_VI_MODE_NORMAL_STRING="\ue62b "
-P9K_VI_MODE_NORMAL_FOREGROUND='yellow'
+POWERLEVEL9K_VI_MODE_INSERT_STRING=""
+POWERLEVEL9K_VI_MODE_NORMAL_STRING="\ue62b "
+POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='yellow'
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
