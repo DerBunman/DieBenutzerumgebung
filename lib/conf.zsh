@@ -19,3 +19,7 @@ function conf_chk_host_flag() {
 	[ "${host_flags_enabled[(r)$1]}" = "$1" ] && return 0 || return 1
 }
 
+function conf_chk_dfp_installed() {
+	local installed=( $(conf get dfp/installed) )
+	[ "${installed[(r)$1]}" = "$1" ] && return 0 || return 1
+}
