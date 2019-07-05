@@ -37,10 +37,13 @@ typeset -A links=(
 # but also the apt packages for debian and ubuntu systems.
 # more systems may be added on a later time.
 dependencies() {
-	. /etc/os-release
+	test -f \
+		&& . /etc/os-release \
+		|| ID=ubuntu # they are the same for this package
 	typeset -A pkg_types=(
-		dfp "dfp_dependencies"
-		apt "packages_${ID:l}"
+		dfp  "dfp_dependencies"
+		apt  "packages_${ID:l}"
+		host "host_features"
 	)
 	if [ "${#pkg_types[$1]}" -gt 0 ]; then
 		echo "${(P)pkg_types[$1]}"
