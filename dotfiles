@@ -128,6 +128,7 @@ typeset -a APT_PACKAGES
 typeset -A links
 # key = link, value = target
 links=(
+	~/bin/rofi_startmenu.zsh    data/bin/rofi_startmenu.zsh
 	~/.Xresources               data/Xresources
 	~/.config/compton.conf      data/config/compton.conf
 	~/.config/dunst             data/config/dunst
