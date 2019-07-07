@@ -198,7 +198,7 @@ rofi.kb-accept-alt: space
 rofi.font: RobotoMono Nerd Font Regular 10
 rofi.disable-history: false
 rofi.levenshtein-sort: true
-rofi.show-icons: false
+rofi.show-icons: true
 rofi.modi:window,run,drun
 
 
