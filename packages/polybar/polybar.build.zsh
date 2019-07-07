@@ -2,8 +2,7 @@ repository="polybar/polybar"
 pkg_name="${repository:t}"
 tag="3.3.1"
 install_debs=(
-	rofi_${tag}_amd64.deb
-	rofi-dev_${tag}_amd64.deb
+	polybar_${tag}_amd64.deb
 )
 
 git clone \
@@ -11,7 +10,6 @@ git clone \
 	"https://github.com/${repository}" "${build_path}/git"
 
 cd "${build_path}/git"
-#cp -Rv $pkg_path/debian .
 tar xf $pkg_path/debian.tar.xz
 
 # switch to release tag

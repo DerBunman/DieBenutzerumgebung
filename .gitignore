@@ -14,4 +14,5 @@ data/config/ranger/bookmarks
 data/config/ranger/history
 data/config/ranger/**/*pyc
 data/config/mc/menu
-
+debs/*
+!debs/.gitkeep

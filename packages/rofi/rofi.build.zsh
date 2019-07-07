@@ -7,16 +7,17 @@ install_debs=(
 	rofi-dev_${tag}_amd64.deb
 )
 
-wget \
-	"http://deb.debian.org/debian/pool/main/r/rofi/rofi_1.5.1-1.debian.tar.xz" \
-	-O "${build_path}/debian.tar.xz"
+#wget \
+#	"http://deb.debian.org/debian/pool/main/r/rofi/rofi_1.5.1-1.debian.tar.xz" \
+#	-O "${build_path}/debian.tar.xz"
 
 git clone \
 	--recurse-submodules \
 	"https://github.com/${repository}" "${build_path}/git"
 
 cd "${build_path}/git"
-tar xf ../debian.tar.xz
+tar xf $pkg_path/debian.tar.xz
+#tar xf ../debian.tar.xz
 
 # switch to release tag
 git checkout "$tag"
