@@ -34,7 +34,8 @@ typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
 # this package depends on
 typeset -r -a dfp_dependencies=(
 	xresources
-	#xdg polybar urxvt x11-themes icons
+	polybar
+	#xdg urxvt x11-themes icons
 )
 
 typeset -r -a host_flags=(

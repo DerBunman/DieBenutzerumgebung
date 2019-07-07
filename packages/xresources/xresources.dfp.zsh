@@ -3,7 +3,7 @@ setopt MULTI_FUNC_DEF
 
 typeset -r info="$(<<-EOF
 	This package contains the ~/.Xressources file which defines
-	 |the basic colors used by most applications.
+	the basic colors used by most applications.
 	EOF
 	)"
 
@@ -39,7 +39,6 @@ tests() {
 	}
 	done
 	echo "Looking good!"
-	return 0
 }
 
 # the update/init function only creates a symlink.
@@ -47,5 +46,4 @@ tests() {
 update install() {
 	install_symlinks \
 		&& tests
-	exit $?
 }
