@@ -5,9 +5,10 @@ script_path=$0:A # :A follows symlinks
 cd ${script_path:h} # h dirname
 
 # include lib files
-for file in lib/*.zsh; do
-	. "$file"
-done
+. lib/conf.zsh
+. lib/colorized_messages.zsh
+. lib/conf.zsh
+
 
 ASSUME_YES=$(conf_chk_behavior apt-ask && echo false || echo true)
 RUN_APT_COMMANDS=${${RUN_APT_COMMANDS}:-true}

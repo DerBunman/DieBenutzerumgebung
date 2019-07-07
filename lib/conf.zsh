@@ -3,6 +3,7 @@ function conf() {
 	$HOME/.repos/dotfiles/modules/conf.zsh "$@"
 }
 
+#alias conf="$HOME/.repos/dotfiles/modules/conf.zsh"
 
 function conf_chk_behavior() {
 	local behaviors_enabled=( $(conf get dotfiles/behaviors_enabled) )
@@ -20,6 +21,6 @@ function conf_chk_host_flag() {
 }
 
 function conf_chk_dfp_installed() {
-	local installed=( $(conf get dfp/installed) )
-	[ "${installed[(r)$1]}" = "$1" ] && return 0 || return 1
+	conf get dfp/installed/$1 || return 1
+	return 0
 }

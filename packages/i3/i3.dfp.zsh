@@ -3,8 +3,8 @@ setopt MULTI_FUNC_DEF
 
 typeset -r info="$(<<-EOF
 	This package will install the i3 config
-	 |and also install the needed packages for
-	 |i3. (When the package installation is enabled.)
+	and also install the needed packages for
+	i3. (When the package installation is enabled.)
 	EOF
 	)"
 
@@ -33,7 +33,7 @@ typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
 # these are the dotfiles packages (dfp)
 # this package depends on
 typeset -r -a dfp_dependencies=(
-	xresouces
+	xresources
 	#xdg polybar urxvt x11-themes icons
 )
 
@@ -58,6 +58,3 @@ update init() {
 # to veryfy that the installation is complete
 tests() {
 }
-
-
-. ${0:h}/../inc.dfp.zsh "$@"

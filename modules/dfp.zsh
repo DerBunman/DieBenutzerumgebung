@@ -1,10 +1,13 @@
 #!/usr/bin/env zsh
 debug=${debug:-false}
-unsetopt FUNCTION_ARGZERO
 
 # load needed libs
 # bzcurses is loaded later on
 . ${0:h}/../lib/conf.zsh
+. ${0:h}/../lib/trace.zsh
+
+setopt ERR_EXIT FUNCTION_ARG_ZERO
+trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; return $?' ERR INT TERM
 
 cat <<'EOF'
       _  __                _
@@ -38,10 +41,18 @@ shift
 typeset -A packages
 for package in $packages_path/*(/); do
 	dfp_zsh="$packages_path/${package:t}/${package:t}.dfp.zsh"
+	[ -f "$dfp_zsh" ] || {
+		echo "ERROR in package '${package:t}' could not find ${dfp_zsh}."
+		echo "      package will be ignored."
+		continue
+	}
 	packages+=(
 		"${package:t}" "$dfp_zsh"
 	)
 done
+
+dfp_pb=${0:h}/../lib/dfp.package-builder.zsh
+
 
 #   _ _     _
 #  | (_)___| |_
@@ -100,10 +111,30 @@ elif [ "$action" = "install" ]; then
 	echo "$text"
 	echo "${(r:${#text}::=:)${}}\n"
 
-	dfp_zsh="${(v)packages[$1]:A}"
-	"$dfp_zsh" init "$1" && {
+	depends_dfp=( "${(f@)$($dfp_pb "$1" depends_dfp)}" )
+	if [ "${depends_dfp}" = "" ]; then
+		echo "DFP-Dependencies: none"
+	else
+		echo "DFP-Dependencies:"
+		for dfp in $depends_dfp; do
+			conf_chk_dfp_installed $dfp && {
+				echo "$dfp (installed)"
+			} || {
+				echo "$dfp (missing)"
+			}
+		done
+
+		echo "Installing DFP-Dependencies ..."
+		for dfp in $depends_dfp; do
+			conf_chk_dfp_installed $dfp || {
+				echo "Installing DFP $dfp"
+				"$0" install $dfp
+			}
+		done
+	fi
+
+	$dfp_pb "$1" update && {
 		echo "Package $1 has been successfully installed."
-		"$dfp_zsh" version | conf put "dfp/installed/$1"
 	} || {
 		echo "ERROR! Install failed."
 		exit 1

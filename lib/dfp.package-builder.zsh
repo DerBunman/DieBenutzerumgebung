@@ -1,7 +1,62 @@
-# load conf lib
-. ${0:h}/../lib/conf.zsh
+#!/usr/bin/env zsh
+zmodload zsh/mapfile
+setopt ERR_EXIT FUNCTION_ARG_ZERO
+trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; exit $?' ERR INT TERM
 
-backup_dir=${0:h}/../backups/
+# load needed libs
+. ${0:h}/conf.zsh
+. ${0:h}/trace.zsh
+. ${0:h}/dfp.helpers.zsh
+
+help() {
+	echo "$(cat <<-EOF
+	Syntax: dfp.package-builder.zsh package action [parameters]
+	Eg: dfp.package-builder.zsh i3 install
+	EOF
+	)"
+}
+
+if [ "$1" = "" ]; then
+	{
+		echo "ERROR: provide package name."
+		echo ""
+		help
+	} 1>&2
+	exit 1
+fi
+
+package=$1
+shift
+package_dfp=${0:A:h}/../packages/$package/$package.dfp.zsh
+backup_dir=${0:A:h}/../backups/
+
+if [ ! -f "$package_dfp" ]; then
+	echo "ERROR: could not find $package_dfp"
+	exit 1
+
+elif [ "$1" = "" ]; then
+	{
+		echo "ERROR: provide action."
+		echo ""
+		help
+	} 1>&2
+	exit 1
+
+fi
+
+action="$1"
+shift
+action_parameters=( "$*" )
+if [[ "$action" = "install" && "$(conf get dfp/installed/$package)" != "" ]]; then
+	{
+		echo "ERROR: This package is aready installed."
+		echo "       Please use update function."
+	} 1>&2
+	exit 1
+fi
+
+
+
 
 # returns the dependencies for other dotfiles packages (dfp)
 # but also the apt packages for debian and ubuntu systems.
@@ -72,39 +127,6 @@ validate() {
 	return $error
 }
 
-install_symlinks() {
-	for link target in ${(kv)symlinks[@]}; do
-		if [ ${link:A} = ${target:A} ]; then
-			echo "[OK] Symlink exists and points to the right file:"
-			echo "${link}"
-			continue
-
-		elif [[ ! -L "${link}" && -e "${link}" ]]; then
-			echo "File/Directory and not link:"
-			echo "${link}"
-			echo "Moving to "
-			echo mv "$link" "$backup_dir"
-
-		elif [[ ! -e "$target" ]]; then
-			echo "Symlink target does not exit."
-			echo "This has to be fixed. before we can continue."
-			exit 1
-
-		elif [[ -L "${link}" && ${link:A} != ${target:A} ]]; then
-			echo "Symlink exists and is wrong or broken:"
-			echo "${link}"
-			echo "  points to"
-			echo "   ${link:A}"
-			echo "  should point to"
-			echo "   ${target:A}"
-			echo
-			echo "  -> Delete and relink."
-			rm "${link}"
-		fi
-		ln -v --relative -s "$target" "$link"
-	done
-}
-
 # doesnt work yet as it should
 validate_symlinks() {
 	echo "Symlinks:|"
@@ -165,8 +187,16 @@ validate_dependencies_apt() {
 
 
 validate_dependencies_host_flags() {
+	if [ ${#host_flags} -eq 0 ]; then
+		return 0
+	fi
+
 	echo "Host Flags:|"
-	local flags_enabled=( ${(@)$(conf get dotfiles/host_flags_enabled)} )
+	
+	local flags_enabled=(
+		${(@)$(conf get dotfiles/host_flags_enabled)}
+	)
+	
 	for flag in $host_flags; do
 		[ "$flags_enabled[(r)$flag]" = "$flag" ] && {
 			echo " |OK!$flag"
@@ -208,13 +238,116 @@ details() {
 	validate_dependencies_apt
 }
 
-# wrapper that calls the functions for the package handling
-[ $# -ne 0 ] && {
-	if typeset -f "$1" > /dev/null; then
-		func="$1"
-		shift
-		"$func" "$*"
-	else
-		echo "ERROR: function $1 was not found in $0."
-	fi
+install_symlinks() {
+	for link target in ${(kv)symlinks[@]}; do
+		if [ ${link:A} = ${target:A} ]; then
+			echo "[OK] Symlink exists and points to the right file:"
+			echo "${link}"
+			continue
+
+		elif [[ ! -L "${link}" && -e "${link}" ]]; then
+			echo "File/Directory and not link:"
+			echo "${link}"
+			echo "Moving to "
+			echo mv "$link" "$backup_dir"
+
+		elif [[ ! -e "$target" ]]; then
+			echo "Symlink target does not exit."
+			echo "This has to be fixed. before we can continue."
+			exit 1
+
+		elif [[ -L "${link}" && ${link:A} != ${target:A} ]]; then
+			echo "Symlink exists and is wrong or broken:"
+			echo "${link}"
+			echo "  points to"
+			echo "   ${link:A}"
+			echo "  should point to"
+			echo "   ${target:A}"
+			echo
+			echo "  -> Delete and relink."
+			rm "${link}"
+		fi
+		ln -v --relative -s "$target" "$link"
+	done
 }
+
+install_dependencies_apt() {
+	local deps=( ${(@)$(dependencies apt)} )
+	if [ ${#deps} -eq 0 ]; then
+		echo "INFO: Package has no apt dependencies."
+		return
+	fi
+	echo "INFO: Installing apt packages ${deps}\n"
+	sudo apt-get install ${deps}
+}
+
+
+depends_dfp() {
+	if [ "$1" = "" ]; then
+		deps_tmp_file="$(mktemp)"
+	else
+		deps_tmp_file="$1"
+	fi
+	
+	local deps=("${(f@)mapfile[$deps_tmp_file]}")
+
+	for dfp in $dfp_dependencies; do
+		if [ ${#deps[(r)$dfp]} -eq 0 ]; then
+			echo $dfp >> $deps_tmp_file
+			$ZSH_ARGZERO $dfp depends_dfp "${deps_tmp_file}"
+		fi
+	done
+
+	# if $1 is not set, we are in the first call to this
+	# function. so we return the deps.
+	[ "$1" = "" ] && {
+		cat "$deps_tmp_file" && rm "$deps_tmp_file"
+	}
+	exit 0
+}
+
+
+
+
+
+
+
+
+# Include package definition
+. $package_dfp
+
+validate
+
+
+
+# validate stuff before install/update
+[[ "$action" = "install" \
+	|| $action = "update" \
+	&& ${#host_flags} -ne 0 ]] && {
+	local flags_enabled=(
+		${(@)$(conf get dotfiles/host_flags_enabled)}
+	)
+	for flag in $host_flags; do
+		[ "$flags_enabled[(r)$flag]" = "$flag" ] || {
+			echo "ERROR: host flag not enabled: $flag"
+			echo "       enable or gtfo."
+		} 1>&2
+	done
+}
+
+# wrapper that calls the functions for the package handling
+if typeset -f "$action" > /dev/null; then
+	"$action" "$action_parameters"
+
+else
+	echo "ERROR: function $action was not found in ${package_dfp:A}." 1>&2
+	exit 1
+
+fi
+
+
+if [[ "$action" = "update" || "$action" = "install" ]]; then
+	date | conf put dfp/installed/$package
+	echo "SUCCESS!"
+fi
+

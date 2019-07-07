@@ -17,7 +17,7 @@ typeset -r license="MIT"
 
 typeset -r -a packages_debian=()
 typeset -r -a packages_ubuntu=()
-typeset -r -a dfp_dependencies=()
+typeset -r -a dfp_dependencies=( )
 
 typeset -r -a host_flags=(
 	has_x11
@@ -44,12 +44,8 @@ tests() {
 
 # the update/init function only creates a symlink.
 # for this package
-update init() {
+update install() {
 	install_symlinks \
 		&& tests
 	exit $?
 }
-
-. ${0:h}/../inc.dfp.zsh "$@"
-
-exit 0
