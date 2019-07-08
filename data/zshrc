@@ -163,9 +163,13 @@ POWERLEVEL9K_VI_MODE_INSERT_STRING=""
 POWERLEVEL9K_VI_MODE_NORMAL_STRING="\ue62b "
 POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='yellow'
 
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-POWERLEVEL9K_SHORTEN_DELIMITER="*"
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_to_unique"
+#POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+#POWERLEVEL9K_SHORTEN_DELIMITER="*"
+#POWERLEVEL9K_SHORTEN_STRATEGY="truncate_to_unique"
+
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 
 #  If set, used to give the indentation between the right hand side of the right prompt in the line editor 
 #  as given by RPS1 or RPROMPT and the right hand side of the screen. If not set, the value 1 is used.
