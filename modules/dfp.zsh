@@ -3,11 +3,13 @@ debug=${debug:-false}
 
 # load needed libs
 # bzcurses is loaded later on
-. ${0:h}/../lib/conf.zsh
-. ${0:h}/../lib/trace.zsh
+. ${0:h:h}/lib/path.helpers.zsh
+. ${0:h:h}/lib/text.helpers.zsh
+. ${0:h:h}/lib/conf.zsh
+. ${0:h:h}/lib/trace.zsh
 
 setopt ERR_EXIT FUNCTION_ARG_ZERO
-trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; return $?' ERR INT TERM
+trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; exit $?' ERR INT TERM
 
 cat <<'EOF'
       _  __                _
@@ -33,25 +35,27 @@ function help() {
 
 [ ${#} -eq 0 ] && { help; exit }
 
-packages_path=${0:h}/../packages
+packages_path=$(path_packages)
 
 action="${1}"
 shift
 
 typeset -A packages
 for package in $packages_path/*(/); do
-	dfp_zsh="$packages_path/${package:t}/${package:t}.dfp.zsh"
+	dfp_zsh="$(path_package_dfp $package:t)"
 	[ -f "$dfp_zsh" ] || {
 		echo "ERROR in package '${package:t}' could not find ${dfp_zsh}."
 		echo "      package will be ignored."
 		continue
 	}
 	packages+=(
-		"${package:t}" "$dfp_zsh"
+		"${package:t}" "${dfp_zsh:A}"
 	)
 done
 
-dfp_pb=${0:h}/../lib/dfp.package-builder.zsh
+# dfp_pf stands for dfp package builder and it is the
+# script, that wraps the data in functions and logic.
+dfp_pb=$(path_dfp_pb)
 
 
 #   _ _     _
@@ -60,16 +64,17 @@ dfp_pb=${0:h}/../lib/dfp.package-builder.zsh
 #  | | \__ \ |_
 #  |_|_|___/\__|
 if [ "$action" = "list" ]; then
-	echo "Listing packages:"
-	echo "================="
+	text_unterlined "Listing packages:"
+
 	for package dfp_zsh in ${(kv)packages[@]}; do
 		echo $(
-			echo "$(${dfp_zsh:A} nameplus):"
+			echo "$($dfp_pb $package nameplus):"
 			echo " | "
-			${dfp_zsh:A} info_short
+			$dfp_pb $package info_short
 		)
 	done | column -s'|' -t
-
+	echo ""
+	text_rulem "[ Finished ]"
 
 #   _ _     _        _           _        _ _          _
 #  | (_)___| |_     (_)_ __  ___| |_ __ _| | | ___  __| |
@@ -86,19 +91,121 @@ elif [ "$action" = "list-installed" ]; then
 #  \__ \ | | | (_) \ V  V /
 #  |___/_| |_|\___/ \_/\_/
 elif [ "$action" = "show" ]; then
-	local text="Package details for ${1}:"
-	echo "$text"
-	echo "${(r:${#text}::=:)${}}\n"
+	package=$1;
+   	shift
 
-	dfp_zsh="${(v)packages[$1]:A}"
+	text_unterlined "Package details for ${package}:"
+
+	$dfp_pb "$package" info
+	echo ""
 	{
-		"$dfp_zsh" details \
-			|| {
-			echo "ERROR $? in $0"
-			exit $?
-		} 1>&2
+		echo "info_short:|$( $dfp_pb "$package" info_short )"
 
+		echo "version:|$( $dfp_pb "$package" version ) dfp"
+		echo "version:|${$( $dfp_pb "$package" version_upstream ):-no upsteam} upstream"
+
+		echo "license:|$( $dfp_pb "$package" license )"
+
+		$dfp_pb "$package" validate
+		if [ $? -eq 0 ]; then
+			echo "self-check:|SUCCESS"
+		else
+			echo "self-check:|FAILED"
+		fi
 	} | column -s'|' -t -c1
+
+	# Symlinks
+	echo ""
+	text_rulem "[ Symlinks ]"
+	typeset -A symlinks=( $($dfp_pb "$package" symlinks) )
+	if [ ${#symlinks} -eq 0 ]; then
+		echo "no symlinks needed\n"
+	else
+		for link target in ${(kv)symlinks}; do
+			echo ${link} $target
+		done | column -t -s' '
+		echo ""
+
+		# APT
+		text_rulem "[ APT-dependencies ]"
+		local deps=( ${(@)$($dfp_pb "$package" dependencies apt)} )
+		if [ ${#deps} -eq 0 ]; then
+			echo "no dependencies\n"
+		else
+			{
+			echo "status!package!installed!depends on version"
+			for apt_package in ${deps}; do
+				apt_package=("${(@s/:/)apt_package}")
+				installed_version=$(apt-cache policy $apt_package[1] \
+					| grep -oP 'Installed: \K.*([^ ]*)' \
+					| grep -v '(none)' )
+
+				local retval=$?
+				local pkg_status=${installed_version:-MISSING}
+
+				ok="MISSING"
+				if [[ "${pkg_status}" != "MISSING" && ${apt_package[2]:--} != '-' ]]; then
+					dpkg --compare-versions "${pkg_status}" gt ${apt_package[2]:-999999} && {
+						ok="OK "
+					} || {
+						ok="TOO OLD"
+					}
+				elif [[ "${pkg_status}" != "MISSING" ]]; then
+					ok="OK"
+				fi
+				echo "$ok!$apt_package[1]!(I:$pkg_status)!(D:${apt_package[2]:--})"
+			done
+			} | column -t -s'!'
+			echo ""
+		fi
+	fi
+
+	# host_flags
+	text_rulem "[ Host Flags ]"
+	local host_flags=( ${(@)$($dfp_pb "$package" dependencies host_flags)} )
+	if [ ${#host_flags} -eq 0 ]; then
+		echo "no flags needed\n"
+	else
+		local flags_enabled=(
+			${(@)$(conf get dotfiles/host_flags_enabled)}
+		)
+		
+		{
+			echo "status!flag"
+			for flag in $host_flags; do
+				[ "$flags_enabled[(r)$flag]" = "$flag" ] && {
+					echo "OK!$flag"
+				} || {
+					echo "OFF!$flag"
+				}
+			done 
+		} | column -t -s'!'
+		echo ""
+	fi
+
+	# DFP deps
+	text_rulem "[ DFP-Dependencies ]"
+	local dfp_dependencies=( ${(@)$($dfp_pb "$package" dependencies dfp)} )
+	if [ ${#dfp_dependencies} -eq 0 ]; then
+		echo "no dependencies\n"
+	else
+		{
+			echo "status!package"
+			for dfp in $dfp_dependencies; do
+				ok="INSTALLED"
+
+				conf_chk_dfp_installed "$dfp" \
+					|| ok="MISSING"
+
+				echo "$ok!$dfp"
+			done
+		} | column -t -s'!'
+	fi
+	echo ""
+
+	# end of package detail page
+	text_rulem "[ Finished ]"
+	echo ""
 
 
 #   _           _        _ _

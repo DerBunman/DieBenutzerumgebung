@@ -1,16 +1,17 @@
 #!/usr/bin/env zsh
 setopt MULTI_FUNC_DEF
 
+typeset -r -i version=1
+typeset -r version_upstream="1.5.4"
+
 typeset -r info="$(<<-EOF
-	This rofi package builds and installs a deb package from the official git sources.
+	This package builds rofi $version_upstream and installs a deb package from the official git sources.
 	EOF
 	)"
-
-typeset -r info_short="rofi from git sources."
+typeset -r info_short="Rofi $version_upstream from git sources."
 
 typeset -r package_file=$0
 
-typeset -r -i version=1
 
 typeset -r license="MIT"
 

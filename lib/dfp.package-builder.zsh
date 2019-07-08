@@ -4,10 +4,12 @@ setopt ERR_EXIT FUNCTION_ARG_ZERO
 trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; exit $?' ERR INT TERM
 
 # load needed libs
+. ${0:h}/path.helpers.zsh
 . ${0:h}/conf.zsh
 . ${0:h}/trace.zsh
 . ${0:h}/dfp.helpers.zsh
 
+# displays a small help for this wrapper
 help() {
 	echo "$(cat <<-EOF
 	Syntax: dfp.package-builder.zsh package action [parameters]
@@ -16,6 +18,7 @@ help() {
 	)"
 }
 
+# package name provided?
 if [ "$1" = "" ]; then
 	{
 		echo "ERROR: provide package name."
@@ -25,10 +28,11 @@ if [ "$1" = "" ]; then
 	exit 1
 fi
 
+# set path for the currently wrapped package
 package=$1
 shift
-package_dfp=${0:A:h}/../packages/$package/$package.dfp.zsh
-backup_dir=${0:A:h}/../backups/
+package_dfp=$(path_package_dfp $package)
+backup_dir=$(path_backup)
 
 if [ ! -f "$package_dfp" ]; then
 	echo "ERROR: could not find $package_dfp"
@@ -44,6 +48,8 @@ elif [ "$1" = "" ]; then
 
 fi
 
+# set action and its parameters
+# action can be any function in this scope
 action="$1"
 shift
 action_parameters=( "$*" )
@@ -56,8 +62,6 @@ if [[ "$action" = "install" && "$(conf get dfp/installed/$package)" != "" ]]; th
 fi
 
 
-
-
 # returns the dependencies for other dotfiles packages (dfp)
 # but also the apt packages for debian and ubuntu systems.
 # more systems may be added on a later time.
@@ -68,7 +72,7 @@ dependencies() {
 	typeset -A pkg_types=(
 		dfp        "dfp_dependencies"
 		apt        "packages_${ID:l}"
-		host_flags "host_features"
+		host_flags "host_flags"
 	)
 	if [ "${#pkg_types[$1]}" -gt 0 ]; then
 		echo "${(P)pkg_types[$1]}"
@@ -84,6 +88,7 @@ dependencies() {
 info() {
 	echo "${info}"
 }
+
 info_short() {
 	echo "$info_short"
 }
@@ -92,12 +97,26 @@ version() {
 	echo ${version}
 }
 
+version_upstream() {
+	echo ${version_upstream}
+}
+
+license() {
+	echo ${license}
+}
+
 name() {
 	echo ${package_name}
 }
 
 nameplus() {
 	echo "${package_file:t:r:r}[$version]"
+}
+
+symlinks() {
+	# ressurect array like this:
+	# typeset -A symlinks=( $($dfp_pb "$package" symlinks) )
+	printf '%q\n' "${(kv)symlinks[@]}"
 }
 
 # validates that the dfp has all variables are set
@@ -127,116 +146,104 @@ validate() {
 	return $error
 }
 
-# doesnt work yet as it should
-validate_symlinks() {
-	echo "Symlinks:|"
-	for link target in ${(kv)symlinks[@]}; do
-		if [ ${link:A} = ${target:A} ]; then
-			echo " |Symlink exists and points to the right file:"
-			echo " |${link}"
-			echo " |${target}"
+## doesnt work yet as it should
+#validate_symlinks() {
+#	echo "Symlinks:|"
+#	for link target in ${(kv)symlinks[@]}; do
+#		if [ ${link:A} = ${target:A} ]; then
+#			echo " |Symlink exists and points to the right file:"
+#			echo " |${link}"
+#			echo " |${target}"
+#
+#		elif [[ ! -L "${link:A}" && ! -z "${link:A}" ]]; then
+#			echo " |File/Directory and not link:"
+#			echo " |${link}"
+#
+#
+#		elif [ "${link:a}" != "" ]; then
+#			echo " |Symlink exists has is wrong:"
+#			echo " |${link}"
+#			echo " |  points to"
+#			echo " |   ${link:a}"
+#			echo " |  should point to to"
+#			echo " |   ${target:a}"
+#		fi
+#	done
+#}
 
-		elif [[ ! -L "${link:A}" && ! -z "${link:A}" ]]; then
-			echo " |File/Directory and not link:"
-			echo " |${link}"
+#validate_dependencies_apt() {
+#	echo "APT-deps:|"
+#	local deps=( ${(@)$(dependencies apt)} )
+#	if [ ${#deps} -eq 0 ]; then
+#		echo " |no dependencies"
+#		return
+#	fi
+#	{
+#	echo " |status!package!installed!depends on version"
+#	for apt_package in ${deps}; do
+#		apt_package=("${(@s/:/)apt_package}")
+#		installed_version=$(apt-cache policy $apt_package[1] \
+#			| grep -oP 'Installed: \K.*([^ ]*)' \
+#			| grep -v '(none)' )
+#
+#		local retval=$?
+#		local pkg_status=${installed_version:-MISSING}
+#
+#		ok="MISSING"
+#		if [[ "${pkg_status}" != "MISSING" && ${apt_package[2]:--} != '-' ]]; then
+#			dpkg --compare-versions "${pkg_status}" gt ${apt_package[2]:-999999} && {
+#				ok="OK "
+#			} || {
+#				ok="TOO OLD"
+#			}
+#		elif [[ "${pkg_status}" != "MISSING" ]]; then
+#			ok="OK"
+#		fi
+#		echo " |$ok!$apt_package[1]!(I:$pkg_status)!(D:${apt_package[2]:--})"
+#	done
+#	} | column -t -s'!'
+#}
 
 
-		elif [ "${link:a}" != "" ]; then
-			echo " |Symlink exists has is wrong:"
-			echo " |${link}"
-			echo " |  points to"
-			echo " |   ${link:a}"
-			echo " |  should point to to"
-			echo " |   ${target:a}"
-		fi
-	done
-}
+#validate_dependencies_host_flags() {
+#	if [ ${#host_flags} -eq 0 ]; then
+#		return 0
+#	fi
+#
+#	echo "Host Flags:|"
+#	
+#	local flags_enabled=(
+#		${(@)$(conf get dotfiles/host_flags_enabled)}
+#	)
+#	
+#	for flag in $host_flags; do
+#		[ "$flags_enabled[(r)$flag]" = "$flag" ] && {
+#			echo " |OK!$flag"
+#		} || {
+#			echo " |OFF!$flag"
+#		}
+#	done | column -t -s'!'
+#}
 
-validate_dependencies_apt() {
-	echo "APT-deps:|"
-	local deps=( ${(@)$(dependencies apt)} )
-	if [ ${#deps} -eq 0 ]; then
-		echo " |no dependencies"
-		return
-	fi
-	{
-	echo " |status!package!installed!depends on version"
-	for apt_package in ${deps}; do
-		apt_package=("${(@s/:/)apt_package}")
-		installed_version=$(apt-cache policy $apt_package[1] \
-			| grep -oP 'Installed: \K.*([^ ]*)' \
-			| grep -v '(none)' )
-
-		local retval=$?
-		local pkg_status=${installed_version:-MISSING}
-
-		ok="MISSING"
-		if [[ "${pkg_status}" != "MISSING" && ${apt_package[2]:--} != '-' ]]; then
-			dpkg --compare-versions "${pkg_status}" gt ${apt_package[2]:-999999} && {
-				ok="OK "
-			} || {
-				ok="TOO OLD"
-			}
-		elif [[ "${pkg_status}" != "MISSING" ]]; then
-			ok="OK"
-		fi
-		echo " |$ok!$apt_package[1]!(I:$pkg_status)!(D:${apt_package[2]:--})"
-	done
-	} | column -t -s'!'
-}
-
-
-validate_dependencies_host_flags() {
-	if [ ${#host_flags} -eq 0 ]; then
-		return 0
-	fi
-
-	echo "Host Flags:|"
-	
-	local flags_enabled=(
-		${(@)$(conf get dotfiles/host_flags_enabled)}
-	)
-	
-	for flag in $host_flags; do
-		[ "$flags_enabled[(r)$flag]" = "$flag" ] && {
-			echo " |OK!$flag"
-		} || {
-			echo " |OFF!$flag"
-		}
-	done | column -t -s'!'
-}
-
-validate_dependencies_dfp() {
-	if [ ${#dfp_dependencies} -eq 0 ]; then
-		return 0
-	fi
-	echo "DFP-deps:|"
-	for dfp in $dfp_dependencies; do
-		ok="INSTALLED"
-
-		conf_chk_dfp_installed "$dfp" \
-			|| ok="MISSING"
-
-		echo " |$ok!$dfp"
-	done | column -t -s'!'
-}
-
-details() {
-	echo "info_short:|${info_short}"
-	echo "info:|${info}"
-	echo "version:|${version}"
-	echo "license:|${license}"
-	validate
-	if [ $? -eq 0 ]; then
-		echo "self-check:|SUCCESS"
-	else
-		echo "self-check:|FAILED!"
-	fi
-	validate_symlinks
-	validate_dependencies_host_flags
-	validate_dependencies_dfp
-	validate_dependencies_apt
-}
+#validate_dependencies_dfp() {
+#	if [ ${#dfp_dependencies} -eq 0 ]; then
+#		return 0
+#	fi
+#	echo "DFP-deps:|"
+#	for dfp in $dfp_dependencies; do
+#		ok="INSTALLED"
+#
+#		conf_chk_dfp_installed "$dfp" \
+#			|| ok="MISSING"
+#
+#		echo " |$ok!$dfp"
+#	done | column -t -s'!'
+#}
+#
+#details() {
+#	validate_dependencies_host_flags
+#	validate_dependencies_dfp
+#}
 
 install_symlinks() {
 	for link target in ${(kv)symlinks[@]}; do

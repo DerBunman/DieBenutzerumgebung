@@ -21,6 +21,6 @@ function conf_chk_host_flag() {
 }
 
 function conf_chk_dfp_installed() {
-	conf get dfp/installed/$1 || return 1
+	conf get dfp/installed/$1 >/dev/null || return 1
 	return 0
 }

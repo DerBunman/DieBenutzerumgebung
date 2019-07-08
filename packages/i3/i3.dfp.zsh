@@ -40,11 +40,15 @@ typeset -r -a dfp_dependencies=(
 
 typeset -r -a host_flags=(
 	has_x11
+	has_root
 )
 
 # these symlinks will be created
 typeset -r -A symlinks=(
-	~/.config/i3/config1 "${0:h}/config"
+	~/.config/i3/config1     "$(path_packages $package)/config"
+	~/bin/i3-applet-wrapper  "$(path_packages $package)/i3-applet-wrapper"
+	~/bin/i3-autostart.zsh   "$(path_packages $package)/i3-autostart.zsh"
+	~/bin/i3subscribe        "$(path_packages $package)/i3subscribe"
 )
 
 # the update/init function
