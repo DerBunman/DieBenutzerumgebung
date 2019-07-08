@@ -21,7 +21,7 @@ typeset -r license="TEST"
 # these packages have to be installed on your system
 # there may be differences between ubuntu and debian
 typeset -r -a packages_debian=(
-	rofi i3 arandr fonts-roboto fonts-roboto-hinted
+	i3 arandr fonts-roboto fonts-roboto-hinted
 	xclip rxvt-unicode-256color slop aosd-cat compton
 	libnotify-bin pavucontrol:3.1-4
 	zathura-cb zathura zathura-djvu zathura-pdf-poppler zathura-ps

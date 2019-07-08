@@ -146,7 +146,6 @@ links=(
 	~/.themes/oomox-DieOberflaechengestaltung data/theme/oomox-DieOberflaechengestaltung
 	~/.tmux.conf                data/tmux.conf
 	~/.toprc                    data/toprc
-	~/.urxvt                    data/urxvt
 	~/.vim                      data/vim
 	~/.xkeys                    data/xkeys
 	~/.xprofile                 data/xprofile
@@ -161,22 +160,30 @@ links=(
 	~/bin/conf                  modules/conf.zsh
 	~/bin/dotfiles              dotfiles
 	~/bin/gvim                  data/bin/gvim.zsh
-	~/bin/i3-applet-wrapper     data/bin/i3-applet-wrapper
-	~/bin/i3-autostart.zsh      data/bin/i3-autostart.zsh
-	~/bin/i3subscribe           data/bin/i3subscribe
-	~/bin/layout_manager.sh     submodules/i3-layout-manager/layout_manager.sh
-	~/bin/screenshot            data/bin/screenshot
 	~/bin/serve_via_http.sh     data/bin/serve_via_http.sh
 	~/bin/ssh_send_terminfo.zsh data/bin/ssh_send_terminfo.zsh
 	~/bin/tint_screen.zsh       data/bin/tint_screen.zsh
 	~/bin/xkeys.zsh             data/bin/xkeys.zsh
-	# mimetypes for xdg-open
+
+# urxvt
+	~/.urxvt                    data/urxvt
+
+
+# mimetypes for xdg-open
 	~/.config/mimeapps.list     data/config/mimeapps.list
 	# depreacted mimetype paths for old apps
 	~/.local/share/applications/mimeapps.list data/config/mimeapps.list
 	~/.local/share/applications/defaults.list data/config/mimeapps.list
 	# desktop file so xdg-open can start firefox
 	~/.local/share/applications/firefox.desktop data/local/share/applications/firefox.desktop
+
+#i3 
+	~/bin/screenshot            data/bin/screenshot
+	~/bin/i3-applet-wrapper     data/bin/i3-applet-wrapper
+	~/bin/i3-autostart.zsh      data/bin/i3-autostart.zsh
+	~/bin/i3subscribe           data/bin/i3subscribe
+	~/bin/layout_manager.sh     submodules/i3-layout-manager/layout_manager.sh
+
 
 	~/bin/polybar-scripts       data/bin/polybar-scripts
 	

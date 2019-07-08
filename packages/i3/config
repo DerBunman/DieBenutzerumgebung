@@ -339,6 +339,7 @@ for_window [class="usbguard-applet-qt"] floating enable
 for_window [class="Display-im6.q16"] floating enable
 for_window [class="feh"] floating enable
 for_window [class="copyq"] floating enable
+for_window [class="Easystroke"] floating enable
 
 #                 _
 #    __ _ ___ ___(_) __ _ _ __

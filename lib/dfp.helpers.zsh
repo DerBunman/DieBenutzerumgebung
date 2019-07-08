@@ -33,7 +33,7 @@ build_deb() {
 	mkdir -p "$build_path"
 	cd "$build_path"
 	echo "Starting build script $build_script ..."
-	. "$build_script" || { echo saflkfdsaj }
+	. "$build_script" || { echo "ERROR while building" }
 
 	echo "Build finished, installing debs:"
 	for file in $install_debs; do
