@@ -37,7 +37,7 @@ typeset -r -a host_flags=(
 typeset -r -A symlinks=(
 )
 
-# the update/init function
+# the update/install function
 update() {
 	version_is_already_installed && return
 	install "$*"
@@ -59,5 +59,5 @@ tests() {
 }
 
 always(){
-	test -f $HOME/bin/i3keys
+	tests
 }

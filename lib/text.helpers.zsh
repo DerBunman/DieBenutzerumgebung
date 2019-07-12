@@ -1,11 +1,25 @@
-text_unterlined() {
-	local text="$1"
-	echo "$text\n${(r:${#text}::=:)${}}\n"
+(( $+commands[figlet] )) \
+	&& FIGLET=(
+		"${commands[figlet]}"
+		"-f"
+		"${0:A:h}/../_assets/figlet_fonts/doom.flf"
+	) \
+	|| FIGLET=( "figlet_fallback" )
+
+figlet_fallback() {
+	local text="$(cat -)"
+	echo "*** ${(r:${#text}::=:)${}}"
+	echo "*** $text"
+	echo "*** ${(r:${#text}::=:)${}}\n"
 }
 
-text_break() {
-	local text="$1"
-	
+text_figlet() {
+	$FIGLET "$*"
+}
+
+text_underlined() {
+	local text="$*"
+	echo "$text\n${(r:${#text}::=:)${}}\n"
 }
 
 ## Print a horizontal rule

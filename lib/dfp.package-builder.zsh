@@ -4,10 +4,11 @@ setopt ERR_EXIT FUNCTION_ARG_ZERO
 trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; return $retval' ERR INT TERM
 
 # load needed libs
-. ${0:h}/path.helpers.zsh
-. ${0:h}/conf.zsh
-. ${0:h}/trace.zsh
-. ${0:h}/dfp.compile_tools.zsh
+. ${0:A:h}/path.helpers.zsh
+. ${0:A:h}/conf.zsh
+. ${0:A:h}/trace.zsh
+. ${0:A:h}/dfp.compile_tools.zsh
+. ${0:A:h}/text.helpers.zsh
 
 # displays a small help for this wrapper
 help() {
@@ -54,7 +55,8 @@ action="$1"
 shift
 action_parameters=( "$*" )
 if [[ "$action" = "install" && "$(conf get dfp/installed/$package/version)" != "" ]]; then
-	echo "INFO: This package is aready installed. Switching to update."
+	echo "INFO: This package is aready installed."
+	echo "      Switching to update.\n"
 	action="update"
 fi
 
@@ -122,7 +124,7 @@ symlinks() {
 
 version_is_already_installed() {
 	[ "$(version_installed)" -eq $version ] && {
-		echo "$package is already up2date. (v$version)"
+		echo "$package is already up2date. (v$version)\n"
 		return 0
 	}
 	return 1
@@ -156,21 +158,46 @@ validate() {
 	return $error
 }
 
+validate_symlinks() {
+	text_underlined "Valdiating installed symlinks for $package"
+	local error=0
+	for link target in ${(kv)symlinks[@]}; do
+		if [ "${link:A}" = "${target:A}" ]; then
+			echo "[OK] Symlink exists and points to the right file:"
+			echo " |-: ${link}"
+			echo " \\-> ${target}\n"
+		elif [ ! -e "${target}" ]; then
+			echo "[ERROR] Target doesn't exist:"
+			echo " |-: ${link}"
+			echo " \\->  ${target}\n"
+			error=1
+		else
+			echo "[ERROR] Symlink has some error. Please check this:"
+			echo " |-: ${link}"
+			echo " \\->  ${target}\n"
+			error=1
+		fi
+	done
+	return $error
+}
+
 install_symlinks() {
+	text_underlined "Installing symlinks for $package"
 	for link target in ${(kv)symlinks[@]}; do
 		if [ ${link:A} = ${target:A} ]; then
 			echo "[OK] Symlink exists and points to the right file:"
-			echo "${link}"
+			echo " |-: ${link}"
+			echo " \\->  ${target}\n"
 			continue
 
 		elif [[ ! -L "${link}" && -e "${link}" ]]; then
 			echo "File/Directory and not link:"
 			echo "${link}"
-			echo "Moving to "
-			echo mv "$link" "$backup_dir"
+			echo "Moving to $backup_dir"
+			mv "$link" "$backup_dir"
 
 		elif [[ ! -e "$target" ]]; then
-			echo "Symlink target does not exit."
+			echo "Symlink target $target does not exit."
 			echo "This has to be fixed. before we can continue."
 			exit 1
 
@@ -185,6 +212,12 @@ install_symlinks() {
 			echo "  -> Delete and relink."
 			rm "${link}"
 		fi
+
+		echo "Creating symlink:"
+		echo " |-: ${link}"
+		echo " \\->  ${target}\n"
+		
+		test -e "${link:h}" || mkdir -p "${link:h}"
 		ln -v --relative -s "$target" "$link"
 	done
 }
@@ -259,7 +292,7 @@ if typeset -f "$action" > /dev/null; then
 	setopt ERR_EXIT
 	"$action" "$action_parameters" || exit $?
 	if typeset -f "always" > /dev/null; then
-		"always" "$action_parameters" || exit $?
+		always "$action_parameters"
 	fi
 else
 	echo "ERROR: function $action was not found in ${package_dfp:A}." 1>&2

@@ -6,7 +6,6 @@ debug=${debug:-false}
 # bzcurses is loaded later on
 . ${0:A:h:h}/lib/path.helpers.zsh
 . ${0:A:h:h}/lib/text.helpers.zsh
-. ${0:A:h:h}/lib/text.helpers.zsh
 . ${0:A:h:h}/lib/dfp.tools.zsh
 . ${0:A:h:h}/lib/conf.zsh
 . ${0:A:h:h}/lib/trace.zsh
@@ -57,7 +56,7 @@ dfp_pb=$(path_dfp_pb)
 #  | | \__ \ |_
 #  |_|_|___/\__|
 if [ "$action" = "list" ]; then
-	text_unterlined "Listing packages:"
+	text_underlined "Listing packages:"
 
 	for package dfp_zsh in ${(kv)packages[@]}; do
 		echo $(
@@ -87,7 +86,7 @@ elif [ "$action" = "show" ]; then
 	package=$1;
    	shift
 
-	text_unterlined "Package details for ${package}:"
+	text_underlined "Package details for ${package}:"
 
 	$dfp_pb "$package" info
 	echo ""
@@ -215,6 +214,7 @@ elif [ "$action" = "install" ]; then
 		local install=install
 		local text="Installing package ${1}:"
 	fi
+	text_figlet "$1"
 	echo "$text"
 	echo "${(r:${#text}::=:)${}}\n"
 
@@ -230,6 +230,7 @@ elif [ "$action" = "install" ]; then
 				echo "$dfp (missing)"
 			}
 		done
+		echo ""
 
 		echo "Installing DFP-Dependencies ..."
 		for dfp in $depends_dfp; do
@@ -240,14 +241,14 @@ elif [ "$action" = "install" ]; then
 				}
 			}
 		done
-		echo "Installing DFP-Dependencies ... DONE"
+		echo "Installing DFP-Dependencies ... DONE\n"
 	fi
 
 	# install or update the package
 	$dfp_pb "$1" $install && {
-		echo "Package $1 has been successfully installed."
+		echo "Package $1 has been successfully installed.\n"
 	} || {
-		echo "ERROR! Install failed."
+		echo "ERROR! Install failed.\n"
 		exit 1
 	}
 

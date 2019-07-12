@@ -28,13 +28,10 @@ typeset -r -a host_flags=(
 
 # these symlinks will be created
 typeset -r -A symlinks=(
-	~/bin/polybar-scripts "${0:h}/polybar-scripts"
-	~/.config/polybar     "${0:h}/polybar"
+	~/bin/polybar-scripts "${0:A:h}/polybar-scripts"
+	~/.config/polybar     "${0:A:h}/polybar"
 
 )
-
-tests() {
-}
 
 update() {
 	version_is_already_installed && return
@@ -47,4 +44,13 @@ install() {
 	# build deb is to compile and package debs
 	build_deb "$package"
 	install_symlinks
+}
+
+tests() {
+	validate_symlinks
+}
+
+# will be executed after successful install/update
+always() {
+	tests
 }

@@ -19,7 +19,7 @@ generate_packages_array() {
 		dfp_zsh="$(path_package_dfp $package:t)"
 		[ -f "$dfp_zsh" ] || {
 			echo "ERROR in package '${package:t}' could not find ${dfp_zsh}."
-			echo "      package will be ignored."
+			echo "      package will be ignored.\n" 1>&2
 			continue
 		}
 		packages+=(

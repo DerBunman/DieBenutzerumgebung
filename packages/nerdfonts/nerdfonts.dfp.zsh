@@ -35,7 +35,7 @@ tests() {
 	echo "Looking good!" # MAH MAN!
 }
 
-# the update/init function only creates a symlink.
+# the update/install function only creates a symlink.
 # for this package
 update() {
 }
@@ -43,7 +43,7 @@ update() {
 install() {
 	test -e "$font_path" && {
 		echo "Folder exits. Delete $font_path to reinstall."
-		exit 1
+		return 0
 	}
 	mkdir -p "$font_path"
 	cd "$font_path"

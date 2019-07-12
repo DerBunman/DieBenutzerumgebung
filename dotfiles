@@ -29,6 +29,11 @@ action=${1:-unset}
 	exit
 }
 
+
+# everything beyond shouldn't be run, but it has to be migrated.
+exit
+
+
 #       _ _           _               _
 #    __| (_)___ _ __ | | __ _ _   _  | | ___   __ _  ___
 #   / _` | / __| '_ \| |/ _` | | | | | |/ _ \ / _` |/ _ \
@@ -153,13 +158,6 @@ links=(
 	~/bin/xkeys.zsh             data/bin/xkeys.zsh
 
 
-	# Theme
-	~/.config/oomox             data/config/oomox
-	~/.config/gtk-3.0           data/config/gtk-3.0
-	~/.gtkrc-2.0                data/gtkrc-2.0
-	~/.icons                    data/icons
-	~/.themes/oomox-DieOberflaechengestaltung data/theme/oomox-DieOberflaechengestaltung
-	
 
 	# compton
 	~/.config/compton.conf      data/config/compton.conf
@@ -178,6 +176,12 @@ links=(
 
 
 	# autodownloader ...
+	# Theme
+	#~/.config/oomox             data/config/oomox
+	#~/.config/gtk-3.0           data/config/gtk-3.0
+	#~/.gtkrc-2.0                data/gtkrc-2.0
+	#~/.icons                    data/icons
+	#~/.themes/oomox-DieOberflaechengestaltung data/theme/oomox-DieOberflaechengestaltung
 	~/.local/share/fonts        data/local/share/fonts
 	# already moved to new package format
 	~/bin/polybar-scripts       data/bin/polybar-scripts

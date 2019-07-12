@@ -29,7 +29,6 @@ typeset -r -a host_flags=(
 # these symlinks will be created
 typeset -r -A symlinks=()
 
-tests() {}
 
 update() {
 	version_is_already_installed && return
@@ -43,5 +42,11 @@ install() {
 	build_deb "$package"
 }
 
+tests() {
+	validate_symlinks
+}
+
 # will be executed after successful install/update
-always() {}
+always() {
+	tests
+}

@@ -15,7 +15,7 @@ typeset -r -i version=1
 typeset -r license="MIT"
 
 typeset -r -a packages_debian=( xdg-utils )
-typeset -r -a packages_ubuntu=(  ${(@)packages_debian} )
+typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
 typeset -r -a dfp_dependencies=( )
 
 typeset -r -a host_flags=(
@@ -25,24 +25,17 @@ typeset -r -a host_flags=(
 # these symlinks will be created
 typeset -r -A symlinks=(
 	# depreacted mimetype paths for old apps
-	~/.config/mimeapps.list                   "${0:h}/mimeapps.list"
-	~/.local/share/applications/mimeapps.list "${0:h}/mimeapps.list"
-	~/.local/share/applications/defaults.list "${0:h}/mimeapps.list"
+	~/.config/mimeapps.list                   "${0:A:h}/mimeapps.list"
+	~/.local/share/applications/mimeapps.list "${0:A:h}/mimeapps.list"
+	~/.local/share/applications/defaults.list "${0:A:h}/mimeapps.list"
 
 	# desktop file so xdg-open can start firefox
-	~/.local/share/applications/firefox.desktop "${0:h}/firefox.desktop"
+	~/.local/share/applications/firefox.desktop "${0:A:h}/firefox.desktop"
 )
 
 tests() {
+	validate_symlinks
 	echo "Validating installation."
-	for link target in ${(kv)symlinks[@]}; do
-	[ ${link:A} = ${target:A} ] || {
-		echo "ERROR: symlink doesn't seem correct:"
-		echo "[ "${(k)symlinks[1]:A}" != "${(v)symlinks[1]:A}" ]"
-		echo "${(k)symlinks[1]:A}"
-		exit 1
-	}
-	done
 	echo "Looking good!"
 }
 
@@ -51,7 +44,7 @@ update() {
 	install "$*"
 }
 
-# the update/init function only creates a symlink.
+# the update/install function only creates a symlink.
 # for this package
 install() {
 	install_dependencies_apt

@@ -26,32 +26,25 @@ typeset -r -a host_flags=(
 
 # these symlinks will be created
 typeset -r -A symlinks=(
-	~/.config/urxvt "${0:h}/urxvt"
+	~/.config/urxvt                     "${0:A:h}/urxvt"
+	~/.terminfo/r/rxvt-unicode-256color "${0:A:h}/rxvt-unicode-256color"
 )
 
 tests() {
-	echo "Validating installation."
-
-	for link target in ${(kv)symlinks[@]}; do
-	[ ${link:A} = ${target:A} ] || {
-		echo "ERROR: symlink doesn't seem correct:"
-		echo "[ "${(k)symlinks[1]:A}" != "${(v)symlinks[1]:A}" ]"
-		echo "${(k)symlinks[1]:A}"
-		exit 1
-	}
-	done
-	echo "Looking good!"
+	validate_symlinks
 }
 
-# the update/init function only creates a symlink.
+# the update/install function only creates a symlink.
 # for this package
 update() {
 	install_symlinks
-	tests
 }
 
 install() {
 	install_dependencies_apt
 	install_symlinks
+}
+
+always() {
 	tests
 }

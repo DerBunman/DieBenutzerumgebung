@@ -57,7 +57,7 @@ typeset -r -A symlinks=(
 	~/bin/layout_manager.sh  "$(path_packages $package)/layout_manager.sh"
 )
 
-# the update/init function
+# the update/install function
 update install() {
 	install_symlinks
 }
@@ -65,4 +65,9 @@ update install() {
 # this will be called afer init/update
 # to veryfy that the installation is complete
 tests() {
+	validate_symlinks
+}
+
+always() {
+	tests
 }

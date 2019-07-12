@@ -25,7 +25,7 @@ typeset -r -a host_flags=(
 
 # these symlinks will be created
 typeset -r -A symlinks=(
-	~/.Xresources "${0:h}/Xresources"
+	~/.Xresources "${0:A:h}/Xresources"
 )
 
 tests() {
@@ -41,7 +41,7 @@ tests() {
 	echo "Looking good!"
 }
 
-# the update/init function only creates a symlink.
+# the update/install function only creates a symlink.
 # for this package
 update install() {
 	install_symlinks \
