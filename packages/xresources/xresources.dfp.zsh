@@ -16,7 +16,7 @@ typeset -r -i version=1
 typeset -r license="MIT"
 
 typeset -r -a packages_debian=()
-typeset -r -a packages_ubuntu=()
+typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
 typeset -r -a dfp_dependencies=( )
 
 typeset -r -a host_flags=(

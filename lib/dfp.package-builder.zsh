@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 zmodload zsh/mapfile
 setopt ERR_EXIT FUNCTION_ARG_ZERO
-trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; exit $?' ERR INT TERM
+trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; return $retval' ERR INT TERM
 
 # load needed libs
 . ${0:h}/path.helpers.zsh
@@ -239,14 +239,15 @@ validate
 		[ "$flags_enabled[(r)$flag]" = "$flag" ] || {
 			echo "ERROR: host flag not enabled: $flag"
 			echo "       enable or gtfo."
+			exit 1
 		} 1>&2
 	done
 }
 
 # wrapper that calls the functions for the package handling
 if typeset -f "$action" > /dev/null; then
-	"$action" "$action_parameters"
-
+	setopt ERR_EXIT
+	"$action" "$action_parameters" || exit $?
 else
 	echo "ERROR: function $action was not found in ${package_dfp:A}." 1>&2
 	exit 1

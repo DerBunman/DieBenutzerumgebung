@@ -19,6 +19,7 @@ typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
 typeset -r -a dfp_dependencies=(
 	deb-build-tools
 	xresources
+	nerdfonts
 )
 
 typeset -r -a host_flags=(

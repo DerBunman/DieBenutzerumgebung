@@ -16,7 +16,7 @@ typeset -r package_name=${0:t:r:r}
 
 typeset -r -i version=1
 
-typeset -r license="TEST"
+typeset -r license="MIT"
 
 # these packages have to be installed on your system
 # there may be differences between ubuntu and debian
@@ -37,7 +37,7 @@ typeset -r -a dfp_dependencies=(
 	rofi
 	urxvt
 	xdg-utils
-	#xdg  x11-themes icons
+	# x11-themes icons
 )
 
 typeset -r -a host_flags=(

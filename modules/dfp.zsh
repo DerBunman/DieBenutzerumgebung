@@ -12,7 +12,7 @@ debug=${debug:-false}
 . ${0:A:h:h}/lib/trace.zsh
 
 setopt ERR_EXIT FUNCTION_ARG_ZERO
-trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; exit $?' ERR INT TERM
+trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; return $retval' ERR INT TERM
 
 cat <<'EOF'
       _  __                _
@@ -207,7 +207,14 @@ elif [ "$action" = "show" ]; then
 #  | | | | \__ \ || (_| | | |
 #  |_|_| |_|___/\__\__,_|_|_|
 elif [ "$action" = "install" ]; then
-	local text="Installing package ${1}:"
+	if [ "$1" = "--update" ]; then
+		local install=update
+		shift
+		local text="Updating package ${1}:"
+	else
+		local install=install
+		local text="Installing package ${1}:"
+	fi
 	echo "$text"
 	echo "${(r:${#text}::=:)${}}\n"
 
@@ -228,13 +235,16 @@ elif [ "$action" = "install" ]; then
 		for dfp in $depends_dfp; do
 			conf_chk_dfp_installed $dfp || {
 				echo "Installing DFP $dfp"
-				"$0" install $dfp
+				"$0" install $dfp || {
+					exit
+				}
 			}
 		done
 	fi
 
-	$dfp_pb "$1" update && {
-		echo "Package $1 has been successfully installed."
+	# TODO replace update with install
+	$dfp_pb "$1" $install && {
+		echo "Package $1 $? has been successfully installed."
 	} || {
 		echo "ERROR! Install failed."
 		exit 1
