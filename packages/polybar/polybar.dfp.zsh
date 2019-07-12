@@ -26,7 +26,11 @@ typeset -r -a host_flags=(
 )
 
 # these symlinks will be created
-typeset -r -A symlinks=()
+typeset -r -A symlinks=(
+	~/bin/polybar-scripts "${0:h}/polybar-scripts"
+	~/.config/polybar     "${0:h}/polybar"
+
+)
 
 tests() {}
 
@@ -34,5 +38,6 @@ update install() {
 	echo "processing ..."
 	install_dependencies_apt
 	# build deb is to compile and package debs
-	build_deb "$package"
+	#build_deb "$package"
+	install_symlinks
 }

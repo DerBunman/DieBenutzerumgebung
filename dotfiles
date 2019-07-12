@@ -168,19 +168,20 @@ links=(
 # compton
 	~/.config/compton.conf      data/config/compton.conf
 
-# urxvt
-	~/.urxvt                    data/urxvt
 
 
-# mimetypes for xdg-open
+
+
+	
+	# already moved to new package format
+	~/bin/polybar-scripts       data/bin/polybar-scripts
+	# mimetypes for xdg-open
 	~/.config/mimeapps.list     data/config/mimeapps.list
 	# depreacted mimetype paths for old apps
 	~/.local/share/applications/mimeapps.list data/config/mimeapps.list
 	~/.local/share/applications/defaults.list data/config/mimeapps.list
 	# desktop file so xdg-open can start firefox
 	~/.local/share/applications/firefox.desktop data/local/share/applications/firefox.desktop
-
-#i3 
 	~/bin/compton-invert        data/bin/compton-invert
 	~/bin/tint_screen.zsh       data/bin/tint_screen.zsh
 	~/bin/screenshot            data/bin/screenshot
@@ -188,11 +189,7 @@ links=(
 	~/bin/i3-autostart.zsh      data/bin/i3-autostart.zsh
 	~/bin/i3subscribe           data/bin/i3subscribe
 	~/bin/layout_manager.sh     submodules/i3-layout-manager/layout_manager.sh
-
-
-	~/bin/polybar-scripts       data/bin/polybar-scripts
-	
-	# already moved to new package format
+	~/.urxvt                    data/urxvt
 	~/.Xresources               data/Xresources
 	~/.config/i3                data/config/i3
 	~/.config/polybar           data/config/polybar

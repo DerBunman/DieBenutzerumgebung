@@ -30,6 +30,5 @@ typeset -r -A symlinks=()
 tests() {}
 
 update install() {
-	echo "processing ..."
 	install_dependencies_apt
 }

@@ -25,7 +25,6 @@ typeset -r -a packages_debian=(
 	xclip rxvt-unicode-256color slop aosd-cat compton
 	libnotify-bin pavucontrol:3.1-4
 	zathura-cb zathura zathura-djvu zathura-pdf-poppler zathura-ps
-	# needed for xkeys.zsh (x11-xserver-utils for xmodmap)
 	xbindkeys xbindkeys-config xdotool x11-xserver-utils
 )
 typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
@@ -35,7 +34,10 @@ typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
 typeset -r -a dfp_dependencies=(
 	xresources
 	polybar
-	#xdg urxvt x11-themes icons
+	rofi
+	urxvt
+	xdg-utils
+	#xdg  x11-themes icons
 )
 
 typeset -r -a host_flags=(
@@ -45,7 +47,7 @@ typeset -r -a host_flags=(
 
 # these symlinks will be created
 typeset -r -A symlinks=(
-	~/.config/i3/config1     "$(path_packages $package)/config"
+	~/.config/i3/config      "$(path_packages $package)/config"
 	~/bin/i3-applet-wrapper  "$(path_packages $package)/i3-applet-wrapper"
 	~/bin/i3-autostart.zsh   "$(path_packages $package)/i3-autostart.zsh"
 	~/bin/i3subscribe        "$(path_packages $package)/i3subscribe"
@@ -57,10 +59,7 @@ typeset -r -A symlinks=(
 
 # the update/init function
 update init() {
-	for link target in ${(kv)symlinks[@]}; do
-		# TODO build lib to validate and create symsymlinks
-		echo "ln --relative -s \"$target\" $link"
-	done
+	install_symlinks
 }
 
 # this will be called afer init/update

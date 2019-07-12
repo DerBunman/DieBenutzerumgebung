@@ -14,7 +14,7 @@ typeset -r package_name=${0:t:r:r}
 
 typeset -r -i version=1
 
-typeset -r license="TEST"
+typeset -r license="MIT"
 
 # these packages have to be installed on your system
 # there may be differences between ubuntu and debian
@@ -50,4 +50,5 @@ update init() {
 # this will be called afer init/update
 # to veryfy that the installation is complete
 tests() {
+	test -f $HOME/bin/i3keys
 }
