@@ -43,31 +43,18 @@ if [ "$1" = "Application Categories" ]; then
 	echo "${categories}"
 	echo "quit"
 
+elif [ "${1}" = "Show i3 keymap" ]; then
+	{
+		i3keys web 8080 & 
+		sleep 3 && $BROWSER http://localhost:8080
+	} &
+	killall rofi
+
 elif [ "${1[1]}" = "»" ]; then
 	xdotool search --class rofi key --delay 0 --clearmodifiers 'Control+Alt+space'
 	xdotool search --class rofi type --delay 1 "${1:2}"
 
 	echo "swag"
-
-	# delete all input
-	#xdotool search --class rofi key --delay 0 'Control+w'
-
-#	echo "asdfasda"
-#	category="${1:2}"
-#	kill $(cat ~/.rofi.menu.pid)
-#	rofi \
-#		-pid ~/.rofi.menu.pid \
-#		-i \
-#		-show-icons \
-#		-location 7 \
-#		-yoffset -30 \
-#		-width 520 \
-#		-filter "${1:2}" \
-#		-sidebar-mode \
-#		-display-run "$run_icon cmd" \
-#		-display-drun "all apps" \
-#		-show drun \
-#		-modi mymenu:"$0 show",run
 
 else
 	icon='\uf015' # Home
@@ -78,7 +65,7 @@ else
 	#echo -en "\0message\x1fSpecial <b>bold</b>message\n"
 
 	echo -en "Application Categories\0icon\x1ffolder\n"
-	echo -en "aa---p\0icon\x1ffolder\0cmd\x1fecho foo\n"
-	echo -en "{cmd}foo:<i>asdf</i>;\0cmd\x1fvlc\0icon\x1faudacious\n"
+	echo -en "Show i3 keymap\0icon\x1ffolder\n"
+	
 	echo -en "\0message\x1fSpecial <b>bold</b> message\n"
 fi
