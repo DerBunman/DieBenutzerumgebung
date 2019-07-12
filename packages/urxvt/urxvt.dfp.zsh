@@ -15,7 +15,7 @@ typeset -r -i version=1
 typeset -r license="MIT"
 
 typeset -r -a packages_debian=( rxvt-unicode-256color )
-typeset -r -a packages_ubuntu=( rxvt-unicode-256color )
+typeset -r -a packages_ubuntu=(  ${(@)packages_debian} )
 typeset -r -a dfp_dependencies=(
 	xresources
 )
@@ -45,7 +45,12 @@ tests() {
 
 # the update/init function only creates a symlink.
 # for this package
-update install() {
+update() {
+	install_symlinks
+	tests
+}
+
+install() {
 	install_dependencies_apt
 	install_symlinks
 	tests

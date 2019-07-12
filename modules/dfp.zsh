@@ -240,11 +240,12 @@ elif [ "$action" = "install" ]; then
 				}
 			}
 		done
+		echo "Installing DFP-Dependencies ... DONE"
 	fi
 
-	# TODO replace update with install
+	# install or update the package
 	$dfp_pb "$1" $install && {
-		echo "Package $1 $? has been successfully installed."
+		echo "Package $1 has been successfully installed."
 	} || {
 		echo "ERROR! Install failed."
 		exit 1

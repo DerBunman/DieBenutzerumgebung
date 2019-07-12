@@ -27,8 +27,9 @@ typeset -r -a host_flags=(
 typeset -r -A symlinks=(
 )
 
+font_path="$HOME/.local/share/fonts/NerdFonts"
+
 tests() {
-#	setopt ERR_RETURN
 	echo "Validating installation."
 	fc-list | grep "RobotoMono Nerd Font" >/dev/null
 	echo "Looking good!" # MAH MAN!
@@ -36,18 +37,22 @@ tests() {
 
 # the update/init function only creates a symlink.
 # for this package
-update install() {
-#	setopt ERR_RETURN
-	font_path="$HOME/.local/share/fonts/NerdFonts"
+update() {
+}
+
+install() {
 	test -e "$font_path" && {
 		echo "Folder exits. Delete $font_path to reinstall."
-	} || {
-		mkdir -p "$font_path"
-		cd "$font_path"
-		wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/RobotoMono.zip"
-		unzip "RobotoMono.zip"
-		rm "RobotoMono.zip"
+		exit 1
 	}
+	mkdir -p "$font_path"
+	cd "$font_path"
+	wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/RobotoMono.zip"
+	unzip "RobotoMono.zip"
+	rm "RobotoMono.zip"
+}
+
+always() {
 	fc-cache -fv ${font_path:h}
 	tests
 }

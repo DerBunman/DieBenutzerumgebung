@@ -31,9 +31,17 @@ typeset -r -A symlinks=()
 
 tests() {}
 
-update install() {
+update() {
+	version_is_already_installed && return
+	install "$*"
+}
+
+install() {
 	echo "processing ..."
 	install_dependencies_apt
 	# build deb is to compile and package debs
 	build_deb "$package"
 }
+
+# will be executed after successful install/update
+always() {}

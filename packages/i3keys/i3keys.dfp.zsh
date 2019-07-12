@@ -38,7 +38,12 @@ typeset -r -A symlinks=(
 )
 
 # the update/init function
-update init() {
+update() {
+	version_is_already_installed && return
+	install "$*"
+}
+
+install() {
 	install_dependencies_apt
 
 	go get -u github.com/RasmusLindroth/i3keys
@@ -50,5 +55,9 @@ update init() {
 # this will be called afer init/update
 # to veryfy that the installation is complete
 tests() {
+	test -f $HOME/bin/i3keys
+}
+
+always(){
 	test -f $HOME/bin/i3keys
 }

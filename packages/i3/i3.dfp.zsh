@@ -58,7 +58,7 @@ typeset -r -A symlinks=(
 )
 
 # the update/init function
-update init() {
+update install() {
 	install_symlinks
 }
 

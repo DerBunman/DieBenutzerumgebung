@@ -15,7 +15,7 @@ typeset -r -i version=1
 typeset -r license="MIT"
 
 typeset -r -a packages_debian=( xdg-utils )
-typeset -r -a packages_ubuntu=( xdg-utils )
+typeset -r -a packages_ubuntu=(  ${(@)packages_debian} )
 typeset -r -a dfp_dependencies=( )
 
 typeset -r -a host_flags=(
@@ -46,10 +46,18 @@ tests() {
 	echo "Looking good!"
 }
 
+update() {
+	version_is_already_installed && return
+	install "$*"
+}
+
 # the update/init function only creates a symlink.
 # for this package
-update install() {
+install() {
 	install_dependencies_apt
 	install_symlinks
+}
+
+always() {
 	tests
 }

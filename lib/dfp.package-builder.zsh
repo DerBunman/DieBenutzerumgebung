@@ -53,12 +53,9 @@ fi
 action="$1"
 shift
 action_parameters=( "$*" )
-if [[ "$action" = "install" && "$(conf get dfp/installed/$package)" != "" ]]; then
-	{
-		echo "ERROR: This package is aready installed."
-		echo "       Please use update function."
-	} 1>&2
-	exit 1
+if [[ "$action" = "install" && "$(conf get dfp/installed/$package/version)" != "" ]]; then
+	echo "INFO: This package is aready installed. Switching to update."
+	action="update"
 fi
 
 
@@ -97,6 +94,10 @@ version() {
 	echo ${version}
 }
 
+version_installed() {
+	conf get dfp/installed/${package}/version
+}
+
 version_upstream() {
 	echo ${version_upstream}
 }
@@ -118,6 +119,15 @@ symlinks() {
 	# typeset -A symlinks=( $($dfp_pb "$package" symlinks) )
 	printf '%q\n' "${(kv)symlinks[@]}"
 }
+
+version_is_already_installed() {
+	[ "$(version_installed)" -eq $version ] && {
+		echo "$package is already up2date. (v$version)"
+		return 0
+	}
+	return 1
+}
+
 
 # validates that the dfp has all variables are set
 # and also are from the correct type
@@ -248,6 +258,9 @@ validate
 if typeset -f "$action" > /dev/null; then
 	setopt ERR_EXIT
 	"$action" "$action_parameters" || exit $?
+	if typeset -f "always" > /dev/null; then
+		"always" "$action_parameters" || exit $?
+	fi
 else
 	echo "ERROR: function $action was not found in ${package_dfp:A}." 1>&2
 	exit 1
@@ -256,7 +269,7 @@ fi
 
 
 if [[ "$action" = "update" || "$action" = "install" ]]; then
-	date | conf put dfp/installed/$package
+	version | conf put dfp/installed/$package/version
 	echo "SUCCESS!"
 fi
 
