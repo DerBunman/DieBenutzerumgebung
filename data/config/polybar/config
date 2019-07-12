@@ -71,7 +71,7 @@ font-6 = "RobotoMono Nerd Font:style=Solid:size=12:antialias=true;1"
 
 monitor = ${env:MONITOR:}
 
-modules-left = ${env:POLYBAR_MODULES_LEFT:i3 xwindow}
+modules-left = ${env:POLYBAR_MODULES_LEFT:i3 startmenu xwindow}
 modules-center = ${env:POLYBAR_MODULES_CENTER: }
 modules-right = ${env:POLYBAR_MODULES_RIGHT:docker email eth memory temperature cpu system-cpu-loadavg filesystem battery xkeyboard pulseaudio date}
 
@@ -93,16 +93,16 @@ scroll-down = i3wm-wsprev
 cursor-click = pointer
 cursor-scroll = default
 
-[module/my-text-label]
+[module/startmenu]
 type = custom/text
-content =  Theresa 
+content = 
 
 ; "content" has the same properties as "format-NAME"
 #content-background = #000
 content-foreground = #fff
 
 ; "click-(left|middle|right)" will be executed using "/usr/bin/env sh -c $COMMAND"
-click-left = notify-send hallo
+click-left = ~/bin/rofi_startmenu.zsh
 
 [module/openvpn_gw]
 type = custom/script

@@ -129,15 +129,17 @@ typeset -a APT_PACKAGES
 typeset -A links
 # key = link, value = target
 links=(
+	# deprecated
+	~/.dialogrc                 data/dialogrc
+
+	# todo: split in packages
 	~/bin/rofi_startmenu.zsh    data/bin/rofi_startmenu.zsh
-	~/.config/compton.conf      data/config/compton.conf
 	~/.config/dunst             data/config/dunst
 	~/.config/gtk-3.0           data/config/gtk-3.0
 	~/.config/mc                data/config/mc
 	~/.config/mpv               data/config/mpv
 	~/.config/oomox             data/config/oomox
 	~/.config/ranger            data/config/ranger
-	~/.dialogrc                 data/dialogrc
 	~/.gtkrc-2.0                data/gtkrc-2.0
 	~/.icons                    data/icons
 	~/.local/share/fonts        data/local/share/fonts
@@ -156,14 +158,15 @@ links=(
 	~/.zshrc.d                  data/zshrc.d
 	~/bin/autostart/xkeys.zsh   data/bin/xkeys.zsh
 	~/bin/bosd_cat              data/bin/bosd_cat
-	~/bin/compton-invert        data/bin/compton-invert
 	~/bin/conf                  modules/conf.zsh
 	~/bin/dotfiles              dotfiles
 	~/bin/gvim                  data/bin/gvim.zsh
 	~/bin/serve_via_http.sh     data/bin/serve_via_http.sh
 	~/bin/ssh_send_terminfo.zsh data/bin/ssh_send_terminfo.zsh
-	~/bin/tint_screen.zsh       data/bin/tint_screen.zsh
 	~/bin/xkeys.zsh             data/bin/xkeys.zsh
+
+# compton
+	~/.config/compton.conf      data/config/compton.conf
 
 # urxvt
 	~/.urxvt                    data/urxvt
@@ -178,6 +181,8 @@ links=(
 	~/.local/share/applications/firefox.desktop data/local/share/applications/firefox.desktop
 
 #i3 
+	~/bin/compton-invert        data/bin/compton-invert
+	~/bin/tint_screen.zsh       data/bin/tint_screen.zsh
 	~/bin/screenshot            data/bin/screenshot
 	~/bin/i3-applet-wrapper     data/bin/i3-applet-wrapper
 	~/bin/i3-autostart.zsh      data/bin/i3-autostart.zsh

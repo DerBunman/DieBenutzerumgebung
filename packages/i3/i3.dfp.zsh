@@ -49,6 +49,10 @@ typeset -r -A symlinks=(
 	~/bin/i3-applet-wrapper  "$(path_packages $package)/i3-applet-wrapper"
 	~/bin/i3-autostart.zsh   "$(path_packages $package)/i3-autostart.zsh"
 	~/bin/i3subscribe        "$(path_packages $package)/i3subscribe"
+	~/bin/screenshot         "$(path_packages $package)/screenshot"
+	~/bin/tint_screen.zsh    "$(path_packages $package)/tint_screen.zsh"
+	~/bin/compton-invert     "$(path_packages $package)/compton-invert"
+	~/bin/layout_manager.sh  "$(path_packages $package)/layout_manager.sh"
 )
 
 # the update/init function

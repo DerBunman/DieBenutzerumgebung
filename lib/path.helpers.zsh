@@ -19,6 +19,10 @@ path_packages() {
 	fi
 }
 
+path_module_dfp() {
+	echo $(path_root)/modules/dfp.sh
+}
+
 path_package_dfp() {
 	echo "$(path_packages $1)/$1.dfp.zsh"
 }

@@ -44,7 +44,7 @@ update init() {
 	go get -u github.com/RasmusLindroth/i3keys
 	cd $HOME/go/src/github.com/RasmusLindroth/i3keys
 
-	go install
+	GOBIN=$HOME/bin/ go install
 }
 
 # this will be called afer init/update

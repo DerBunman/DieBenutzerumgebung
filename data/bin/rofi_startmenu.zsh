@@ -62,10 +62,9 @@ else
 	#echo -en "\0urgent\x1f0,2\n"
 	echo -en "\0active\x1f1\n"
 	echo -en "\0markup-rows\x1ftrue\n"
-	#echo -en "\0message\x1fSpecial <b>bold</b>message\n"
+	echo -en "\0message\x1fSpecial <b>bold</b> message\n"
 
 	echo -en "Application Categories\0icon\x1ffolder\n"
 	echo -en "Show i3 keymap\0icon\x1ffolder\n"
 	
-	echo -en "\0message\x1fSpecial <b>bold</b> message\n"
 fi

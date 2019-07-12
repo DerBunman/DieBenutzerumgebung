@@ -1,14 +1,15 @@
 #!/usr/bin/env zsh
 debug=${debug:-false}
 
+#/path.helpers.zsh
 # load needed libs
 # bzcurses is loaded later on
-. ${0:h:h}/lib/path.helpers.zsh
-. ${0:h:h}/lib/text.helpers.zsh
-. ${0:h:h}/lib/text.helpers.zsh
-. ${0:h:h}/lib/dfp.tools.zsh
-. ${0:h:h}/lib/conf.zsh
-. ${0:h:h}/lib/trace.zsh
+. ${0:A:h:h}/lib/path.helpers.zsh
+. ${0:A:h:h}/lib/text.helpers.zsh
+. ${0:A:h:h}/lib/text.helpers.zsh
+. ${0:A:h:h}/lib/dfp.tools.zsh
+. ${0:A:h:h}/lib/conf.zsh
+. ${0:A:h:h}/lib/trace.zsh
 
 setopt ERR_EXIT FUNCTION_ARG_ZERO
 trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; exit $?' ERR INT TERM
