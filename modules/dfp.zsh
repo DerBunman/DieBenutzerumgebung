@@ -5,6 +5,8 @@ debug=${debug:-false}
 # bzcurses is loaded later on
 . ${0:h:h}/lib/path.helpers.zsh
 . ${0:h:h}/lib/text.helpers.zsh
+. ${0:h:h}/lib/text.helpers.zsh
+. ${0:h:h}/lib/dfp.tools.zsh
 . ${0:h:h}/lib/conf.zsh
 . ${0:h:h}/lib/trace.zsh
 
@@ -40,18 +42,8 @@ packages_path=$(path_packages)
 action="${1}"
 shift
 
-typeset -A packages
-for package in $packages_path/*(/); do
-	dfp_zsh="$(path_package_dfp $package:t)"
-	[ -f "$dfp_zsh" ] || {
-		echo "ERROR in package '${package:t}' could not find ${dfp_zsh}."
-		echo "      package will be ignored."
-		continue
-	}
-	packages+=(
-		"${package:t}" "${dfp_zsh:A}"
-	)
-done
+# generates the current global packages array
+generate_packages_array
 
 # dfp_pf stands for dfp package builder and it is the
 # script, that wraps the data in functions and logic.
@@ -125,39 +117,39 @@ elif [ "$action" = "show" ]; then
 			echo ${link} $target
 		done | column -t -s' '
 		echo ""
+	fi
 
-		# APT
-		text_rulem "[ APT-dependencies ]"
-		local deps=( ${(@)$($dfp_pb "$package" dependencies apt)} )
-		if [ ${#deps} -eq 0 ]; then
-			echo "no dependencies\n"
-		else
-			{
-			echo "status!package!installed!depends on version"
-			for apt_package in ${deps}; do
-				apt_package=("${(@s/:/)apt_package}")
-				installed_version=$(apt-cache policy $apt_package[1] \
-					| grep -oP 'Installed: \K.*([^ ]*)' \
-					| grep -v '(none)' )
+	# APT
+	text_rulem "[ APT-dependencies ]"
+	local deps=( ${(@)$($dfp_pb "$package" dependencies apt)} )
+	if [ ${#deps} -eq 0 ]; then
+		echo "no dependencies\n"
+	else
+		{
+		echo "status!package!installed!depends on version"
+		for apt_package in ${deps}; do
+			apt_package=("${(@s/:/)apt_package}")
+			installed_version=$(apt-cache policy $apt_package[1] \
+				| grep -oP 'Installed: \K.*([^ ]*)' \
+				| grep -v '(none)' )
 
-				local retval=$?
-				local pkg_status=${installed_version:-MISSING}
+			local retval=$?
+			local pkg_status=${installed_version:-MISSING}
 
-				ok="MISSING"
-				if [[ "${pkg_status}" != "MISSING" && ${apt_package[2]:--} != '-' ]]; then
-					dpkg --compare-versions "${pkg_status}" gt ${apt_package[2]:-999999} && {
-						ok="OK "
-					} || {
-						ok="TOO OLD"
-					}
-				elif [[ "${pkg_status}" != "MISSING" ]]; then
-					ok="OK"
-				fi
-				echo "$ok!$apt_package[1]!(I:$pkg_status)!(D:${apt_package[2]:--})"
-			done
-			} | column -t -s'!'
-			echo ""
-		fi
+			ok="MISSING"
+			if [[ "${pkg_status}" != "MISSING" && ${apt_package[2]:--} != '-' ]]; then
+				dpkg --compare-versions "${pkg_status}" gt ${apt_package[2]:-999999} && {
+					ok="OK "
+				} || {
+					ok="TOO OLD"
+				}
+			elif [[ "${pkg_status}" != "MISSING" ]]; then
+				ok="OK"
+			fi
+			echo "$ok!$apt_package[1]!(I:$pkg_status)!(D:${apt_package[2]:--})"
+		done
+		} | column -t -s'!'
+		echo ""
 	fi
 
 	# host_flags

@@ -7,7 +7,7 @@ trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; exit $?' ERR INT TERM
 . ${0:h}/path.helpers.zsh
 . ${0:h}/conf.zsh
 . ${0:h}/trace.zsh
-. ${0:h}/dfp.helpers.zsh
+. ${0:h}/dfp.compile_tools.zsh
 
 # displays a small help for this wrapper
 help() {
