@@ -1,0 +1,371 @@
+#                       _ _  __ _
+#   _ __ ___   ___   __| (_)/ _(_) ___ _ __
+#  | '_ ` _ \ / _ \ / _` | | |_| |/ _ \ '__|
+#  | | | | | | (_) | (_| | |  _| |  __/ |
+#  |_| |_| |_|\___/ \__,_|_|_| |_|\___|_|
+#
+set $mod Mod4
+
+#    __ _ _ __  _ __   ___ _ __ __ _ _ __   ___ ___
+#   / _` | '_ \| '_ \ / _ \ '__/ _` | '_ \ / __/ _ \
+#  | (_| | |_) | |_) |  __/ | | (_| | | | | (_|  __/
+#   \__,_| .__/| .__/ \___|_|  \__,_|_| |_|\___\___|
+#        |_|   |_|
+set_from_resource $red1     color1  #000000
+set_from_resource $red2     color9  #000000
+set_from_resource $green1   color2  #000000
+set_from_resource $green2   color10 #000000
+set_from_resource $yellow1  color3  #000000
+set_from_resource $yellow2  color11 #000000
+set_from_resource $blue1    color4  #000000
+set_from_resource $blue2    color12 #000000
+set_from_resource $magenta1 color5  #000000
+set_from_resource $magenta2 color13 #000000
+set_from_resource $cyan1    color6  #000000
+set_from_resource $cyan2    color14 #000000
+set_from_resource $white1   color7  #000000
+set_from_resource $white2   color15 #000000
+set_from_resource $black1   color0  #000000
+set_from_resource $black2   color8  #000000
+
+set_from_resource $foreground  foreground  #000000
+set_from_resource $background  background  #000000
+set_from_resource $cursorcolor cursorColor #000000
+set_from_resource $bordercolor border      #000000
+
+#                       border       backgr.     text    indicator    child_border
+client.focused          $bordercolor $blue1      $black1 $black1      $bordercolor
+client.unfocused        $black2      $black1     $white1 $black1      $black2
+client.urgent           $red1        $red2       $white1 $red2        $red2
+client.placeholder      $black2      $black1     $white1 $black1      $black2
+client.focused_inactive $black2      $black2     $white1 $bordercolor $black2
+
+client.background       #ffffff
+
+# Font for window titles.
+font pango:Roboto 8
+
+# 2px border for all windows
+for_window [class="^.*"] border pixel 2
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+#   _ _____   _          _                 _
+#  (_)___ /  | |__   ___| |__   __ ___   _(_) ___  _   _ _ __
+#  | | |_ \  | '_ \ / _ \ '_ \ / _` \ \ / / |/ _ \| | | | '__|
+#  | |___) | | |_) |  __/ | | | (_| |\ V /| | (_) | |_| | |
+#  |_|____/  |_.__/ \___|_| |_|\__,_| \_/ |_|\___/ \__,_|_|
+#
+set $mode_default mode default; exec tint_screen.zsh off;
+set $exec_tint_blue exec tint_screen.zsh grey;
+
+focus_follows_mouse no
+workspace_auto_back_and_forth yes
+
+hide_edge_borders smart
+
+# don't autofocus popups
+no_focus [window_role="pop-up"]
+
+mouse_warping none
+
+# doesn't work with ubuntu
+#focus_wrapping no
+
+
+#                       __   _
+#   _ __ _   _ _ __    / /__| |_ ___  _ __     __ _ _ __  _ __  ___
+#  | '__| | | | '_ \  / / __| __/ _ \| '_ \   / _` | '_ \| '_ \/ __|
+#  | |  | |_| | | | |/ /\__ \ || (_) | |_) | | (_| | |_) | |_) \__ \
+#  |_|   \__,_|_| |_/_/ |___/\__\___/| .__/   \__,_| .__/| .__/|___/
+#                                    |_|           |_|   |_|
+
+# start a terminal
+bindsym $mod+Return exec urxvtcd
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+#bindsym $mod+d exec "rofi -combi-modi drun,run -show combi -modi combi"
+bindsym $mod+d exec "rofi -show run"
+
+bindsym $mod+x exec xscreensaver-command -lock
+
+#                             _                    _                     _
+#    ___ ___  _ __ ___  _ __ | |_ ___  _ __       (_)_ ____   _____ _ __| |_
+#   / __/ _ \| '_ ` _ \| '_ \| __/ _ \| '_ \ _____| | '_ \ \ / / _ \ '__| __|
+#  | (_| (_) | | | | | | |_) | || (_) | | | |_____| | | | \ V /  __/ |  | |_
+#   \___\___/|_| |_| |_| .__/ \__\___/|_| |_|     |_|_| |_|\_/ \___|_|   \__|
+#                      |_|
+bindsym $mod+i exec       "sleep .1; compton-invert -As"
+bindsym $mod+Shift+i exec "sleep .1; compton-invert -Ds"
+# restart compton-invert when restarting i3
+exec_always --no-startup-id ~/bin/compton-invert &
+
+#                      _ _         _
+#   _ __ ___   ___  __| (_) __ _  | | _____ _   _ ___
+#  | '_ ` _ \ / _ \/ _` | |/ _` | | |/ / _ \ | | / __|
+#  | | | | | |  __/ (_| | | (_| | |   <  __/ |_| \__ \
+#  |_| |_| |_|\___|\__,_|_|\__,_| |_|\_\___|\__, |___/
+#                                           |___/
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20
+
+#        _                                       _           _
+#    ___| |__   __ _ _ __   __ _  ___  __      _(_)_ __   __| | _____      __
+#   / __| '_ \ / _` | '_ \ / _` |/ _ \ \ \ /\ / / | '_ \ / _` |/ _ \ \ /\ / /
+#  | (__| | | | (_| | | | | (_| |  __/  \ V  V /| | | | | (_| | (_) \ V  V /
+#   \___|_| |_|\__,_|_| |_|\__, |\___|   \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/
+#                          |___/
+#    __
+#   / _| ___   ___ _   _ ___
+#  | |_ / _ \ / __| | | / __|
+#  |  _| (_) | (__| |_| \__ \
+#  |_|  \___/ \___|\__,_|___/
+#
+# change focused window
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+#                                       _           _
+#   _ __ ___   _____   _____  __      _(_)_ __   __| | _____      __
+#  | '_ ` _ \ / _ \ \ / / _ \ \ \ /\ / / | '_ \ / _` |/ _ \ \ /\ / /
+#  | | | | | | (_) \ V /  __/  \ V  V /| | | | | (_| | (_) \ V  V /
+#  |_| |_| |_|\___/ \_/ \___|   \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/
+#
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+
+#   _                         _
+#  | | __ _ _   _  ___  _   _| |_
+#  | |/ _` | | | |/ _ \| | | | __|
+#  | | (_| | |_| | (_) | |_| | |_
+#  |_|\__,_|\__, |\___/ \__,_|\__|
+#           |___/
+
+# split in horizontal orientation
+bindsym $mod+p split h
+
+# split in vertical orientation
+bindsym $mod+o split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# focus the parent container
+bindsym $mod+Shift+p focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# i3 layout manager from https://github.com/klaxalk/i3-layout-manager
+bindsym $mod+Escape exec ~/bin/layout_manager.sh
+
+#                      _
+#  __      _____  _ __| | _____ _ __   __ _  ___ ___  ___
+#  \ \ /\ / / _ \| '__| |/ / __| '_ \ / _` |/ __/ _ \/ __|
+#   \ V  V / (_) | |  |   <\__ \ |_) | (_| | (_|  __/\__ \
+#    \_/\_/ \___/|_|  |_|\_\___/ .__/ \__,_|\___\___||___/
+#                              |_|
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+#                                            _ _____
+#   _ __ ___   __ _ _ __   __ _  __ _  ___  (_)___ /
+#  | '_ ` _ \ / _` | '_ \ / _` |/ _` |/ _ \ | | |_ \
+#  | | | | | | (_| | | | | (_| | (_| |  __/ | |___) |
+#  |_| |_| |_|\__,_|_| |_|\__,_|\__, |\___| |_|____/
+#                               |___/
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+
+#                      _       _                     _
+#   ___  ___ _ __ __ _| |_ ___| |__  _ __   __ _  __| |___
+#  / __|/ __| '__/ _` | __/ __| '_ \| '_ \ / _` |/ _` / __|
+#  \__ \ (__| | | (_| | || (__| | | | |_) | (_| | (_| \__ \
+#  |___/\___|_|  \__,_|\__\___|_| |_| .__/ \__,_|\__,_|___/
+#                                   |_|
+bindsym $mod+Shift+G mark"mainscratch", move scratchpad
+bindsym $mod+g [con_mark="^mainscratch$"] scratchpad show
+bindsym $mod+q [con_mark="^mainscratch$"] scratchpad show
+
+bindsym $mod+Shift+A mark"ascratch", move scratchpad
+bindsym $mod+a [con_mark="^ascratch$"] scratchpad show
+bindsym $mod+Shift+Z mark"zscratch", move scratchpad
+bindsym $mod+z [con_mark="^zscratch$"] scratchpad show
+
+
+
+#                 _                    _           _
+#   _ __ ___  ___(_)_______  __      _(_)_ __   __| | _____      __
+#  | '__/ _ \/ __| |_  / _ \ \ \ /\ / / | '_ \ / _` |/ _ \ \ /\ / /
+#  | | |  __/\__ \ |/ /  __/  \ V  V /| | | | | (_| | (_) \ V  V /
+#  |_|  \___||___/_/___\___|   \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/
+#
+set $mode_resize resize [ ]
+bindsym $mod+r mode $mode_resize; $exec_tint_blue; exec bosd_cat "mode: $mode_resize" &
+mode "$mode_resize" {
+	# These bindings trigger as soon as you enter the resize mode
+
+	# Pressing left will shrink the window’s width.
+	# Pressing right will grow the window’s width.
+	# Pressing up will shrink the window’s height.
+	# Pressing down will grow the window’s height.
+	bindsym h resize shrink width 10 px or 10 ppt
+	bindsym j resize grow   height 10 px or 10 ppt
+	bindsym k resize shrink height 10 px or 10 ppt
+	bindsym l resize grow   width 10 px or 10 ppt
+
+	# same bindings, but for the arrow keys
+	bindsym Left  resize shrink width 10 px or 10 ppt
+	bindsym Down  resize grow   height 10 px or 10 ppt
+	bindsym Up    resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow   width 10 px or 10 ppt
+
+	# back to normal: Enter or Escape
+	bindsym Return $mode_default
+	bindsym Escape $mode_default
+}
+
+#   _ __ ___   _____   _____
+#  | '_ ` _ \ / _ \ \ / / _ \
+#  | | | | | | (_) \ V /  __/
+#  |_| |_| |_|\___/ \_/ \___|
+#                      _
+#  __      _____  _ __| | _____ _ __   __ _  ___ ___
+#  \ \ /\ / / _ \| '__| |/ / __| '_ \ / _` |/ __/ _ \
+#   \ V  V / (_) | |  |   <\__ \ |_) | (_| | (_|  __/
+#    \_/\_/ \___/|_|  |_|\_\___/ .__/ \__,_|\___\___|
+#                              |_|
+set $mode_move_workspace move workspace [ ]
+bindsym $mod+m mode $mode_move_workspace; $exec_tint_blue;; exec bosd_cat "mode: $mode_move_workspace" &
+mode "$mode_move_workspace" {
+	bindsym Left      $mode_default    move workspace to output left;
+	bindsym Down      $mode_default    move workspace to output down;
+	bindsym Up        $mode_default    move workspace to output up;
+	bindsym Right     $mode_default    move workspace to output right;
+
+	bindsym h         $mode_default    move workspace to output left;
+	bindsym j         $mode_default    move workspace to output down;
+	bindsym k         $mode_default    move workspace to output up;
+	bindsym l         $mode_default    move workspace to output right;
+
+	bindsym Return    $mode_default
+	bindsym Escape    $mode_default
+}
+
+
+#                     _ _           _   _
+#    __ _ _ __  _ __ | (_) ___ __ _| |_(_) ___  _ __
+#   / _` | '_ \| '_ \| | |/ __/ _` | __| |/ _ \| '_ \
+#  | (_| | |_) | |_) | | | (_| (_| | |_| | (_) | | | |
+#   \__,_| .__/| .__/|_|_|\___\__,_|\__|_|\___/|_| |_|
+#        |_|   |_|
+#                       _  __ _                   _
+#   ___ _ __   ___  ___(_)/ _(_) ___   _ __ _   _| | ___  ___
+#  / __| '_ \ / _ \/ __| | |_| |/ __| | '__| | | | |/ _ \/ __|
+#  \__ \ |_) |  __/ (__| |  _| | (__  | |  | |_| | |  __/\__ \
+#  |___/ .__/ \___|\___|_|_| |_|\___| |_|   \__,_|_|\___||___/
+#      |_|
+for_window [class="VirtualBox Machine"] floating enable
+for_window [class="Florence"] floating enable
+for_window [class="Qutecom"] floating enable
+for_window [class="mpv"] floating enable
+for_window [instance="heat_signature.exe"] floating enable
+for_window [class="usbguard-applet-qt"] floating enable
+for_window [class="Display-im6.q16"] floating enable
+for_window [class="feh"] floating enable
+for_window [class="copyq"] floating enable
+for_window [class="Easystroke"] floating enable
+
+#                 _
+#    __ _ ___ ___(_) __ _ _ __
+#   / _` / __/ __| |/ _` | '_ \
+#  | (_| \__ \__ \ | (_| | | | |
+#   \__,_|___/___/_|\__, |_| |_|
+#                   |___/
+#                      _
+#  __      _____  _ __| | _____ _ __   __ _  ___ ___  ___
+#  \ \ /\ / / _ \| '__| |/ / __| '_ \ / _` |/ __/ _ \/ __|
+#   \ V  V / (_) | |  |   <\__ \ |_) | (_| | (_|  __/\__ \
+#    \_/\_/ \___/|_|  |_|\_\___/ .__/ \__,_|\___\___||___/
+#                              |_|
+assign [class="scratchpad_gvim"] 9
+assign [class="Signal"] 10
+assign [class="Steam"] 3
+
+#               _            _             _
+#    __ _ _   _| |_ ___  ___| |_ __ _ _ __| |_
+#   / _` | | | | __/ _ \/ __| __/ _` | '__| __|
+#  | (_| | |_| | || (_) \__ \ || (_| | |  | |_
+#   \__,_|\__,_|\__\___/|___/\__\__,_|_|   \__|
+exec --no-startup-id xscreensaver -nosplash &
+exec --no-startup-id xset m 0 0 &
+exec_always --no-startup-id /usr/lib/gnome-settings-daemon &
+exec_always --no-startup-id ~/bin/polybar-scripts/polybar_wrapper.sh &
+
+exec --no-startup-id ~/bin/i3-autostart.zsh ~/bin/autostart &
+exec_always --no-startup-id ~/bin/i3-autostart.zsh ~/bin/autostart/always &

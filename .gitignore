@@ -6,10 +6,13 @@ backups/*
 !backups/.gitkeep
 local/*
 !local/.gitkeep
+tmp/*
+!tmp/.gitkeep
 index.md
 data/config/gtk-3.0/bookmarks
 data/config/ranger/bookmarks
 data/config/ranger/history
 data/config/ranger/**/*pyc
 data/config/mc/menu
-
+debs/*
+!debs/.gitkeep

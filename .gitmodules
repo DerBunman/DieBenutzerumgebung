@@ -1,5 +1,5 @@
 [submodule "data/vim/vim-plug-repo"]
-	path = data/vim/vim-plug-repo
+	path = packages/vim/vim/vim-plug-repo
 	url = https://github.com/junegunn/vim-plug
 [submodule "submodules/numix-cursor-theme"]
 	path = submodules/numix-cursor-theme
@@ -9,4 +9,4 @@
 	url = https://github.com/klaxalk/i3-layout-manager
 [submodule "submodules/bzcurses"]
 	path = submodules/bzcurses
-	url = git@github.com:DerBunman/bzcurses.git
+	url = https://github.com/DerBunman/bzcurses

@@ -31,7 +31,7 @@ fi
 
 key_path="$storage_path/$2"
 
-[ -d "$key_path" ] && {
+[[ -d "$key_path" && "$1" != "get_list" && "$1" != "get_path" ]] && {
 	echo "Error: $key_path exists but is a directory."
 	exit 1
 }
@@ -40,26 +40,34 @@ if [ "$1" = "get" ]; then
 	test -f "$key_path" || exit 1
 	cat "$key_path"
 	exit
-fi
 
-if [ "$1" = "edit" ]; then
+elif [ "$1" = "get_list" ]; then
+	test -d "$key_path" || exit 1
+	ls -1 "$key_path"
+	exit
+
+elif [ "$1" = "get_path" ]; then
+	test -d "$key_path" || exit 1
+	ls -1 "$key_path"
+	exit
+
+elif [ "$1" = "edit" ]; then
 	if ! (( $+commands[$EDITOR] )); then
 		EDITOR=vim
 	fi
 	mkdir -p "${key_path:h}"
 	$EDITOR "$key_path" || exit 1
 	exit
-fi
 
-if [ "$1" = "put" ]; then
-	mkdir -p "${key_path:h}"
+elif [ "$1" = "put" ]; then
+	test -d ${key_path:h} || mkdir -p "${key_path:h}"
 	cat - > "$key_path" || exit 1
 	exit
-fi
 
-if [ "$1" = "rm" ]; then
+elif [ "$1" = "rm" ]; then
 	test -f "${key_path}" && rm -f "${key_path}"
 	exit
+
 fi
 
 
