@@ -2,13 +2,13 @@
 setopt MULTI_FUNC_DEF
 
 typeset -r info="$(<<-EOF
-	This package will install the i3 config
-	and also install the needed packages for
-	i3. (When the package installation is enabled.)
+	This package contains the xkeys keymapper.
+	It can (and will) change the keyboard layout
+	using xmodmap and/or bind actions via xbindkeys.
 	EOF
 	)"
 
-typeset -r info_short="i3 packages and config files"
+typeset -r info_short="The xkeys keymapper."
 
 typeset -r package_file=$0
 typeset -r package_name=${0:t:r:r}

@@ -22,7 +22,7 @@ typeset -r -a packages_debian=(
 	compton arandr fonts-roboto fonts-roboto-hinted
 	xclip slop aosd-cat compton libnotify-bin
 	zathura-cb zathura zathura-djvu zathura-pdf-poppler zathura-ps
-	pavucontrol arandr indicator-cpufreq udiskie
+	pavucontrol arandr udiskie
 	feh xclip lxappearance
 
 	xscreensaver-screensaver-webcollage xscreensaver

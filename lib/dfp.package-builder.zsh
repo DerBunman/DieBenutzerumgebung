@@ -230,7 +230,7 @@ install_dependencies_apt() {
 	fi
 	text_underlined "Installing apt packages:"
 	echo "${deps}\n"
-	sudo apt-get install ${deps} || exit $?
+	sudo apt-get install --yes ${deps} || exit $?
 	echo ""
 	return 0
 }
