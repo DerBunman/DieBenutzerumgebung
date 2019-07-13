@@ -1,1 +1,0 @@
-../../packages/shell-base/serve_via_http.sh

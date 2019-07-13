@@ -1,1 +1,0 @@
-../../packages/i3/tint_screen.zsh

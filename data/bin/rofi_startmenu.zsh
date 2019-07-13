@@ -1,1 +1,0 @@
-../../packages/rofi/rofi_startmenu.zsh

@@ -1,1 +1,0 @@
-../../packages/urxvt/ssh_send_terminfo.zsh
