@@ -132,10 +132,9 @@ The init command will also run a dialog wizard which will help you tune the conf
 Please note, that the dependencies have to be installed for nonroot mode.
 
 ```zsh
-sudo apt install zsh git curl dialog
-mkdir -p ~/.repos \
-	&& git clone --recursive git@github.com:DerBunman/DieBenutzerumgebung.git ~/.repos/dotfiles \
-	&& ~/.repos/dotfiles/dotfiles init
+sudo apt install zsh git curl
+git clone --recursive https://github.com/DerBunman/DieBenutzerumgebung ~/.repos/dotfiles \
+	&& ~/.repos/dotfiles/dotfiles setup
 ```
 Please relogin after init so all the updated configs are parsed.
 
