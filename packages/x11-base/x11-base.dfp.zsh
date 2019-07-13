@@ -10,6 +10,10 @@ typeset -r info="$(<<-EOF
 
 typeset -r info_short="The x11-base: configs and applications."
 
+# base packages cannot be deselected and so they will be
+# forecd to install when all host flags match
+typeset -r base_package=true
+
 typeset -r package_file=$0
 
 typeset -r -i version=1
