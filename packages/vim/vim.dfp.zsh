@@ -20,7 +20,11 @@ local additional_packages=()
 conf_chk_host_flag has_x11 \
 	&& additional_packages+=( vim-gtk3 )
 
-typeset -r -a packages_debian=( vim $additional_packages[@] )
+typeset -r -a packages_debian=(
+	vim
+	exuberant-ctags
+	$additional_packages[@]
+)
 typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
 typeset -r -a dfp_dependencies=( )
 

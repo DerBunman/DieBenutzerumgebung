@@ -2,7 +2,7 @@
 verbose=true
 pause_after_run=1
 shell_patterns=true
-auto_save_setup=true
+auto_save_setup=false
 preallocate_space=false
 auto_menu=false
 use_internal_view=true
@@ -97,7 +97,7 @@ menubar_visible=1
 free_space=1
 horizontal_split=0
 vertical_equal=1
-left_panel_size=99
+left_panel_size=49
 horizontal_equal=1
 top_panel_size=1
 
@@ -127,6 +127,8 @@ xterm-256color=
 screen-256color=
 
 xterm-kitty=
+
+rxvt-unicode-256color=
 
 [Panels]
 show_mini_info=true

@@ -8,7 +8,8 @@
 }
 
 TERM_FILE="~/.terminfo/${TERM:0:1}/$TERM"
-infocmp "$TERM" -I | ssh $1 "\
+infocmp "$TERM" -I | ssh $1 \
+	-o PermitLocalCommand=no "\
 	mkdir -pv \"${TERM_FILE:h}\"; \
 	test -f \"${TERM_FILE}\" \
 	|| cat - > \"${TERM_FILE}\" \

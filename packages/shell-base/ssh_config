@@ -1,0 +1,7 @@
+Host *
+	PermitLocalCommand yes
+	LocalCommand ssh_send_terminfo.zsh %n
+	ServerAliveInterval 60
+	ServerAliveCountMax 2
+
+Include conf.d/*

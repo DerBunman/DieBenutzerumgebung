@@ -17,7 +17,7 @@ typeset -r license="MIT"
 typeset -r -a packages_debian=( rxvt-unicode-256color )
 typeset -r -a packages_ubuntu=(  ${(@)packages_debian} )
 typeset -r -a dfp_dependencies=(
-	xresources
+	x11-base
 )
 
 typeset -r -a host_flags=(

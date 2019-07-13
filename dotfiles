@@ -136,43 +136,37 @@ typeset -A links
 links=(
 	# deprecated
 	~/.dialogrc                 data/dialogrc
-
-	# todo: split in packages
-	~/bin/rofi_startmenu.zsh    data/bin/rofi_startmenu.zsh
-	~/.config/dunst             data/config/dunst
-	~/.config/mc                data/config/mc
 	~/.config/mpv               data/config/mpv
-	~/.config/ranger            data/config/ranger
-	~/.profile                  data/profile
-	~/.ssh/config               data/ssh/config
-	~/.tmux.conf                data/tmux.conf
-	~/.toprc                    data/toprc
+
+
+
+
+
+	# xkeys
 	~/.xkeys                    data/xkeys
-	~/.xprofile                 data/xprofile
 	~/bin/autostart/xkeys.zsh   data/bin/xkeys.zsh
-	~/bin/bosd_cat              data/bin/bosd_cat
-	~/bin/conf                  modules/conf.zsh
-	~/bin/dotfiles              dotfiles
-	~/bin/serve_via_http.sh     data/bin/serve_via_http.sh
-	~/bin/ssh_send_terminfo.zsh data/bin/ssh_send_terminfo.zsh
 	~/bin/xkeys.zsh             data/bin/xkeys.zsh
-
-
-
-	# compton
-	~/.config/compton.conf      data/config/compton.conf
-
-
+	~/.config/mc                data/config/mc
+	~/.ssh/config               data/ssh/config
+	~/.config/ranger            data/config/ranger
 	# zsh
 	~/.zsh-dircolors.config     data/zsh-dircolors.config
 	~/.zsh_autocomplete         data/zsh_autocomplete
 	~/.zshenv                   data/zshenv
 	~/.zshrc                    data/zshrc
 	~/.zshrc.d                  data/zshrc.d
-
-
-
-
+	# shell-base
+	~/.profile                  data/profile
+	~/.tmux.conf                data/tmux.conf
+	~/.toprc                    data/toprc
+	~/bin/conf                  modules/conf.zsh
+	~/bin/dotfiles              dotfiles
+	~/bin/serve_via_http.sh     data/bin/serve_via_http.sh
+	# compton
+	~/.config/dunst             data/config/dunst
+	~/bin/bosd_cat              data/bin/bosd_cat
+	~/.xprofile                 data/xprofile
+	~/.config/compton.conf      data/config/compton.conf
 	# autodownloader ...
 	# Theme
 	#~/.config/oomox             data/config/oomox
@@ -181,6 +175,7 @@ links=(
 	#~/.icons                    data/icons
 	#~/.themes/oomox-DieOberflaechengestaltung data/theme/oomox-DieOberflaechengestaltung
 	~/.local/share/fonts        data/local/share/fonts
+	~/bin/rofi_startmenu.zsh    data/bin/rofi_startmenu.zsh
 	# already moved to new package format
 	~/.vim                      data/vim
 	~/bin/gvim                  data/bin/gvim.zsh
@@ -200,6 +195,7 @@ links=(
 	~/bin/i3subscribe           data/bin/i3subscribe
 	~/bin/layout_manager.sh     submodules/i3-layout-manager/layout_manager.sh
 	~/.urxvt                    data/urxvt
+	~/bin/ssh_send_terminfo.zsh data/bin/ssh_send_terminfo.zsh
 	~/.Xresources               data/Xresources
 	~/.config/i3                data/config/i3
 	~/.config/polybar           data/config/polybar
@@ -363,6 +359,7 @@ if conf_chk_host_flag "has_root"; then
 		fi
 		if [ "${RUN_APT_COMMANDS}" = true ]; then
 
+			# SHELL BLOCK ALREADY MIGRATED
 			APT_PACKAGES=(${APT_PACKAGES} pwgen jq traceroute dialog
 				linux-tools-common curl powerline iotop vim mc detox fdupes
 				menu pv figlet net-tools apt-file sysfsutils tmux p7zip-full
@@ -370,6 +367,7 @@ if conf_chk_host_flag "has_root"; then
 				xdg-utils
 			)
 
+			# X11 BLOCK ALREADY MIGRATED (some stuff dropped)
 			conf_chk_host_flag "has_x11" && APT_PACKAGES=(${APT_PACKAGES}
 				mate-polkit-bin vim-gtk3 pavucontrol rofi i3
 				arandr indicator-cpufreq fonts-roboto fonts-roboto-hinted

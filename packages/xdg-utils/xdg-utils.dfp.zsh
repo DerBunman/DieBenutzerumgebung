@@ -17,10 +17,7 @@ typeset -r license="MIT"
 typeset -r -a packages_debian=( xdg-utils )
 typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
 typeset -r -a dfp_dependencies=( )
-
-typeset -r -a host_flags=(
-	has_x11
-)
+typeset -r -a host_flags=()
 
 # these symlinks will be created
 typeset -r -A symlinks=(
@@ -35,8 +32,6 @@ typeset -r -A symlinks=(
 
 tests() {
 	validate_symlinks
-	echo "Validating installation."
-	echo "Looking good!"
 }
 
 update() {

@@ -19,7 +19,7 @@ typeset -r -a packages_debian=()
 typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
 typeset -r -a dfp_dependencies=(
 	deb-build-tools
-	xresources
+	x11-base
 )
 
 typeset -r -a host_flags=(

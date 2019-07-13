@@ -21,18 +21,14 @@ typeset -r license="MIT"
 # these packages have to be installed on your system
 # there may be differences between ubuntu and debian
 typeset -r -a packages_debian=(
-	i3 arandr fonts-roboto fonts-roboto-hinted
-	xclip rxvt-unicode-256color slop aosd-cat compton
-	libnotify-bin pavucontrol:3.1-4
-	zathura-cb zathura zathura-djvu zathura-pdf-poppler zathura-ps
-	xbindkeys xbindkeys-config xdotool x11-xserver-utils
+	i3
 )
 typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
 
 # these are the dotfiles packages (dfp)
 # this package depends on
 typeset -r -a dfp_dependencies=(
-	xresources
+	x11-base
 	polybar
 	rofi
 	urxvt
@@ -55,10 +51,24 @@ typeset -r -A symlinks=(
 	~/bin/tint_screen.zsh    "$(path_packages $package)/tint_screen.zsh"
 	~/bin/compton-invert     "$(path_packages $package)/compton-invert"
 	~/bin/layout_manager.sh  "$(path_packages $package)/layout_manager.sh"
+
+	~/bin/autostart/i3-scratchpad-vim.zsh
+		"$(path_packages $package)/autostart/i3-scratchpad-vim.zsh"
+
+	~/bin/autostart/always/udiskie.zsh
+		"$(path_packages $package)/autostart/always/udiskie.zsh"
+
+	~/bin/autostart/always/xrdb_reload.sh
+		"$(path_packages $package)/autostart/always/xrdb_reload.sh"
+
+	~/bin/autostart/always/setxkbmap.zsh
+		"$(path_packages $package)/autostart/always/setxkbmap.zsh"
 )
 
 # the update/install function
 update install() {
+	install_dependencies_apt
+	test -d ~/bin/autostart/always || mkdir -p ~/bin/autostart/always
 	install_symlinks
 }
 

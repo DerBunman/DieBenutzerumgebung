@@ -1,12 +1,1 @@
-Host *
-	PermitLocalCommand yes
-	#LocalCommand echo test
-	#LocalForward 9906 127.0.0.1:3306
-	#RemoteForward 7777 localhost:80
-	ServerAliveInterval 60
-	ServerAliveCountMax 2
-	#VisualHostKey yes
-	#ForwardAgent yes
-	#ForwardX11 yes
-
-Include conf.d/*
+../../packages/shell-base/ssh_config
