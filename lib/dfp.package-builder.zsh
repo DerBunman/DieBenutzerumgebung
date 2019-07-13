@@ -184,7 +184,7 @@ validate_symlinks() {
 install_symlinks() {
 	text_underlined "Installing symlinks for $package"
 	for link target in ${(kv)symlinks[@]}; do
-		if [ ${link:A} = ${target:A} ]; then
+		if [[ "${link:A}" = "${target:A}" && -e "${link:A}" ]]; then
 			echo "[OK] Symlink exists and points to the right file:"
 			echo " |-: ${link}"
 			echo " \\-> ${target}\n"
@@ -201,7 +201,7 @@ install_symlinks() {
 			echo "This has to be fixed. before we can continue."
 			exit 1
 
-		elif [[ -L "${link}" && ${link:A} != ${target:A} ]]; then
+		elif [[ -L "${link}" ]]; then
 			echo "Symlink exists and is wrong or broken:"
 			echo "${link}"
 			echo "  points to"
