@@ -19,7 +19,7 @@ function conf_chk_feature() {
 }
 
 function conf_chk_host_flag() {
-	local host_flags_enabled=( $(conf get dotfiles/host_flags_enabled) )
+	local host_flags_enabled=( $(conf get dotfiles/host_flags/checked) )
 	[ "${host_flags_enabled[(r)$1]}" = "$1" ] && return 0 || return 1
 }
 

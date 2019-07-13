@@ -53,7 +53,7 @@ fi
 # action can be any function in this scope
 action="$1"
 shift
-action_parameters=( "$*" )
+action_parameters=( $@ )
 if [[ "$action" = "install" && "$(conf get dfp/installed/$package/version)" != "" ]]; then
 	echo "INFO: This package is aready installed."
 	echo "      Switching to update.\n"
@@ -82,6 +82,23 @@ dependencies() {
 		} 1>&2
 		exit 1
 	fi
+}
+
+# recursive dfp dependencies
+dfp_rdepenends() {
+	local result=( ${@} )
+	local dfp_pb=$(path_dfp_pb)
+	for dfp in ${(@)$(dependencies dfp)}; do
+		[ "${(@)result[(r)$dfp]}" = "" ] && {
+			result+=( $dfp )
+			result+=( $($dfp_pb $dfp dfp_rdepenends ${(u)result[@]}) )
+		}
+	done
+	echo ${(u)result[@]}
+}
+
+base_package() {
+	echo ${base_package:-false}
 }
 
 info() {
@@ -278,11 +295,11 @@ validate
 [[ "$action" = "install" \
 	|| $action = "update" \
 	&& ${#host_flags} -ne 0 ]] && {
-	local flags_enabled=(
-		${(@)$(conf get dotfiles/host_flags_enabled)}
+	local host_flags_enabled=(
+		${(@)$(conf get dotfiles/host_flags/checked)}
 	)
 	for flag in $host_flags; do
-		[ "$flags_enabled[(r)$flag]" = "$flag" ] || {
+		[ "$host_flags_enabled[(r)$flag]" = "$flag" ] || {
 			echo "ERROR: host flag not enabled: $flag"
 			echo "       enable or gtfo."
 			exit 1
@@ -293,7 +310,7 @@ validate
 # wrapper that calls the functions for the package handling
 setopt ERR_EXIT
 if typeset -f "$action" > /dev/null; then
-	"$action" "$action_parameters" || exit $?
+	"$action" ${(@)action_parameters} || exit $?
 else
 	echo "ERROR: function $action was not found in ${package_dfp:A}." 1>&2
 	exit 1

@@ -31,7 +31,7 @@ fi
 
 key_path="$storage_path/$2"
 
-[[ -d "$key_path" && "$1" != "get_list" ]] && {
+[[ -d "$key_path" && "$1" != "get_list" && "$1" != "get_path" ]] && {
 	echo "Error: $key_path exists but is a directory."
 	exit 1
 }
@@ -42,6 +42,11 @@ if [ "$1" = "get" ]; then
 	exit
 
 elif [ "$1" = "get_list" ]; then
+	test -d "$key_path" || exit 1
+	ls -1 "$key_path"
+	exit
+
+elif [ "$1" = "get_path" ]; then
 	test -d "$key_path" || exit 1
 	ls -1 "$key_path"
 	exit
