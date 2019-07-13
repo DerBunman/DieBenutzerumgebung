@@ -44,9 +44,8 @@ shift
 # generates the current global packages array
 generate_packages_array
 
-# dfp_pf stands for dfp package builder and it is the
-# script, that wraps the data in functions and logic.
-dfp_pb=$(path_dfp_pb)
+# dfp_wrapper wraps the logic around the dotfile package.
+dfp_wrapper=$(path_dfp_wrapper)
 
 
 #   _ _     _
@@ -63,9 +62,9 @@ if [ "$action" = "list" ]; then
 			installed=" (I:$(conf get dfp/installed/$package/version))"
 		}
 		echo $(
-			echo "$($dfp_pb $package nameplus)${installed}:"
+			echo "$($dfp_wrapper $package nameplus)${installed}:"
 			echo " | "
-			$dfp_pb $package info_short
+			$dfp_wrapper $package info_short
 		)
 	done | column -s'|' -t
 	echo ""
@@ -83,17 +82,17 @@ elif [ "$action" = "show" ]; then
 
 	text_underlined "Package details for ${package}:"
 
-	$dfp_pb "$package" info
+	$dfp_wrapper "$package" info
 	echo ""
 	{
-		echo "info_short:|$( $dfp_pb "$package" info_short )"
+		echo "info_short:|$( $dfp_wrapper "$package" info_short )"
 
-		echo "version:|$( $dfp_pb "$package" version ) dfp"
-		echo "version:|${$( $dfp_pb "$package" version_upstream ):-no upsteam} upstream"
+		echo "version:|$( $dfp_wrapper "$package" version ) dfp"
+		echo "version:|${$( $dfp_wrapper "$package" version_upstream ):-no upsteam} upstream"
 
-		echo "license:|$( $dfp_pb "$package" license )"
+		echo "license:|$( $dfp_wrapper "$package" license )"
 
-		$dfp_pb "$package" validate
+		$dfp_wrapper "$package" validate
 		if [ $? -eq 0 ]; then
 			echo "self-check:|SUCCESS"
 		else
@@ -104,7 +103,7 @@ elif [ "$action" = "show" ]; then
 	# Symlinks
 	echo ""
 	text_rulem "[ Symlinks ]"
-	typeset -A symlinks=( $($dfp_pb "$package" symlinks) )
+	typeset -A symlinks=( $($dfp_wrapper "$package" symlinks) )
 	if [ ${#symlinks} -eq 0 ]; then
 		echo "no symlinks needed\n"
 	else
@@ -116,7 +115,7 @@ elif [ "$action" = "show" ]; then
 
 	# APT
 	text_rulem "[ APT-dependencies ]"
-	local deps=( ${(@)$($dfp_pb "$package" dependencies apt)} )
+	local deps=( ${(@)$($dfp_wrapper "$package" dependencies apt)} )
 	if [ ${#deps} -eq 0 ]; then
 		echo "no dependencies\n"
 	else
@@ -149,7 +148,7 @@ elif [ "$action" = "show" ]; then
 
 	# host_flags
 	text_rulem "[ Host Flags ]"
-	local host_flags=( ${(@)$($dfp_pb "$package" dependencies host_flags)} )
+	local host_flags=( ${(@)$($dfp_wrapper "$package" dependencies host_flags)} )
 	if [ ${#host_flags} -eq 0 ]; then
 		echo "no flags needed\n"
 	else
@@ -172,7 +171,7 @@ elif [ "$action" = "show" ]; then
 
 	# DFP deps
 	text_rulem "[ DFP-Dependencies ]"
-	local dfp_dependencies=( ${(@)$($dfp_pb "$package" dependencies dfp)} )
+	local dfp_dependencies=( ${(@)$($dfp_wrapper "$package" dependencies dfp)} )
 	if [ ${#dfp_dependencies} -eq 0 ]; then
 		echo "no dependencies\n"
 	else
@@ -212,7 +211,7 @@ elif [ "$action" = "install" ]; then
 	text_figlet "$1"
 	text_underlined "$text"
 
-	depends_dfp=( "${(f@)$($dfp_pb "$1" depends_dfp)}" )
+	depends_dfp=( "${(f@)$($dfp_wrapper "$1" depends_dfp)}" )
 	if [ "${depends_dfp}" = "" ]; then
 		echo "DFP-Dependencies: none"
 	else
@@ -239,7 +238,7 @@ elif [ "$action" = "install" ]; then
 	fi
 
 	# install or update the package
-	$dfp_pb "$1" $install && {
+	$dfp_wrapper "$1" $install && {
 		echo "Package $1 has been successfully installed.\n"
 	} || {
 		echo "ERROR! Install failed.\n"
@@ -259,7 +258,6 @@ elif [ "$action" = "update" ]; then
 		conf_chk_dfp_installed $package \
 			&& {
 				text_underlined "Updating $package"
-				$dfp_pb $package update
 			}
 	done
 

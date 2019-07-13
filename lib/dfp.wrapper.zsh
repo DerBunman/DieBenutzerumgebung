@@ -13,8 +13,8 @@ trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; return $retval' ERR INT T
 # displays a small help for this wrapper
 help() {
 	echo "$(cat <<-EOF
-	Syntax: dfp.package-builder.zsh package action [parameters]
-	Eg: dfp.package-builder.zsh i3 install
+	Syntax: dfp.wrapper.zsh package action [parameters]
+	Eg: dfp.wrapper.zsh i3 install
 	EOF
 	)"
 }
@@ -87,11 +87,11 @@ dependencies() {
 # recursive dfp dependencies
 dfp_rdepenends() {
 	local result=( ${@} )
-	local dfp_pb=$(path_dfp_pb)
+	local dfp_wrapper=$(path_dfp_wrapper)
 	for dfp in ${(@)$(dependencies dfp)}; do
 		[ "${(@)result[(r)$dfp]}" = "" ] && {
 			result+=( $dfp )
-			result+=( $($dfp_pb $dfp dfp_rdepenends ${(u)result[@]}) )
+			result+=( $($dfp_wrapper $dfp dfp_rdepenends ${(u)result[@]}) )
 		}
 	done
 	echo ${(u)result[@]}
@@ -135,7 +135,7 @@ nameplus() {
 
 symlinks() {
 	# ressurect array like this:
-	# typeset -A symlinks=( $($dfp_pb "$package" symlinks) )
+	# typeset -A symlinks=( $($dfp_wrapper "$package" symlinks) )
 	printf '%q\n' "${(kv)symlinks[@]}"
 }
 

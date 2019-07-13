@@ -97,11 +97,11 @@ choose_dfps() {
 
 	local disabled_text="$(text_underlined "disabled DFPs:")$newline"
 
-	local dfp_pb=$(path_dfp_pb)
+	local dfp_wrapper=$(path_dfp_wrapper)
 	local available_dfps=()
 
 	for package in ${(k)packages}; do
-		local needed_flags=( $($dfp_pb $package dependencies host_flags) )
+		local needed_flags=( $($dfp_wrapper $package dependencies host_flags) )
 		for needed_flag in $needed_flags; do
 			# skip package if there is a host flag missing
 			conf_chk_host_flag $needed_flag || {
@@ -110,7 +110,7 @@ choose_dfps() {
 			}
 		done
 
-		[ "$($dfp_pb $package base_package)" = true ] && {
+		[ "$($dfp_wrapper $package base_package)" = true ] && {
 			forced_dfps+=( $package )
 			continue
 		}
@@ -134,7 +134,7 @@ choose_dfps() {
 	text+="rd = recursive dependencies${newline} ${newline}"
 
 	for dfp in $available_dfps; do
-		rdepends=( $($dfp_pb $dfp dfp_rdepenends) )
+		rdepends=( $($dfp_wrapper $dfp dfp_rdepenends) )
 		for dep in ${rdepends[@]}; do
 			[[ "${available_dfps[(r)$dep]}" = "" && "${forced_dfps[(r)$dep]}" = "" ]] && {
 				error=true
@@ -155,7 +155,7 @@ choose_dfps() {
 	choose_dfps_checkboxes=()
 	choose_dfps_checkbox_order=()
 	for dfp in ${available_dfps[@]}; do
-		choose_dfps_checkboxes+=( $dfp "$dfp: $($dfp_pb $dfp info_short)" )
+		choose_dfps_checkboxes+=( $dfp "$dfp: $($dfp_wrapper $dfp info_short)" )
 		choose_dfps_checkbox_order+=( $dfp )
 	done
 
@@ -355,5 +355,3 @@ function() {
 	_draw_choices main
 
 } "${0:h}/../lib/bzcurses/bzcurses.zsh"
-
-echo yo yo yo

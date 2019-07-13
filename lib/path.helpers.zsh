@@ -34,6 +34,6 @@ path_package_dfp() {
 	echo "$(path_packages $1)/$1.dfp.zsh"
 }
 
-path_dfp_pb() {
-	echo "$(path_lib)/dfp.package-builder.zsh"
+path_dfp_wrapper() {
+	echo "$(path_lib)/dfp.wrapper.zsh"
 }
