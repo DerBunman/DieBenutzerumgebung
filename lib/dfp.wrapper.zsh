@@ -323,6 +323,6 @@ if [[ "$action" = "update" || "$action" = "install" ]]; then
 		always "$action_parameters"
 	fi
 	version | conf put dfp/installed/$package/version
-	echo "SUCCESS!"
+	text_figlet "SUCCESS!"
 fi
 

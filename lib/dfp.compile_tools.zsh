@@ -15,6 +15,12 @@ git_changelog() {
 	done
 }
 
+noscroll_title() {
+	update_nonscrolling_line 1 " $1"
+}
+noscroll_cmd() {
+	update_nonscrolling_line 2 " » $1"
+}
 build_deb() {
 	date=$(date +%Y-%m-%d_%H-%M-%S)
 
@@ -26,6 +32,12 @@ build_deb() {
 	test -f "$build_script" || {
 		echo "ERROR: $build_script does not exist"
 	}
+	
+
+	timer=${timer:-$SECONDS}
+
+	# initialize noscroll
+	set_nonscrolling_line " Building ${1} ..." " » ... "
 
 	echo "Creating debs dir ..."
 	mkdir -p "$debs_path"
@@ -37,11 +49,15 @@ build_deb() {
 	. "$build_script" || {
 		echo "ERROR while building"
 		exit 1
-	}
+	}  2>&1 | tee log.txt
 
 	echo "Build finished, installing debs:"
 	for file in $install_debs; do
-		echo "dpkg -i ${debs_path:A}/${file}"
+		noscroll_cmd "installing $file"
 		sudo dpkg -i ${debs_path:A}/${file}
 	done
+
+	echo "Runtime in $(($SECONDS - $timer))sec"
+
+	reset_scrolling
 }

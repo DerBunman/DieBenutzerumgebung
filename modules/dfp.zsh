@@ -13,15 +13,15 @@ debug=${debug:-false}
 setopt ERR_EXIT FUNCTION_ARG_ZERO
 trap 'retval=$?; echo "ERROR in $0 on $LINENO"; trace; return $retval' ERR INT TERM
 
-cat <<'EOF'
-      _  __                _
-   __| |/ _|_ __   _______| |__
-  / _` | |_| '_ \ |_  / __| '_ \
- | (_| |  _| |_) | / /\__ \ | | |
-  \__,_|_| | .__(_)___|___/_| |_|
-           |_| -----------------
-
-EOF
+#cat <<'EOF'
+#      _  __                _
+#   __| |/ _|_ __   _______| |__
+#  / _` | |_| '_ \ |_  / __| '_ \
+# | (_| |  _| |_) | / /\__ \ | | |
+#  \__,_|_| | .__(_)___|___/_| |_|
+#           |_| -----------------
+#
+#EOF
 
 function help() {
 	cat <<-EOF |  column -s':::' -t

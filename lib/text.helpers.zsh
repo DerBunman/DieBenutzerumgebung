@@ -40,3 +40,41 @@ text_rulem ()  {
 text_right() {
 	printf '%*s' $(tput cols) "$*"
 }
+
+set_nonscrolling_line() {
+	tput init
+	tput csr "4" "$((LINES-1))"
+	tput clear
+	tput smso
+	tput bold
+	# 1st row is empty
+	echo "${(r:${COLUMNS}:: :)${}}"
+	local text=" ${1}"
+	echo "${(r:${COLUMNS}:: :)${text}}"
+	tput sgr0 # disable all attributes
+	tput smso
+	local text=" ${2}"
+	echo "${(r:${COLUMNS}:: :)${text}}"
+	echo "${(r:${COLUMNS}:: :)${}}"
+	tput rmso
+}
+
+update_nonscrolling_line() {
+	tput sc
+	tput cup $(( 0 + $1 )) 0
+	local text="$2"
+	text="${(r:${COLUMNS}:: :)${2}}"
+	tput smso
+	[ "$1" -eq 1 ] && tput bold
+	echo "$text"
+	tput sgr0 # disable all attributes
+	tput rmso
+	tput rc
+}
+
+reset_scrolling() {
+	get_size
+	tput sc
+	tput csr 0 $(($LINES - 1))
+	tput rc
+}
