@@ -1,5 +1,5 @@
 [submodule "data/vim/vim-plug-repo"]
-	path = data/vim/vim-plug-repo
+	path = packages/vim/vim/vim-plug-repo
 	url = https://github.com/junegunn/vim-plug
 [submodule "submodules/numix-cursor-theme"]
 	path = submodules/numix-cursor-theme

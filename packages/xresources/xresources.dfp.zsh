@@ -25,25 +25,19 @@ typeset -r -a host_flags=(
 
 # these symlinks will be created
 typeset -r -A symlinks=(
-	~/.Xresources "${0:A:h}/Xresources"
+	~/.Xresources "$(path_packages $package)/Xresources"
 )
 
 tests() {
-	echo "Validating installation."
-	for link target in ${(kv)symlinks[@]}; do
-	[ ${link:A} = ${target:A} ] || {
-		echo "ERROR: symlink doesn't seem correct:"
-		echo "[ "${(k)symlinks[1]:A}" != "${(v)symlinks[1]:A}" ]"
-		echo "${(k)symlinks[1]:A}"
-		exit 1
-	}
-	done
-	echo "Looking good!"
+	validate_symlinks
 }
 
 # the update/install function only creates a symlink.
 # for this package
 update install() {
-	install_symlinks \
-		&& tests
+	install_symlinks
+}
+
+always() {
+	tests
 }

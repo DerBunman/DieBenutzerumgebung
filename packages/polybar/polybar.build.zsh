@@ -19,13 +19,15 @@ git checkout "$tag"
 git_changelog "$pkg_name"
 
 # install build debs
-sudo mk-build-deps -i
+sudo mk-build-deps \
+	-i \
+	-t "apt-get -o Debug::pkgProblemResolver=yes --yes --no-install-recommends"
 
 # build package
 dpkg-buildpackage -rfakeroot -uc -b
 
 # remove build deps
-sudo apt-get purge --auto-remove polybar-build-deps
+sudo apt-get --yes purge --auto-remove polybar-build-deps
 
 # move debs to debs dir
 for deb in $install_debs; do

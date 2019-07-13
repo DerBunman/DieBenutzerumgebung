@@ -1,5 +1,10 @@
+# set path when parsing this file
+# because it is a pain in the function to find
+# out in which file we are.
+typeset -g path_root="$0:A:h:h"
+
 path_root() {
-	echo "$ZSH_ARGZERO:h:h:A"
+	echo "$path_root"
 }
 
 path_lib() {
@@ -7,7 +12,9 @@ path_lib() {
 }
 
 path_backup() {
-	echo "$(path_root)/backup"
+	local backup_path="$(path_root)/tmp/backup"
+	test -d "$backup_path" || mkdir -p "$backup_path"
+	echo $backup_path
 }
 
 path_packages() {

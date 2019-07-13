@@ -19,7 +19,7 @@ text_figlet() {
 
 text_underlined() {
 	local text="$*"
-	echo "$text\n${(r:${#text}::=:)${}}\n"
+	echo "$text\n${(r:$((${#text} +1))::=:)${}}\n"
 }
 
 ## Print a horizontal rule

@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-test -d "$HOME/bin" || mkdir "$HOME/bin/"
+test -d "$HOME/bin" || mkdir -p "$HOME/bin/"
 test -e "$HOME/bin/conf" || ln -s "${0:A:h:h}/modules/conf.zsh" $HOME/bin/conf
 
 function conf() {

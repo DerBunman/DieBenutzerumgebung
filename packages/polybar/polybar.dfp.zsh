@@ -28,8 +28,8 @@ typeset -r -a host_flags=(
 
 # these symlinks will be created
 typeset -r -A symlinks=(
-	~/bin/polybar-scripts "${0:A:h}/polybar-scripts"
-	~/.config/polybar     "${0:A:h}/polybar"
+	~/bin/polybar-scripts "$(path_packages $package)/polybar-scripts"
+	~/.config/polybar     "$(path_packages $package)/polybar"
 
 )
 

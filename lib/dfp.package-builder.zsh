@@ -169,12 +169,12 @@ validate_symlinks() {
 		elif [ ! -e "${target}" ]; then
 			echo "[ERROR] Target doesn't exist:"
 			echo " |-: ${link}"
-			echo " \\->  ${target}\n"
+			echo " \\-> ${target}\n"
 			error=1
 		else
 			echo "[ERROR] Symlink has some error. Please check this:"
 			echo " |-: ${link}"
-			echo " \\->  ${target}\n"
+			echo " \\-> ${target}\n"
 			error=1
 		fi
 	done
@@ -187,7 +187,7 @@ install_symlinks() {
 		if [ ${link:A} = ${target:A} ]; then
 			echo "[OK] Symlink exists and points to the right file:"
 			echo " |-: ${link}"
-			echo " \\->  ${target}\n"
+			echo " \\-> ${target}\n"
 			continue
 
 		elif [[ ! -L "${link}" && -e "${link}" ]]; then
@@ -228,8 +228,11 @@ install_dependencies_apt() {
 		echo "INFO: Package has no apt dependencies."
 		return
 	fi
-	echo "INFO: Installing apt packages ${deps}\n"
-	sudo apt-get install ${deps}
+	text_underlined "Installing apt packages:"
+	echo "${deps}\n"
+	sudo apt-get install ${deps} || exit $?
+	echo ""
+	return 0
 }
 
 
@@ -288,12 +291,9 @@ validate
 }
 
 # wrapper that calls the functions for the package handling
+setopt ERR_EXIT
 if typeset -f "$action" > /dev/null; then
-	setopt ERR_EXIT
 	"$action" "$action_parameters" || exit $?
-	if typeset -f "always" > /dev/null; then
-		always "$action_parameters"
-	fi
 else
 	echo "ERROR: function $action was not found in ${package_dfp:A}." 1>&2
 	exit 1
@@ -302,6 +302,9 @@ fi
 
 
 if [[ "$action" = "update" || "$action" = "install" ]]; then
+	if typeset -f "always" > /dev/null; then
+		always "$action_parameters"
+	fi
 	version | conf put dfp/installed/$package/version
 	echo "SUCCESS!"
 fi

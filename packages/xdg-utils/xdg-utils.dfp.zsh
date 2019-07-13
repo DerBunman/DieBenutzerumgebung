@@ -25,12 +25,12 @@ typeset -r -a host_flags=(
 # these symlinks will be created
 typeset -r -A symlinks=(
 	# depreacted mimetype paths for old apps
-	~/.config/mimeapps.list                   "${0:A:h}/mimeapps.list"
-	~/.local/share/applications/mimeapps.list "${0:A:h}/mimeapps.list"
-	~/.local/share/applications/defaults.list "${0:A:h}/mimeapps.list"
+	~/.config/mimeapps.list                   "$(path_packages $package)/mimeapps.list"
+	~/.local/share/applications/mimeapps.list "$(path_packages $package)/mimeapps.list"
+	~/.local/share/applications/defaults.list "$(path_packages $package)/mimeapps.list"
 
 	# desktop file so xdg-open can start firefox
-	~/.local/share/applications/firefox.desktop "${0:A:h}/firefox.desktop"
+	~/.local/share/applications/firefox.desktop "$(path_packages $package)/firefox.desktop"
 )
 
 tests() {

@@ -28,10 +28,9 @@ function help() {
 	Usage
 	=====
 	 :::dotfiles dfp list:::List all packages.
-	 :::dotfiles dfp list-installed:::List only installed packages.
 	 :::dotfiles dfp show {packagename}:::Show package details packages.
 	 :::dotfiles dfp install {packagename}:::Install package.
-	 :::dotfiles dfp remove {packagename}:::Install package.
+	 :::dotfiles dfp update:::Update installed packages.
 	EOF
 }
 
@@ -59,22 +58,18 @@ if [ "$action" = "list" ]; then
 	text_underlined "Listing packages:"
 
 	for package dfp_zsh in ${(kv)packages[@]}; do
+		installed=""
+		conf_chk_dfp_installed $package && {
+			installed=" (I:$(conf get dfp/installed/$package/version))"
+		}
 		echo $(
-			echo "$($dfp_pb $package nameplus):"
+			echo "$($dfp_pb $package nameplus)${installed}:"
 			echo " | "
 			$dfp_pb $package info_short
 		)
 	done | column -s'|' -t
 	echo ""
 	text_rulem "[ Finished ]"
-
-#   _ _     _        _           _        _ _          _
-#  | (_)___| |_     (_)_ __  ___| |_ __ _| | | ___  __| |
-#  | | / __| __|____| | '_ \/ __| __/ _` | | |/ _ \/ _` |
-#  | | \__ \ ||_____| | | | \__ \ || (_| | | |  __/ (_| |
-#  |_|_|___/\__|    |_|_| |_|___/\__\__,_|_|_|\___|\__,_|
-elif [ "$action" = "list-installed" ]; then
-	echo ""
 
 
 #       _
@@ -215,8 +210,7 @@ elif [ "$action" = "install" ]; then
 		local text="Installing package ${1}:"
 	fi
 	text_figlet "$1"
-	echo "$text"
-	echo "${(r:${#text}::=:)${}}\n"
+	text_underlined "$text"
 
 	depends_dfp=( "${(f@)$($dfp_pb "$1" depends_dfp)}" )
 	if [ "${depends_dfp}" = "" ]; then
@@ -232,7 +226,7 @@ elif [ "$action" = "install" ]; then
 		done
 		echo ""
 
-		echo "Installing DFP-Dependencies ..."
+		text_underlined "Installing DFP-Dependencies ..."
 		for dfp in $depends_dfp; do
 			conf_chk_dfp_installed $dfp || {
 				echo "Installing DFP $dfp"
@@ -241,7 +235,7 @@ elif [ "$action" = "install" ]; then
 				}
 			}
 		done
-		echo "Installing DFP-Dependencies ... DONE\n"
+		text_underlined "Installing DFP-Dependencies ... DONE"
 	fi
 
 	# install or update the package
@@ -253,12 +247,21 @@ elif [ "$action" = "install" ]; then
 	}
 
 
-#   _ __ ___ _ __ ___   _____   _____
-#  | '__/ _ \ '_ ` _ \ / _ \ \ / / _ \
-#  | | |  __/ | | | | | (_) \ V /  __/
-#  |_|  \___|_| |_| |_|\___/ \_/ \___|
-elif [ "$action" = "remove" ]; then
-	echo ""
+#                   _       _
+#   _   _ _ __   __| | __ _| |_ ___
+#  | | | | '_ \ / _` |/ _` | __/ _ \
+#  | |_| | |_) | (_| | (_| | ||  __/
+#   \__,_| .__/ \__,_|\__,_|\__\___|
+#        |_|
+elif [ "$action" = "update" ]; then
+	text_underlined "Updating packages."
+	for package in ${(k)packages}; do
+		conf_chk_dfp_installed $package \
+			&& {
+				text_underlined "Updating $package"
+				$dfp_pb $package update
+			}
+	done
 
 
 #    ___ _ __ _ __ ___  _ __

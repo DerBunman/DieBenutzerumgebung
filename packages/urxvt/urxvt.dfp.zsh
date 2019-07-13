@@ -26,8 +26,9 @@ typeset -r -a host_flags=(
 
 # these symlinks will be created
 typeset -r -A symlinks=(
-	~/.config/urxvt                     "${0:A:h}/urxvt"
-	~/.terminfo/r/rxvt-unicode-256color "${0:A:h}/rxvt-unicode-256color"
+	~/.config/urxvt                     "$(path_packages $package)/urxvt"
+	~/.terminfo/r/rxvt-unicode-256color "$(path_packages $package)/rxvt-unicode-256color"
+	~/bin/ssh_send_terminfo.zsh         "$(path_packages $package)/ssh_send_terminfo.zsh"
 )
 
 tests() {

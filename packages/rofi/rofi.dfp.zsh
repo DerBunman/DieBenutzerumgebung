@@ -27,7 +27,9 @@ typeset -r -a host_flags=(
 )
 
 # these symlinks will be created
-typeset -r -A symlinks=()
+typeset -r -A symlinks=(
+	~/bin/rofi_startmenu.zsh "$(path_packages $package)/rofi_startmenu.zsh"
+)
 
 
 update() {
@@ -36,7 +38,6 @@ update() {
 }
 
 install() {
-	echo "processing ..."
 	install_dependencies_apt
 	# build deb is to compile and package debs
 	build_deb "$package"
@@ -48,5 +49,6 @@ tests() {
 
 # will be executed after successful install/update
 always() {
+	install_symlinks
 	tests
 }

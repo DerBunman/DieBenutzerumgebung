@@ -171,8 +171,6 @@ links=(
 	~/.zshrc.d                  data/zshrc.d
 
 
-	~/.vim                      data/vim
-	~/bin/gvim                  data/bin/gvim.zsh
 
 
 	# autodownloader ...
@@ -184,6 +182,8 @@ links=(
 	#~/.themes/oomox-DieOberflaechengestaltung data/theme/oomox-DieOberflaechengestaltung
 	~/.local/share/fonts        data/local/share/fonts
 	# already moved to new package format
+	~/.vim                      data/vim
+	~/bin/gvim                  data/bin/gvim.zsh
 	~/bin/polybar-scripts       data/bin/polybar-scripts
 	# mimetypes for xdg-open
 	~/.config/mimeapps.list     data/config/mimeapps.list

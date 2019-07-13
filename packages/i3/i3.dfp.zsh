@@ -37,7 +37,7 @@ typeset -r -a dfp_dependencies=(
 	rofi
 	urxvt
 	xdg-utils
-	# x11-themes icons
+	x11-themes
 )
 
 typeset -r -a host_flags=(
