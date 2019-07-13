@@ -60,5 +60,8 @@ update install() {
 }
 
 always() {
+	test -f "${HOME}/.Xresources.local" \
+		|| touch "${HOME}/.Xresources.local"
+
 	tests
 }

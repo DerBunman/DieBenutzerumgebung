@@ -1,3 +1,7 @@
+Host github.com
+	User git
+	PermitLocalCommand no
+
 Host *
 	PermitLocalCommand yes
 	LocalCommand ssh_send_terminfo.zsh %n

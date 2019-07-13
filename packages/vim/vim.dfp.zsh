@@ -45,6 +45,7 @@ tests() {
 # for this package
 update() {
 	install_dependencies_apt
+	install_symlinks
 	vim +PlugClean +qall -u ~/.vim/vimrc_plug.vim
 	vim +PlugInstall +qall -u ~/.vim/vimrc_plug.vim
 	vim +PlugUpdate +qall -u ~/.vim/vimrc_plug.vim

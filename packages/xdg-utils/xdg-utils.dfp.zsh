@@ -43,9 +43,9 @@ update() {
 # for this package
 install() {
 	install_dependencies_apt
-	install_symlinks
 }
 
 always() {
+	install_symlinks
 	tests
 }

@@ -45,7 +45,7 @@ install() {
 		echo "Folder exits. Delete $font_path to reinstall."
 		return 0
 	}
-	mkdir -p "$font_path"
+	test -d "$font_path" || mkdir -p "$font_path"
 	cd "$font_path"
 	wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/RobotoMono.zip"
 	unzip "RobotoMono.zip"
