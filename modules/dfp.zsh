@@ -123,11 +123,12 @@ elif [ "$action" = "show" ]; then
 		echo "status!package!installed!depends on version"
 		for apt_package in ${deps}; do
 			apt_package=("${(@s/:/)apt_package}")
+
+			local retval=0
 			installed_version=$(apt-cache policy $apt_package[1] \
 				| grep -oP 'Installed: \K.*([^ ]*)' \
-				| grep -v '(none)' )
+				| grep -v '(none)' ) || retval=$?
 
-			local retval=$?
 			local pkg_status=${installed_version:-MISSING}
 
 			ok="MISSING"
