@@ -54,7 +54,8 @@ build_deb() {
 	echo "Build finished, installing debs:"
 	for file in $install_debs; do
 		noscroll_cmd "installing $file"
-		sudo dpkg -i ${debs_path:A}/${file}
+		sudo dpkg -i ${debs_path:A}/${file} \
+			|| sudo apt-get -f install
 	done
 
 	echo "Runtime in $(($SECONDS - $timer))sec"
