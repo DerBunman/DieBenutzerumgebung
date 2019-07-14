@@ -52,15 +52,18 @@ set_nonscrolling_line() {
 	tput clear
 	tput smso
 	tput bold
+	# places a space before the other spaces, so all lines are the
+	# same length without causing problems.
+	local space_helper=" "
 	# 1st row is empty
-	echo "${(r:${COLUMNS}:: :)${}}"
+	echo "${(r:${COLUMNS}:: :)${space_helper}}"
 	local text=" ${1}"
 	echo "${(r:${COLUMNS}:: :)${text}}"
 	tput sgr0 # disable all attributes
 	tput smso
 	local text=" ${2}"
 	echo "${(r:${COLUMNS}:: :)${text}}"
-	echo "${(r:${COLUMNS}:: :)${}}"
+	echo "${(r:${COLUMNS}:: :)${space_helper}}"
 	tput rmso
 }
 
