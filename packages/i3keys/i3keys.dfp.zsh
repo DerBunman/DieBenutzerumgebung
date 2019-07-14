@@ -20,6 +20,7 @@ typeset -r license="MIT"
 # there may be differences between ubuntu and debian
 typeset -r -a packages_debian=(
 	golang-go
+	libxtst-dev
 )
 typeset -r -a packages_ubuntu=( ${(@)packages_debian} )
 
