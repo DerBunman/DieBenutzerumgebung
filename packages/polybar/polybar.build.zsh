@@ -13,7 +13,7 @@ git clone \
 	"https://github.com/${repository}" "${build_path}/git"
 
 cd "${build_path}/git"
-tar xf $pkg_path/debian.tar.xz
+cp -Rv "$pkg_path/debian" .
 
 # switch to release tag
 git checkout "$tag"
