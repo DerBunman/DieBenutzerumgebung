@@ -42,7 +42,6 @@ typeset -A main_choice_actions=(
 	host_flags  "function::_draw_checkboxes::host_flags"
 	setxkbmap   "function::edit_setxkbmap"
 	choose_dfps "function::choose_dfps"
-	#save_apply  "function::dotfiles_main_menu_save"
 )
 main_choice_order=( host_flags )
 
@@ -57,9 +56,17 @@ edit_setxkbmap() {
 	# set default value if there was no conf value
 	conf get setxkbmap/script > /dev/null || {
 		cat <<-EOF | conf put setxkbmap/script
+		# us international layout
 		setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
-		setxkbmap -option 'grp:shift_caps_toggle'
-		setxkbmap -option 'caps:swapescape'
+
+		# german de layout
+		# setxkbmap -rules evdev -model evdev -layout de
+
+		# disable CapsLock
+		setxkbmap -option caps:none
+
+		# Swap CapsLock and Escape
+		# setxkbmap -option 'caps:swapescape'
 		EOF
 	}
 
@@ -157,6 +164,7 @@ choose_dfps() {
 	for dfp in ${available_dfps[@]}; do
 		choose_dfps_checkboxes+=( $dfp "$dfp: $($dfp_wrapper $dfp info_short)" )
 		choose_dfps_checkbox_order+=( $dfp )
+		choose_dfps_checkboxes_checked+=( $dfp )
 	done
 
 	_draw_checkboxes choose_dfps
@@ -324,23 +332,6 @@ host_flags_checkboxes_buttons_actions.save() {
 	return 100
 }
 
-
-
-
-dotfiles_main_menu_save() {
-	local text="$(<<-EOF
-	Please check your configuration:
-	 
-	Active host_flags:
-	----------------
-	 - Shell/CLI host_flags. (required)
-	EOF
-	)"
-
-	for id (${(k)host_flags_checkboxes_checked}) text+=$'\n'" - ${host_flags_checkboxes[$id]}"
-
-	_draw_textbox "save_apply" "Save and apply" "${text}"
-}
 
 
 #--- END OF CONFIGURATION ---#
