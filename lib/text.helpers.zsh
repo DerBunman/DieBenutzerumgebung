@@ -7,7 +7,7 @@
 	|| FIGLET=( "figlet_fallback" )
 
 figlet_fallback() {
-	local text="$(cat -)"
+	local text="$*"
 	echo "*** ${(r:${#text}::=:)${}}"
 	echo "*** $text"
 	echo "*** ${(r:${#text}::=:)${}}\n"

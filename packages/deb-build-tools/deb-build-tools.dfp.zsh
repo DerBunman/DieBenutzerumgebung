@@ -15,6 +15,7 @@ typeset -r -i version=1
 typeset -r license="MIT"
 
 typeset -r -a packages_debian=(
+	moreutils
 	build-essential
 	fakeroot
 	devscripts

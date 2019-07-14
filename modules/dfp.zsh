@@ -225,10 +225,14 @@ elif [ "$action" = "install" ]; then
 		done
 		echo ""
 
+		
+		set_nonscrolling_line "Installing DFP Dependencies"
+
 		text_underlined "Installing DFP-Dependencies ..."
 		for dfp in $depends_dfp; do
 			conf_chk_dfp_installed $dfp || {
 				echo "Installing DFP $dfp"
+				update_nonscrolling_line 2 " » Installing DFP $dfp"
 				"$0" install $dfp || {
 					exit
 				}
@@ -237,6 +241,7 @@ elif [ "$action" = "install" ]; then
 		text_underlined "Installing DFP-Dependencies ... DONE"
 	fi
 
+	set_nonscrolling_line " Installing $1" " » dfp.wrapper"
 	# install or update the package
 	$dfp_wrapper "$1" $install && {
 		echo "Package $1 has been successfully installed.\n"
