@@ -41,6 +41,11 @@ text_right() {
 	printf '%*s' $(tput cols) "$*"
 }
 
+
+# tput commands:
+# https://www.gnu.org/software/termutils/manual/termutils-2.0/html_chapter/tput_1.html
+# example at 38sed:
+# https://streamable.com/za9ul
 set_nonscrolling_line() {
 	tput init
 	tput csr "4" "$((LINES-1))"

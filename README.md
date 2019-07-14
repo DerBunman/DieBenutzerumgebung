@@ -32,7 +32,7 @@ So use at your own risk.
 * Compatible distributions
   - Debian 9 - 10
   - Ubuntu 18.04 - 19.04
-  - Other Debian based distributions should work too, however, you have to compile polybar yourself.
+  - Other Debian based distributions should work too.
   - Other non Debian based distributions should work too, however, you have to install all needed packages without the script. _(for now)_
 * Needed packages to run the installeri are: git, curl, zsh
 * [Packages that the dotfiles script will install.](https://github.com/DerBunman/DieBenutzerumgebung/blob/v0.0.1-alpha1/dotfiles#L255)
@@ -60,11 +60,10 @@ This script will check if there are rules defined for the current active WM_CLAS
   - GTK2 (based on Numix)
   - GTK3 (based on Numix)
   - Shell/Terminal
-
 ## Videos:
-<a href="https://youtu.be/n_71Ccq8z8Q" target="_blank">
-	<img src="_docs/images/video_installation.png" />
-</a>
+
+  - [new installer (missing texts will be added soon)](https://streamable.com/za9ul)
+  - [old installer](https://youtu.be/n_71Ccq8z8Q)
 
 ## Screenshots:
 <a href="_docs/images/screenshot1.png" target="_blank">
