@@ -45,6 +45,7 @@ typeset -r -a host_flags=(
 
 # these symlinks will be created
 typeset -r -A symlinks=(
+	~/.xsessionrc          "$(path_packages $package)/xsessionrc"
 	~/.Xresources          "$(path_packages $package)/Xresources"
 	~/.xprofile            "$(path_packages $package)/xprofile"
 	~/.config/compton.conf "$(path_packages $package)/compton.conf"
