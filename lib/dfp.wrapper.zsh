@@ -68,6 +68,11 @@ dependencies() {
 	test -f \
 		&& . /etc/os-release \
 		|| ID=ubuntu # they are the same for most packages
+
+	if [ "$ID" = "linuxmint" ]; then
+		ID=ubuntu
+	fi
+
 	typeset -A pkg_types=(
 		dfp        "dfp_dependencies"
 		apt        "packages_${ID:l}"
