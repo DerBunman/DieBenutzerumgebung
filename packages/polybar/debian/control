@@ -23,6 +23,7 @@ Build-Depends: debhelper (>= 10),
                libxcb-render0-dev,
                libxcb-sync-dev,
                libxcb-xkb-dev,
+               libxcb-xrm-dev,
                python-xcbgen,
                pkg-config,
                xcb-proto
