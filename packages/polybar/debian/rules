@@ -1,0 +1,39 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/pkg-info.mk
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+
+%:
+	dh $@ --buildsystem=cmake --builddirectory=build
+
+
+override_dh_auto_configure:
+	rm -rf include/xpp/proto/*.hpp
+	dh_auto_configure -- \
+	  -DENABLE_ALSA:BOOL=1 \
+      -DENABLE_I3:BOOL=1 \
+      -DENABLE_MPD:BOOL=1 \
+      -DENABLE_NETWORK:BOOL=1 \
+      -DENABLE_CURL:BOOL=1 \
+      -DBUILD_IPC_MSG:BOOL=1
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+# git commit or tag
+GITREV=3.3.1
+GIT_URL=https://github.com/jaagr/polybar
+SRC_DIR=polybar-$(DEB_VERSION_UPSTREAM)
+
+get-orig-source:
+	rm -rf $(SRC_DIR) polybar_$(DEB_VERSION_UPSTREAM).orig.tar.gz 
+	git clone $(GIT_URL) $(SRC_DIR)
+	cd $(SRC_DIR) && git checkout $(GITREV) && git submodule update --init
+	rm -rf $(SRC_DIR)/.git
+	rm -rf $(SRC_DIR)/.gitmodules
+	rm -rf $(SRC_DIR)/lib/i3ipcpp/.git
+	rm -rf $(SRC_DIR)/lib/xpp/.git
+	tar czvf polybar_$(DEB_VERSION_UPSTREAM).orig.tar.gz $(SRC_DIR)
+	rm -rf $(SRC_DIR)

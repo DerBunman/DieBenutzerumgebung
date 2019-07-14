@@ -1,0 +1,11 @@
+--- a/lib/i3ipcpp/CMakeLists.txt
++++ b/lib/i3ipcpp/CMakeLists.txt
+@@ -24,7 +24,7 @@
+ # External library: jsoncpp-1.7.7 {{{
+ 
+ find_package(PkgConfig)
+-pkg_check_modules(JSONCPP jsoncpp>=1.7.7)
++pkg_check_modules(JSONCPP jsoncpp>=1.7.4)
+ 
+ if(NOT JSONCPP_FOUND)
+   message(STATUS "Could not find jsoncpp>=1.7.7 -- building static lib...")

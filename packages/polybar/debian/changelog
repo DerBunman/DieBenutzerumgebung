@@ -1,0 +1,18 @@
+polybar (3.3.1-0.1~mx17+1) mx; urgency=medium
+
+  * New upstream release; build for MX 17.
+  * Drop xcb_eventstruct_support.patch, applied upstream.
+
+ -- Steven Pusser <stevep@mxlinux.org>  Wed, 08 May 2019 09:31:19 -0700
+
+polybar (3.2.1.0-0.1~obs) obs; urgency=medium
+
+  * New upstream release.
+
+ -- Steven Pusser <stevep@mxlinux.org>  Thu, 15 Nov 2018 15:39:04 -0800
+
+polybar (3.1.0-1) UNRELEASE; urgency=medium
+
+  * Initial release (Closes: #999999)
+
+ -- Jason Pleau <jason@jpleau.ca>  Thu, 01 Mar 2018 22:58:43 -0500

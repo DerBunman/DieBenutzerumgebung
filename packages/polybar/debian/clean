@@ -1,0 +1,5 @@
+rm -f lib/xpp/generators/*.pyc
+rm -f lib/xpp/include/xpp/proto/*.hpp
+
+rm -f doc/config
+rm -f include/settings.hpp
