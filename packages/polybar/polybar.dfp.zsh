@@ -35,7 +35,7 @@ typeset -r -A symlinks=(
 
 update() {
 	install_symlinks
-	#version_is_already_installed && return
+	version_is_already_installed && return
 	install "$*"
 }
 
