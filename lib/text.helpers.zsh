@@ -78,7 +78,6 @@ update_nonscrolling_line() {
 }
 
 reset_scrolling() {
-	get_size
 	tput sc
 	tput csr 0 $(($LINES - 1))
 	tput rc
