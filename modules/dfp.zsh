@@ -265,7 +265,9 @@ elif [ "$action" = "update" ]; then
 	for package in ${(k)packages}; do
 		conf_chk_dfp_installed $package \
 			&& {
+				set_nonscrolling_line " Updating $package" " » please wait"
 				text_underlined "Updating $package"
+				$dfp_wrapper "$package" update
 			}
 	done
 
