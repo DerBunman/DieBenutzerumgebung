@@ -208,6 +208,8 @@ elif [ "$action" = "install" ]; then
 		local install=install
 		local text="Installing package ${1}:"
 	fi
+	set_nonscrolling_line " Installing $1" " » $install"
+
 	text_figlet "$1"
 	text_underlined "$text"
 
