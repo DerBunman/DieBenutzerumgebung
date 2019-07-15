@@ -46,15 +46,15 @@ tests() {
 update() {
 	version_is_already_installed || install_dependencies_apt
 	install_symlinks
-	vim +PlugClean +qall -u ~/.vim/vimrc_plug.vim
-	vim +PlugInstall +qall -u ~/.vim/vimrc_plug.vim
-	vim +PlugUpdate +qall -u ~/.vim/vimrc_plug.vim
+	vim -X +PlugClean! +qall -u ~/.vim/vimrc_plug.vim
+	vim -X +PlugInstall! +qall -u ~/.vim/vimrc_plug.vim
+	vim -X +PlugUpdate! +qall -u ~/.vim/vimrc_plug.vim
 }
 
 install() {
 	install_dependencies_apt
 	install_symlinks
-	vim +PlugInstall +qall -u ~/.vim/vimrc_plug.vim
+	vim -X +PlugInstall! +qall -u ~/.vim/vimrc_plug.vim
 }
 
 always() {
