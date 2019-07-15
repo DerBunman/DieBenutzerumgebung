@@ -35,7 +35,7 @@ tests() {
 }
 
 update() {
-	install_dependencies_apt
+	version_is_already_installed || install_dependencies_apt
 	install_symlinks
 }
 
