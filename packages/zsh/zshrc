@@ -102,7 +102,7 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 
 # Check if zplug is installed
 if [[ ! -d ~/.zplug ]]; then
-	git clone https://github.com/zplug/zplug ~/.zplug
+	git clone https://github.com/DerBunman/zplug ~/.zplug
 	source ~/.zplug/init.zsh && zplug update
 fi
 
@@ -111,7 +111,7 @@ fpath=(~/.zsh_autocomplete $fpath)
 source ~/.zplug/init.zsh
 
 # Make sure to use double quotes
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplug 'DerBunman/zplug' #, hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-autosuggestions"
@@ -176,7 +176,10 @@ POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 ZLE_RPROMPT_INDENT=0
 
 # Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
+if [ "$ASSUME_YES" = true ]; then
+	zplug update
+	zplug install
+elif ! zplug check --verbose; then
 	printf "Install? [y/N]: "
 	if read -q; then
 		echo; zplug install
@@ -299,6 +302,7 @@ bindkey '^[[B' history-substring-search-down
 # Check if fzf is installed
 if [[ ! -d ~/.fzf ]]; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-	~/.fzf/install
+	~/.fzf/install --all
 fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
