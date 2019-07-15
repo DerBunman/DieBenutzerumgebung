@@ -270,6 +270,8 @@ elif [ "$action" = "update" ]; then
 				$dfp_wrapper "$package" update
 			}
 	done
+	update_nonscrolling_line 1 " Updates finished" " » have a nice day!"
+	update_nonscrolling_line 2 " » have a nice day!"
 
 
 #    ___ _ __ _ __ ___  _ __
