@@ -38,7 +38,7 @@ update() {
 	version_is_already_installed || install_dependencies_apt
 	install_symlinks
 	# update zplugs
-	ASSUME_YES=true zsh -e -ic 'echo finished'
+	{ ASSUME_YES=true zsh -c 'source ~/.zshrc' }
 }
 
 
@@ -48,7 +48,7 @@ install() {
 	sudo chsh -s /usr/bin/zsh $USER
 
 	# install zplug and fzf
-	ASSUME_YES=true zsh -e -c 'echo finished'
+	{ ASSUME_YES=true zsh -c 'source ~/.zshrc' }
 
 }
 

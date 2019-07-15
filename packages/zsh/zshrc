@@ -111,7 +111,7 @@ fpath=(~/.zsh_autocomplete $fpath)
 source ~/.zplug/init.zsh
 
 # Make sure to use double quotes
-zplug 'DerBunman/zplug' #, hook-build:'zplug --self-manage'
+zplug 'DerBunman/zplug', hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-autosuggestions"
