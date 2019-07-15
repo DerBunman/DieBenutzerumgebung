@@ -63,14 +63,16 @@ tests() {
 	validate_symlinks
 }
 
-# the update/install function only creates a symlink.
-# for this package
-update install() {
+update() {
+	version_is_already_installed || install_dependencies_apt
+}
+
+install() {
 	install_dependencies_apt
-	test -d "$HOME/.ssh/conf.d" || mkdir -p "$HOME/.ssh/conf.d"
-	install_symlinks
 }
 
 always() {
+	test -d "$HOME/.ssh/conf.d" || mkdir -p "$HOME/.ssh/conf.d"
+	install_symlinks
 	tests
 }
