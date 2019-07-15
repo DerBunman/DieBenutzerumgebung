@@ -44,7 +44,7 @@ tests() {
 # the update/install function only creates a symlink.
 # for this package
 update() {
-	install_dependencies_apt
+	version_is_already_installed || install_dependencies_apt
 	install_symlinks
 	vim +PlugClean +qall -u ~/.vim/vimrc_plug.vim
 	vim +PlugInstall +qall -u ~/.vim/vimrc_plug.vim
