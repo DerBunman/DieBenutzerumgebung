@@ -101,9 +101,11 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 #      |_|            |___/
 
 # Check if zplug is installed
+zplug_first_run=false
 if [[ ! -d ~/.zplug ]]; then
+	zplug_first_run=true
 	git clone https://github.com/zplug/zplug ~/.zplug
-	source ~/.zplug/init.zsh && zplug update --self
+	source ~/.zplug/init.zsh && zplug update
 fi
 
 fpath=(~/.zsh_autocomplete $fpath)
@@ -176,7 +178,11 @@ POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 ZLE_RPROMPT_INDENT=0
 
 # Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
+if [ "$zplug_first_run" = true ]; then
+	zplug install
+	zplug load
+	exit $?
+elif ! zplug check --verbose; then
 	printf "Install? [y/N]: "
 	if read -q; then
 		echo; zplug install
