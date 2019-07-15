@@ -47,9 +47,10 @@ text_right() {
 # example at 38sed:
 # https://streamable.com/za9ul
 set_nonscrolling_line() {
-	tput init
+	tput sc
+	#tput init
 	tput csr "4" "$((LINES-1))"
-	tput clear
+	#tput clear
 	tput smso
 	tput bold
 	# places a space before the other spaces, so all lines are the
@@ -65,6 +66,7 @@ set_nonscrolling_line() {
 	echo "${(r:${COLUMNS}:: :)${text}}"
 	echo "${(r:${COLUMNS}:: :)${space_helper}}"
 	tput rmso
+	tput rc
 }
 
 update_nonscrolling_line() {
