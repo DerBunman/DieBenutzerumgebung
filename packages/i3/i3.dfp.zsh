@@ -66,10 +66,12 @@ typeset -r -A symlinks=(
 )
 
 # the update/install function
-update install() {
+update() {
+	version_is_already_installed || install_dependencies_apt
+}
+
+install() {
 	install_dependencies_apt
-	test -d ~/bin/autostart/always || mkdir -p ~/bin/autostart/always
-	install_symlinks
 }
 
 # this will be called afer init/update
@@ -79,5 +81,7 @@ tests() {
 }
 
 always() {
+	test -d ~/bin/autostart/always || mkdir -p ~/bin/autostart/always
+	install_symlinks
 	tests
 }
