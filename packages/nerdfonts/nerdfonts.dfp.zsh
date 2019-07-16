@@ -35,8 +35,6 @@ tests() {
 	echo "Looking good!" # MAH MAN!
 }
 
-# the update/install function only creates a symlink.
-# for this package
 update() {
 }
 
