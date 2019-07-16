@@ -1,6 +1,7 @@
 git_changelog() {
 	prevtag=initial
 	pkgname="$1"
+	touch debian/changelog
 	git tag -l "*" | sort -V | while read tag; do
 		[ "$prevtag" = "initial" ] && {
 			prevtag="$tag"
