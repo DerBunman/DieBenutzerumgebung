@@ -1,6 +1,6 @@
 ---
 title: DieBenutzerdokumentation
-layout: post
+layout: default
 ---
 ![DieBenutzerumgebung](images/logo.png)
 
