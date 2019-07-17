@@ -1,3 +1,7 @@
+---
+title: DieBenutzerdokumentation
+layout: post
+---
 ![DieBenutzerumgebung](images/logo.png)
 
 If you have comments, ideas or requests, feel free to get involved.
