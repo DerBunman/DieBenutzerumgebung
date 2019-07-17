@@ -2,8 +2,6 @@
 title: DieBenutzerdokumentation
 layout: default
 ---
-![DieBenutzerumgebung](images/logo.png)
-
 If you have comments, ideas or requests, feel free to get involved.
 
 # Documentation table of contents
