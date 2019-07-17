@@ -1,7 +1,7 @@
 ![DieBenutzerumgebung](docs/images/logo.png)
 
 ___DieBenutzerumgebung___ started as an collection of dofiles and an script to manage these.
-The project now aims to go in the direction of a (somewhat) consistent desktop environment.
+The project now aims to provide a (somewhat) consistent desktop environment experience.
 
 Right now we are on the path onto the first beta release including the new [dfp (dotfiles package) manager](docs/dfp.md).
 
