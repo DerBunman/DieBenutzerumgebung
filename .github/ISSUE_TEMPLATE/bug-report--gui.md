@@ -1,8 +1,8 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: 'Bug report: GUI'
+about: I found a visual bug in the GUI.
 title: "[BUG]"
-labels: bug
+labels: bug, gui problem
 assignees: ''
 
 ---
