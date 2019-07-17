@@ -1,5 +1,10 @@
 # Keymaps
 
+## TODO
+* Define more shortcuts that make sense.
+* Decicde what to do about Ctrl+a not beeing mapped to select all.
+
+
 ## Keyboard Shortcuts
 
 | Shortcut         | Comment               | urxvt  | VIM    | gVIM   | zsh    | tmux   | rofi   | Firefox |
