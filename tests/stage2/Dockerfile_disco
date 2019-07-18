@@ -1,0 +1,14 @@
+# Pull base image.
+FROM derbunman/diebenutzerumgebung:disco-staged
+
+ADD build.sh /
+ADD install.zsh /
+
+#CMD "/bin/zsh" "/build.sh"
+RUN chmod 755 /build.sh && /bin/zsh -c /build.sh
+
+ADD validate.zsh /
+ADD validate2.zsh /
+ADD validate.png /
+
+RUN ls -l / && chmod 755 /validate2.zsh /validate.zsh && /bin/zsh -c /validate.zsh

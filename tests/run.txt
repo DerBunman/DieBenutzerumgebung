@@ -1,0 +1,11 @@
+# download and install apt packages and then clone git repo
+docker build -t derbunman/diebenutzerumgebung:bionic-staged $(pwd)
+
+# install the dfp packages
+docker build -t derbunman/diebenutzerumgebung:bionic -f Dockerfile_stage2 $(pwd)
+
+# validate that the install is as expected
+docker build -t derbunman/diebenutzerumgebung:bionic-validated -f Dockerfile_stage3 $(pwd)
+
+
+#docker image build --file=Dockerfile_u2d -t ubuntu_x $(pwd); docker container run --name=dfp --rm ubuntu_x:latest

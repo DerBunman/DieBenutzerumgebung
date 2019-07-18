@@ -1,0 +1,4 @@
+FROM ubuntu:disco AS disco-staged
+ENV DEBIAN_FRONTEND=noninteractive
+ADD setup_baseimage.sh /
+RUN /setup_baseimage.sh
