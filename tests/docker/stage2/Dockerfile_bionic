@@ -35,13 +35,13 @@ RUN mkdir -p ~/.config/dotfiles/dotfiles/host_flags/ \
 	~/.config/dotfiles/dotfiles/host_flags/checked
 
 # start install script in xterm in xvfb
-RUN xvfb-run \
+RUN xvfb-run -e /dev/stdout \
 	xterm -e zsh -c "~/.repos/dotfiles/dotfiles dfp install polybar"
 
 RUN pkill -9 -i xvfb; sleep 2
 
 # start install script in xterm in xvfb
-RUN xvfb-run \
+RUN xvfb-run -e /dev/stdout \
 	xterm -e zsh -c "~/.repos/dotfiles/dotfiles dfp install rofi"
 
 ARG CACHEBUST=1
