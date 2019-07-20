@@ -20,7 +20,7 @@ RUN chmod 755 /build.sh && /bin/zsh -c /build.sh
 
 ADD validate.zsh /
 ADD validate2.zsh /
-ADD validate.png /
+ADD validate.testing.png /validate.png
 
 RUN ls -l / && chmod 755 /validate2.zsh /validate.zsh && /bin/zsh -c /validate.zsh
 
