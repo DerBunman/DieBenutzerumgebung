@@ -21,7 +21,7 @@ i3-msg restart
 # give urxvt a few seconds
 sleep 5
 # create screenshot and upload to doublefun
-img=neofetch1.png;
+img=/neofetch1.png;
 scrot $img;
 echo taking screenshot
 curl -s -X POST -F "image=@$img" https://doublefun.net/media/x.php

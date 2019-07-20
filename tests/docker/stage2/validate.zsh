@@ -18,5 +18,5 @@ echo "========================================="
 cat /scriptout.txt
 echo "========================================="
 
-perceptualdiff -verbose -threshold 25000 neofetch1.png /validate.png
-exit $?
+#perceptualdiff -verbose -threshold 25000 neofetch1.png /validate.png
+#exit $?

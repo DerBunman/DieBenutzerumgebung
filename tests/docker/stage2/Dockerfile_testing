@@ -23,3 +23,5 @@ ADD validate2.zsh /
 ADD validate.png /
 
 RUN ls -l / && chmod 755 /validate2.zsh /validate.zsh && /bin/zsh -c /validate.zsh
+
+RUN perceptualdiff -verbose -threshold 25000 /neofetch1.png /validate.png
