@@ -34,7 +34,6 @@ typeset -r -a packages_debian=(
 	sysfsutils
 	p7zip-full
 	unp
-	unrar
 	unzip
 	grc
 	silversearcher-ag
