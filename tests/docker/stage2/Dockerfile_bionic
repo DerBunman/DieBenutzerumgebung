@@ -1,6 +1,10 @@
 # Pull base image.
 FROM derbunman/diebenutzerumgebung:bionic-staged
 
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
 ADD build.sh /
 ADD install.zsh /
 

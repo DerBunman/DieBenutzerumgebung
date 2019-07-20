@@ -1,0 +1,12 @@
+# Pull base image.
+FROM derbunman/diebenutzerumgebung:stable-staged
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+
+RUN apt-get install procps
+
+RUN xvfb-run xterm -e "~/.repos/dotfiles/dotfiles dfp install polybar"
+RUN xvfb-run xterm -e "~/.repos/dotfiles/dotfiles dfp install rofi"

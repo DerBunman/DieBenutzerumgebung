@@ -2,6 +2,12 @@
 echo starting i3 >> /scriptout.txt
 # hide x6erm
 xdotool windowunmap $(xdotool search --classname "xterm")
+
+{
+	sleep 240
+	pkill -i -9 xvfb
+} &
+
 # start i3 as background process
 i3 &
 # give it a few seconds to startr
@@ -18,10 +24,10 @@ sleep 5
 img=neofetch1.png;
 scrot $img;
 echo taking screenshot
- curl -s -X POST -F "image=@$img" https://doublefun.net/media/x.php
+curl -s -X POST -F "image=@$img" https://doublefun.net/media/x.php
 # kill i3 and urxvt to leave xvfb graceful
 pkill i3
 pkill urxvt
-pkill xvfb
+pkill -9 -i xvfb
 # the screenshot will be taken in validate.zsh
 # when this script ends

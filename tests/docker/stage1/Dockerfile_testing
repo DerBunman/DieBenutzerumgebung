@@ -1,4 +1,16 @@
 FROM debian:testing AS testing-staged
 ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    # Install locales
+    apt-get install -y apt-utils locales && \
+    # Set locale
+    sed --in-place '/en_US.UTF-8/s/^# //' /etc/locale.gen && \
+    locale-gen && \
+    # Set system locale (add line)
+    echo "export LANG=en_US.UTF-8" >> /etc/profile && \
+    # Set system timezone (add line)
+    echo "export TZ=UTC" >> /etc/profile
+
 ADD setup_baseimage.sh /
 RUN /setup_baseimage.sh
