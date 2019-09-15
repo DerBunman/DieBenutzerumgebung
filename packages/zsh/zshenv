@@ -3,6 +3,10 @@
 #
 skip_global_compinit=1
 
+
+# needed for gpg-agent. (man gpg-agent)
+export GPG_TTY=$(tty)
+
 export __GL_SYNC_DISPLAY_DEVICE=DP-4
 export __VDPAU_NVIDIA_SYNC_DISPLAY_DEVICE=DP-4
 
