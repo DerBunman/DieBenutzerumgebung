@@ -29,6 +29,7 @@ typeset -r -a host_flags=(
 # these symlinks will be created
 typeset -r -A symlinks=(
 	~/bin/rofi_startmenu.zsh "$(path_packages $package)/rofi_startmenu.zsh"
+	~/bin/rofi_media_menu.zsh "$(path_packages $package)/rofi_media_menu.zsh"
 )
 
 
