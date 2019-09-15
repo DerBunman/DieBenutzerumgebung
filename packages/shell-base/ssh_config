@@ -3,8 +3,6 @@ Host github.com
 	PermitLocalCommand no
 
 Host *
-	PermitLocalCommand yes
-	LocalCommand ssh_send_terminfo.zsh %n
 	ServerAliveInterval 60
 	ServerAliveCountMax 2
 
