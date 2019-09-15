@@ -89,8 +89,8 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec "rofi -combi-modi drun,run -show combi -modi combi"
-bindsym $mod+d exec "rofi -show run"
-
+#bindsym $mod+d exec "rofi -show run"
+bindsym $mod+d exec "rofi -modi window,run,media:~/bin/rofi_media_menu.zsh -show run -sidebar-mode"
 bindsym $mod+x exec xscreensaver-command -lock
 
 #                             _                    _                     _
@@ -340,6 +340,7 @@ for_window [class="Display-im6.q16"] floating enable
 for_window [class="feh"] floating enable
 for_window [class="copyq"] floating enable
 for_window [class="Easystroke"] floating enable
+for_window [class="Emulator"] floating enable
 
 #                 _
 #    __ _ ___ ___(_) __ _ _ __
@@ -362,10 +363,12 @@ assign [class="Steam"] 3
 #   / _` | | | | __/ _ \/ __| __/ _` | '__| __|
 #  | (_| | |_| | || (_) \__ \ || (_| | |  | |_
 #   \__,_|\__,_|\__\___/|___/\__\__,_|_|   \__|
+exec --no-startup-id eval $(gnome-keyring-daemon)
 exec --no-startup-id xscreensaver -nosplash &
 exec --no-startup-id xset m 0 0 &
 exec_always --no-startup-id /usr/lib/gnome-settings-daemon &
 exec_always --no-startup-id ~/bin/polybar-scripts/polybar_wrapper.sh &
+
 
 exec --no-startup-id ~/bin/i3-autostart.zsh ~/bin/autostart &
 exec_always --no-startup-id ~/bin/i3-autostart.zsh ~/bin/autostart/always &
