@@ -4,6 +4,23 @@ all:
   # system and the dotfiles and packages) will be run
   # for all hosts. you don't have to add them to a group.
   vars:
+    # these users will be managed by ansible
+    # it is mandatory to add the user you have set as ansible user to this list
+    users:
+      - name: "ichi"
+        comment: "numero ichi"
+        home: /home/ichi
+        group: users
+        groups: adm,sudo
+        shell: /bin/zsh
+
+      - name: "root"
+        comment: "root"
+        home: /root
+        group: root
+        shell: /bin/zsh
+
+    # the following ssh pubkeys will be added to all users above.
     ssh_keys: |
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMjCDwwHvhp3Gk/dYKWMxfn5sHE6rW+NvuekydZja2d localhorst
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFxrqRD0ab7ljvUjAYVqLH2XsdsUTEr8ZGZ/N3riZOx schleppi
