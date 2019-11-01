@@ -1,0 +1,19 @@
+---
+all:
+  # the roles system and common (which will setup the
+  # system and the dotfiles and packages) will be run
+  # for all hosts. you don't have to add them to a group.
+  vars:
+    ssh_keys: |
+    # place ssh keys here
+  hosts:
+    localhost:
+      ansible_host: localhorst.lan
+      ansible_user: your_user
+
+  children:
+    # the desktop group will have
+    # the desktop role applied which will install i3
+    desktop:
+      hosts:
+        localhost:

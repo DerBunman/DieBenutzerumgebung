@@ -1,0 +1,56 @@
+@startuml
+
+package "Human Input Devices" {
+	[keyboard]
+	[mouse]
+}
+
+package "xkeys" {
+	[xkeys.zsh]
+	[xmodmap]
+	[xbindkeys]
+	[xdotool]
+}
+
+package "X11" {
+	[i3 WM]
+	[dunst]
+	[Firefox]
+	[gVIM]
+	[urxvt]
+	[urxvt pixmap]
+	[libnotify]
+	[rofi]
+}
+
+package "Shell" {
+	[zsh]
+	[tmux]
+	[VIM]
+	[ranger]
+}
+
+[i3 WM] --> libnotify
+libnotify --> [dunst]
+[keyboard] --> [xkeys.zsh]
+[xkeys.zsh] --> [xmodmap]
+[xkeys.zsh] --> [xbindkeys]
+[xmodmap] --> [xbindkeys]
+[xbindkeys] --> [xdotool]
+[xdotool] --> [i3 WM]
+[xbindkeys] --> [i3 WM]
+[i3 WM] --> [Firefox]
+[i3 WM] --> [gVIM]
+[i3 WM] --> [urxvt]
+[urxvt] --> [zsh]
+[zsh] --> [tmux]
+[tmux] --> [zsh]
+[zsh] --> [VIM]
+[gVIM] --> [tmux] : VIM-Comapnion
+[i3 WM] --> [rofi]
+[zsh] --> [ranger]
+[ranger] --> [urxvt]
+[ranger] --> [urxvt pixmap] : pictures in shell
+[urxvt] --> [urxvt pixmap]
+
+@enduml

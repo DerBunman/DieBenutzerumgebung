@@ -1,0 +1,19 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.inner {
+    max-width: 900px;
+}
+
+
+img {
+    border: 0;
+    box-shadow: 0;
+    -webkit-box-shadow: 0;
+    -moz-box-shadow: 0;
+    -o-box-shadow: 0;
+    -ms-box-shadow: 0;
+
+}

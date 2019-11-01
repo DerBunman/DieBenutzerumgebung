@@ -1,41 +1,117 @@
-# ansible
-ansible playground
+![DieBenutzerumgebung](docs/images/logo.png)
 
-# install dependencies:
+___DieBenutzerumgebung___ started as an collection of dofiles and an script to manage these.
+The project now aims to provide a (somewhat) consistent desktop environment experience.
 
-## roles
-```sh
-ansible-galaxy install -r requirements.yml
-```
+- You can track the current progress
+  * [in this project](https://github.com/users/DerBunman/projects/1)
+  * [the next milestone (first beta)](https://github.com/DerBunman/DieBenutzerumgebung/milestone/1)
+  * [planned features (after 0.0.1 release)](https://github.com/DerBunman/DieBenutzerumgebung/milestone/2)
 
-## docker
-```sh
-sudo apt-get install python-docker
-```
+If you have comments, ideas or requests, feel free to get involved.
 
-# run
-there are different possibilities
+# Migration to ansible
+When I recently started working with ansible I realized, that it provides all features needed for this project.
+So I discarded the idea of using a custon zsh install script in the favor of ansible.
+(However, you can always browse the legacy branch.)
 
-## complete
-this will setup, install and upgrade target hosts
-### on local hosts only
-```sh
-ansible-playbook -v -i inventories/local.yml playbook_complete.yml
-```
+Right now, the ansible branch (master) is not feature complete, but it installs all features the old installer installed.
+Also it is now possible, to install hosts where you have no root permissions.
 
-### on remote hosts only
-```sh
-ansible-playbook -v -i inventories/remote.yml playbook_complete.yml
-```
+The documentation also needs to be changed to represent the new changes.
 
-### on local and remote hosts only
-```sh
-ansible-playbook -v -i inventories/local.yml -i inventories/remote.yml playbook_complete.yml
-```
+# Main Features
 
-## only apt upgrade
-this will upgrade target hosts
-see inventory usage above
-```sh
-ansible-playbook -v -i inventories/local.yml playbook_upgrade.yml
-```
+## Unified keymaps
+I really like consistent keyboard shortcuts. So I started to [define desktop wide shortcuts](docs/keymaps.md).
+
+For example in my shell CTRL-a/CTRL-e will jump to beginning/end of the line.
+When editing in VIM these are mapped to increment (CTRL-a) and Scroll without moving cursor (CTRL-e).
+Since I don't use these shortcuts I remapped them to jump to beginning/end of the line.
+
+### Systemwide, application based keybindings/remappings
+
+Because some applications have not configureable shortcuts defined, [xkeys.zsh](docs/xkeys.zsh.md) will apply and then load xmodmap and/or xbindkeys configurations for the current focused application (identified by the active WM_CLASS).
+
+More informations on [xkeys.zsh can be found here](docs/xkeys.zsh.md).
+
+## Unified themes and style for:
+
+  - i3 & polybar
+  - GTK2 (based on oomox and Numix)
+  - GTK3 (based on oomox and Numix)
+  - Shell/Terminal
+
+
+More informations on [theming and styling can be found here](docs/style.md).
+
+The GTK themes and icons are located in [DerBunman/DieOberflaechengestaltung](https://github.com/DerBunman/DieOberflaechengestaltung).
+
+Also note, that the oomox sources are included so you are able to customize the theme.
+
+### Primary used applications:
+* [i3wm](https://i3wm.org/)
+* [zsh](https://www.zsh.org/) powered by [zplug](https://github.com/zplug/zplug) and the plugins listed [here](roles/common/files/dotfiles/.zshrc).
+* [vim](https://www.vim.org/) powered by [vim-plug](https://github.com/junegunn/vim-plug) and the plugins listed [here](roles/common/files/dotfiles/.vim/vimrc_plug.vim).
+* [polybar](https://github.com/jaagr/polybar)
+* [nerdfonts](https://nerdfonts.com/)
+* [dunst](https://dunst-project.org/)
+* [gtk3 theme](https://www.gtk.org/)
+
+
+# Installation
+
+## Compatible distributions
+- Debian >=10 (9 should also work but is untested)
+- Ubuntu >=19.04
+- Ubuntu 18.04 and Linux Mint 19.1 Tessa (which uses Ubuntu 18.04 as base):
+- Other Debian based distributions should work too. You may have to change the sources.
+
+## Examples
+TODO
+
+# Media
+## Videos:
+TODO
+
+## Screenshots:
+<a href="docs/images/screenshot1.png" target="_blank">
+	<img src="docs/images/screenshot1.thumb.png" />
+</a>  
+<br>
+<a href="docs/images/screenshot1.png" target="_blank">
+	Firefox, urxvt running zsh
+</a>  
+<br>
+<a href="docs/images/screenshot2.png" target="_blank">
+	<img src="docs/images/screenshot2.thumb.png" />
+</a>  
+<br>
+<a href="docs/images/screenshot2.png" target="_blank">
+	gVIM (GTK3), urxt running neofetch and pukeskull
+</a>  
+<br>
+<a href="docs/images/screenshot3.png" target="_blank">
+	<img src="docs/images/screenshot3.thumb.png" />
+</a>  
+<br>
+<a href="docs/images/screenshot3.png" target="_blank">
+	GTK2 (Filezilla), GTK3 (oomox, nautilus)
+</a>  
+<br>
+<a href="docs/images/screenshot4.png" target="_blank">
+	<img src="docs/images/screenshot4.thumb.png" />
+</a>  
+<br>
+<a href="docs/images/screenshot4.png" target="_blank">
+	gVIM (GTK3), Firefox and some terminals
+</a>  
+<br>
+<a href="docs/images/screenshot5.png" target="_blank">
+	<img src="docs/images/screenshot5.thumb.png" />
+</a>  
+<br>
+<a href="docs/images/screenshot5.png" target="_blank">
+	gVIM (GTK3), Firefox, and urxvt running ranger
+</a>
+
