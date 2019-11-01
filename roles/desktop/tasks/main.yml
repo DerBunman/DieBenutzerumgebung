@@ -1,0 +1,9 @@
+# basic host setup
+---
+- name: Setup default x11 packages
+  include: default-packages.yml
+
+- name: Setup i3 and needed tools
+  tags:
+    i3
+  include: i3.yml

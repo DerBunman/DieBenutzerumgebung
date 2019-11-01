@@ -1,0 +1,20 @@
+# these users will be created
+users:
+  - name: "ichi"
+    comment: "numero ichi"
+    home: /home/ichi
+    group: users
+    groups: adm,sudo
+    shell: /bin/zsh
+  - name: "root"
+    comment: "root"
+    home: /root
+    group: root
+    shell: /bin/zsh
+
+#  - name: "testus"
+#    comment: "numero ichi"
+#    home: /home/testus
+#    group: users
+#    groups: adm,sudo
+#    shell: /bin/zsh

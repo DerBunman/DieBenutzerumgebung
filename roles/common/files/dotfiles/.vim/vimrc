@@ -1,0 +1,480 @@
+"  _   _ _____ _     ____  _____ ____  ____
+" | | | | ____| |   |  _ \| ____|  _ \/ ___|
+" | |_| |  _| | |   | |_) |  _| | |_) \___ (_)
+" |  _  | |___| |___|  __/| |___|  _ < ___) |
+" |_| |_|_____|_____|_|   |_____|_| \_\____(_)
+" find out where you mapped a key:
+"   :verbose map <CR>
+
+set rtp+=~/.fzf
+
+set wildmenu
+
+" // is intentional as it adds the path in the filename
+set directory=$HOME/.vim/swapfiles//
+set backupdir=$HOME/.vim/backups//
+
+set path+=**
+
+runtime! debian.vim
+
+let g:airline#extensions#gutentags#enabled = 1
+let g:airline_powerline_fonts = 1
+
+"        _                       _
+" __   _(_)_ __ ___        _ __ | |_   _  __ _
+" \ \ / / | '_ ` _ \ _____| '_ \| | | | |/ _` |
+"  \ V /| | | | | | |_____| |_) | | |_| | (_| |
+"   \_/ |_|_| |_| |_|     | .__/|_|\__,_|\__, |
+"                         |_|            |___/
+source ~/.vim/vimrc_plug.vim
+
+
+"     _
+"    / \   _ __  _ __   ___  __ _ _ __ __ _ _ __   ___ ___
+"   / _ \ | '_ \| '_ \ / _ \/ _` | '__/ _` | '_ \ / __/ _ \
+"  / ___ \| |_) | |_) |  __/ (_| | | | (_| | | | | (_|  __/
+" /_/   \_\ .__/| .__/ \___|\__,_|_|  \__,_|_| |_|\___\___|
+"         |_|   |_|
+set guifont=RobotoMono\ Nerd\ Font\ Medium\ 10
+"set guifont=Roboto\ Mono\ for\ Powerline\ 10
+"set guifont=RobotoMono\ Nerd\ Font\ 10
+
+" enable 256 colors
+set t_Co=256
+
+if ! has('gui_running')
+	" fix background color on complete rows
+	set t_ut=
+	" line spacing
+	set linespace=-2
+endif
+
+set cursorline      " Highlight current line
+set scrolloff=5     " Keep more buffer context when scrolling
+
+syntax enable
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline_solarized_bg = 'dark'
+let g:airline_solarized_bg = 'light'
+"let g:airline_theme = 'solarized'
+let g:airline_theme = 'molokai'
+
+" Airline Tab navigation like Firefox.
+" nnoremap <C-q>   :bprevious<CR>
+nnoremap <C-z>   :bnext<CR>
+nnoremap <C-S-t> :tabnew<CR>
+
+let g:gruvbox_bold=1
+let g:gruvbox_italic=1
+let g:gruvbox_undercurl=1
+let g:gruvbox_underline=1
+let g:gruvbox_italicize_comments=0
+let g:gruvbox_italicize_strings=0
+let g:gruvbox_termcolors=256
+let g:gruvbox_invert_indent_guides=0
+let g:gruvbox_hls_cursor='orange'
+let g:gruvbox_sign_column='dark1'
+let g:gruvbox_vert_split='dark2'
+let g:gruvbox_invert_signs=0
+let g:gruvbox_invert_selection=1
+" let g:gruvbox_contrast='medium'
+let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_light='medium'
+let g:gruvbox_invert_tabline=0
+
+colorscheme gruvbox
+set background=dark
+
+set statusline=%F%m%r%h%w\ [%{&ff}]\ [%Y]\ [POS=%04l/%L,%04v][%p%%]\ [ASCII=\%03.3b\|HEX=\%02.2B]
+
+" only use the powerline fancy icons when using gvim
+"if has("gui_running")
+	let g:Powerline_symbols = 'fancy'
+"endif
+
+set number " show line numbers
+set relativenumber " show line numbers relative to current line
+
+" Tabs and Whitespaces
+set list
+if has("gui_running")
+	set lcs=tab:\|-,trail:-,eol:\ ,extends:>,precedes:<
+else
+	set lcs=tab:>\ ,trail:-,eol:\ ,extends:>,precedes:<
+endif
+
+" Column 120 Warning
+highlight OverLength        ctermbg=red    ctermfg=white guibg=#592929
+highlight OverLengthWarning ctermbg=yellow ctermfg=black guibg=#595929
+highlight Visual            guibg=#1e3d37  gui=none
+
+
+let w:m1=matchadd('OverLengthWarning', '\%<121v.\%>118v', -1)
+let w:m2=matchadd('OverLength',        '\%>120v.\+',      -1)
+
+" PHP Syntax Highlighting
+let php_sql_query          = 1
+let php_html_in_strings    = 1
+let php_parent_error_close = 1
+
+" get some  autoselect interaction with the system clipboard
+set guioptions-=T
+" set guioptions-=m
+set guioptions-=r
+set guioptions-=L " left scrollbar
+
+set guioptions+=aA
+
+set linespace=-2
+
+"   __             _            _
+"  / _| ___  _ __ | |_      ___(_)_______
+" | |_ / _ \| '_ \| __|____/ __| |_  / _ \
+" |  _| (_) | | | | ||_____\__ \ |/ /  __/
+" |_|  \___/|_| |_|\__|    |___/_/___\___|
+" 
+map <A--> <Plug>FontsizeDec
+map <A-=> <Plug>FontsizeInc
+map <A-0> <Plug>FontsizeDefaults+=aA
+
+"  ____                      _
+" / ___|  ___  __ _ _ __ ___| |__
+" \___ \ / _ \/ _` | '__/ __| '_ \
+"  ___) |  __/ (_| | | | (__| | | |
+" |____/ \___|\__,_|_|  \___|_| |_|
+set hlsearch   " Highlight searches
+set incsearch  " Highlight dynamically as pattern is typed
+set ignorecase " Make searches case-insensitive...
+set smartcase  " ...unless they contain at least one uppercase character
+set gdefault   " Use global search by default
+
+" Clear last search highlighting with enter and clear the command line
+function! MapCR()
+" nnoremap <cr> :nohlsearch<cr>:<backspace>
+endfunction
+call MapCR()
+
+" allow modified buffers to be hidden
+set hidden
+
+"  _   _ _   _ ____   ___
+" | | | | \ | |  _ \ / _ \
+" | | | |  \| | | | | | | |
+" | |_| | |\  | |_| | |_| |
+"  \___/|_| \_|____/ \___/
+if has("win32")
+	set undodir=~/vimfiles/undodir
+	silent call system('mkdir ' . &undodir)
+else
+	set undodir=~/.vim/undodir
+	silent call system('mkdir -p ' . &undodir)
+endif
+
+set undofile
+set undolevels=1000  " maximum number of changes that can be undone
+set undoreload=10000 " maximum number lines to save for undo on a buffer reload
+
+"  ___                   _     _   _      _
+" |_ _|_ __  _ __  _   _| |_  | | | | ___| |_ __   ___ _ __ ___
+"  | || '_ \| '_ \| | | | __| | |_| |/ _ \ | '_ \ / _ \ '__/ __|
+"  | || | | | |_) | |_| | |_  |  _  |  __/ | |_) |  __/ |  \__ \
+" |___|_| |_| .__/ \__,_|\__| |_| |_|\___|_| .__/ \___|_|  |___/
+"           |_|                            |_|
+" CTRL+Enter = <br />
+inoremap <C-CR> <br />
+
+" enable mouse mode in terminal
+set mouse=a
+
+" auto shebang
+au! BufNewFile * ShebangInsert
+let g:shebang#shebangs = {
+	\ 'php': '',
+	\ }
+
+" run last command in vim-companion
+map <C-x> :exec "!tmux send-keys -t vim-companion C-p C-j" <CR><CR>
+map <C-a> <Home>
+map <C-e> <End>
+imap <C-a> <Home>
+imap <C-e> <End>
+
+" unset search highlight
+map <CR> :nohl<CR>
+
+" remap F1 to ESC because I keep hitting F1 instead of ESC
+map <F1> <Esc>
+imap <F1> <Esc>
+
+"  ___           _            _        _   _
+" |_ _|_ __   __| | ___ _ __ | |_ __ _| |_(_) ___  _ __
+"  | || '_ \ / _` |/ _ \ '_ \| __/ _` | __| |/ _ \| '_ \
+"  | || | | | (_| |  __/ | | | || (_| | |_| | (_) | | | |
+" |___|_| |_|\__,_|\___|_| |_|\__\__,_|\__|_|\___/|_| |_|
+set tabstop=4
+set shiftwidth=4
+set noexpandtab
+
+set noautoindent
+set smartindent
+
+"   ____ _                         _     _   _ _____ _____      ___
+"  / ___| |__   __ _ _ __ ___  ___| |_  | | | |_   _|  ___|    ( _ )
+" | |   | '_ \ / _` | '__/ __|/ _ \ __| | | | | | | | |_ _____ / _ \
+" | |___| | | | (_| | |  \__ \  __/ |_  | |_| | | | |  _|_____| (_) |
+"  \____|_| |_|\__,_|_|  |___/\___|\__|  \___/  |_| |_|        \___/
+" Set UTF-8 as standard
+set encoding=UTF-8 nobomb
+set fileencoding=UTF-8 nobomb
+
+"  _     _              _____           _ _
+" | |   (_)_ __   ___  | ____|_ __   __| (_)_ __   __ _ ___
+" | |   | | '_ \ / _ \ |  _| | '_ \ / _` | | '_ \ / _` / __|
+" | |___| | | | |  __/ | |___| | | | (_| | | | | | (_| \__ \
+" |_____|_|_| |_|\___| |_____|_| |_|\__,_|_|_| |_|\__, |___/
+"                                                 |___/
+" default fileformat unix (first is picked for new files/buffers)
+set fileformats=unix,dos
+
+"     _         _               ____                      _      _
+"    / \  _   _| |_ ___        / ___|___  _ __ ___  _ __ | | ___| |_ ___
+"   / _ \| | | | __/ _ \ _____| |   / _ \| '_ ` _ \| '_ \| |/ _ \ __/ _ \
+"  / ___ \ |_| | || (_) |_____| |__| (_) | | | | | | |_) | |  __/ ||  __/
+" /_/   \_\__,_|\__\___/       \____\___/|_| |_| |_| .__/|_|\___|\__\___|
+"                                                  |_|
+" SuperTab and Completion Configuration
+set omnifunc=syntaxcomplete#Complete " default for non-PHP Files
+
+autocmd  FileType  php          set omnifunc=phpcomplete#CompletePHP
+autocmd  FileType  python       set omnifunc=pythoncomplete#Complete
+autocmd  FileType  javascript   set omnifunc=javascriptcomplete#CompleteJS
+autocmd  FileType  html         set omnifunc=htmlcomplete#CompleteTags
+autocmd  FileType  css          set omnifunc=csscomplete#CompleteCSS
+autocmd  FileType  xml          set omnifunc=xmlcomplete#CompleteTags
+autocmd  FileType  c            set omnifunc=ccomplete#Complete
+
+set completeopt=longest,menuone
+
+"  _____     _     _ _
+" |  ___|__ | | __| (_)_ __   __ _
+" | |_ / _ \| |/ _` | | '_ \ / _` |
+" |  _| (_) | | (_| | | | | | (_| |
+" |_|  \___/|_|\__,_|_|_| |_|\__, |
+"                            |___/
+" if this is not enabled the autocomplete performance goes bonkers
+" we set this after we enter insert mode, because we also want folds to work
+autocmd InsertEnter * setlocal foldmethod=manual
+autocmd InsertLeave * setlocal foldmethod=expr
+
+" PHP-FoldExpr
+let b:phpfold_group_iftry = 0
+let b:phpfold_text_percent = 1
+
+"  _____                 _   _               _  __
+" |  ___|   _ _ __   ___| |_(_) ___  _ __   | |/ /___ _   _ ___
+" | |_ | | | | '_ \ / __| __| |/ _ \| '_ \  | ' // _ \ | | / __|
+" |  _|| |_| | | | | (__| |_| | (_) | | | | | . \  __/ |_| \__ \
+" |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_| |_|\_\___|\__, |___/
+"                                                     |___/
+
+" Set comma as <leader> instead of default backslash
+let mapleader=";"
+
+nnoremap <silent> <F2>   :VbookmarkToggle<CR>
+nnoremap <silent> <F3>   :VbookmarkNext<CR>
+nnoremap <silent> <S-F3> :VbookmarkPrevious<CR>
+
+nmap <F8>   :TMiniBufExplorer<CR>
+nmap <F9>   :BufExplorer<CR>
+nmap <F10>  :NERDTreeToggle<CR>
+
+" navigate windows
+nmap <S-Left>  <C-w><Left>
+nmap <S-Up>    <C-w><Up>
+nmap <S-Down>  <C-w><Down>
+nmap <S-Right> <C-w><Right>
+
+" resize windows
+nnoremap <silent> <C-S-Up>    :<C-u>call <SID>try_wincmd('ObviousResizeUp',    '+')<CR>
+nnoremap <silent> <C-S-Down>  :<C-u>call <SID>try_wincmd('ObviousResizeDown',  '-')<CR>
+nnoremap <silent> <C-S-Left>  :<C-u>call <SID>try_wincmd('ObviousResizeLeft',  '<')<CR>
+nnoremap <silent> <C-S-Right> :<C-u>call <SID>try_wincmd('ObviousResizeRight', '>')<CR>
+
+function! s:try_wincmd(cmd, default)
+	if exists(':' . a:cmd)
+		let cmd = v:count ? join([a:cmd, v:count]) : a:cmd
+		execute cmd
+	else
+		execute join([v:count, 'wincmd', a:default])
+	endif
+endfunction
+
+"  ____              _            _   _
+" / ___| _   _ _ __ | |_ __ _ ___| |_(_) ___
+" \___ \| | | | '_ \| __/ _` / __| __| |/ __|
+"  ___) | |_| | | | | || (_| \__ \ |_| | (__
+" |____/ \__, |_| |_|\__\__,_|___/\__|_|\___|
+"        |___/
+" Syntax Checker
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list            = 1
+let g:syntastic_check_on_open            = 1
+let g:syntastic_check_on_wq              = 0
+let g:syntastic_php_checkers             = ['php']
+
+
+" gundo mapping
+nnoremap <F5> :GundoToggle<CR>
+let g:gundo_right=1
+
+"  _   _ _____ ____  ____  _
+" | \ | | ____|  _ \|  _ \| |_ _ __ ___  ___
+" |  \| |  _| | |_) | | | | __| '__/ _ \/ _ \
+" | |\  | |___|  _ <| |_| | |_| | |  __/  __/
+" |_| \_|_____|_| \_\____/ \__|_|  \___|\___|
+let g:NERDTreeMapActivateNode = "<CR>"
+let g:NERDTreeShowBookmarks   = 1
+let g:NERDTreeShowHidden      = 1
+
+" Automaticly open Onlinesystem Bookmark
+autocmd StdinReadPre * let s:std_in=1
+
+" open nerdtree if there are no other buffers
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+if ! has("gui_running")
+	let NERDTreeDirArrows=0
+endif
+
+" close vim when NERDTree is the only left window
+" function! s:CloseIfOnlyControlWinLeft()
+" 	if winnr("$") != 1
+" 		return
+" 	endif
+" 	if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+" 		\ || &buftype == 'quickfix'
+" 		q
+" 	endif
+" endfunction
+" augroup CloseIfOnlyControlWinLeft
+" 	au!
+" 	au BufEnter * call s:CloseIfOnlyControlWinLeft()
+" augroup END
+
+"  _____
+" |_   _|_ _  __ _ ___
+"   | |/ _` |/ _` / __|
+"   | | (_| | (_| \__ \
+"   |_|\__,_|\__, |___/
+"            |___/
+set tags=./tags,tags,y:/public_html/govalue/tags
+
+" Keyboard and Input behavior
+set backspace=indent,eol,start
+
+" __  ____  __ _
+" \ \/ /  \/  | |
+"  \  /| |\/| | |
+"  /  \| |  | | |___
+" /_/\_\_|  |_|_____|
+" when editing xml files with really long lines performance degrades drasticly
+" so we just disable syntax highlighting after row 120
+autocmd  FileType  xml setlocal synmaxcol=120
+set synmaxcol=3000
+
+"  _____ _ _          _____
+" |  ___(_) | ___    |_   _|   _ _ __   ___  ___
+" | |_  | | |/ _ \_____| || | | | '_ \ / _ \/ __|
+" |  _| | | |  __/_____| || |_| | |_) |  __/\__ \
+" |_|   |_|_|\___|     |_| \__, | .__/ \___||___/
+"                          |___/|_|
+" custom file types for templates
+au BufNewFile,BufRead *.tpl,*html.twig                  set filetype=html
+au BufNewFile,BufRead *css.tpl,*.css,*css.php,*css.twig set filetype=css
+au BufNewFile,BufRead *js.tpl,*.js,*js.twig             set filetype=javascript
+
+"  __  __           _      _ _
+" |  \/  | ___   __| | ___| (_)_ __   ___
+" | |\/| |/ _ \ / _` |/ _ \ | | '_ \ / _ \
+" | |  | | (_) | (_| |  __/ | | | | |  __/
+" |_|  |_|\___/ \__,_|\___|_|_|_| |_|\___|
+" Respect modelines in files up to this number of lines
+set modeline
+set modelines=5
+
+"  _   _ _     _
+" | | | (_)___| |_ ___  _ __ _   _
+" | |_| | / __| __/ _ \| '__| | | |
+" |  _  | \__ \ || (_) | |  | |_| |
+" |_| |_|_|___/\__\___/|_|   \__, |
+"                            |___/
+" Remember more commands and search history (default: 20)
+set history=100
+
+" Save with sudo and reload
+command! WW :execute ':silent w !sudo tee % > /dev/null' | :edit!
+
+"     _        _
+"    / \   ___| | __
+"   / _ \ / __| |/ /
+"  / ___ \ (__|   <
+" /_/   \_\___|_|\_\
+if executable('ag')
+	let g:ackprg = 'ag --vimgrep'
+endif
+
+
+let g:vimwiki_list = [{
+	\ 'path': '~/Dropbox/vimwiki/',
+	\ 'syntax': 'markdown',
+	\ 'ext': '.md'
+	\ },{
+	\ 'path': '~/.repos/dotfiles/_docs/',
+	\ 'syntax': 'markdown',
+	\ 'ext': '.md'
+	\ }]
+
+"   __ _       _      _
+"  / _(_) __ _| | ___| |_
+" | |_| |/ _` | |/ _ \ __|
+" |  _| | (_| | |  __/ |_
+" |_| |_|\__, |_|\___|\__|
+"        |___/
+vmap <leader>f :!figlet<CR>
+	\ `[v`]$:s/ *$//<CR>
+	\ gv:s/^/\=substitute(BunmanFigletOpenCommentString(), '$', ' ', ' ')/<CR>
+	\ :noh<CR>
+
+function! BunmanFigletOpenCommentString() abort
+	" default asks to
+	" - EnhancedCommentify8
+	if exists('b:ECcommentOpen') && !empty(b:ECcommentOpen)
+		return b:ECcommentOpen
+		" - tComment
+		" - NERDCommenter
+		" - &commentstring?
+	elseif !empty(&commentstring) && &commentstring =~ '\v.+\%s.+'
+		return matchstr(&commentstring, '\v.*\ze\%s')
+	endif
+	echom "could not detect comment char"
+	return ""
+endfunction
+
+
+"                  _ _     _
+"   __ _ _ __  ___(_) |__ | | ___
+"  / _` | '_ \/ __| | '_ \| |/ _ \
+" | (_| | | | \__ \ | |_) | |  __/
+"  \__,_|_| |_|___/_|_.__/|_|\___|
+au BufRead,BufNewFile */ansible/*.yml set filetype=yaml.ansible
+au BufRead,BufNewFile playbook*.yml   set filetype=yaml.ansible
+
+" Big Font: figlet -f standard (you can use toilet instead of figlet)
+" vim: set noai ff=unix ts=4 sw=4 noet

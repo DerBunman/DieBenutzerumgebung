@@ -1,0 +1,7 @@
+"xdotool keyup --clearmodifiers a key --clearmodifiers Home"
+    m:0x4 + c:38
+    Control + a
+
+"xdotool keyup --clearmodifiers e key --clearmodifiers End"
+    m:0x4 + c:26
+    Control + e

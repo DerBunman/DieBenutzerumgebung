@@ -1,0 +1,34 @@
+---
+- name: 'Install default packages'
+  package:
+    name: '{{ default_packages }}'
+    state: present
+  when: 'ansible_become == True'
+
+# the following tasks are to ensure that the needed packages are installed,
+# when we are running in non root mode.
+- name: 'Check default shell packages'
+  block:
+    - name: 'Remove old tempfile'
+      file:
+        path: /tmp/ansible_check_pkg
+        state: absent
+      changed_when: false
+
+    - name: 'Check install status'
+      raw: >
+        for pkg in {{ default_packages|join(" ")}};
+          do dpkg -l $pkg | grep "^ii" || echo $pkg >> /tmp/ansible_check_pkg;
+        done >/dev/null 2>&1;
+        if [ -f /tmp/ansible_check_pkg ]; then echo $(cat /tmp/ansible_check_pkg); fi
+      register: pkg_status
+      changed_when: false
+
+    - name: 'The following packages need to be installed: {{ pkg_status.stdout }}'
+      fail:
+        msg: '{{ pkg_status.stdout }}'
+      when: 'pkg_status.stdout != ""'
+
+  when: 'ansible_become == False'
+
+# - meta: end_play

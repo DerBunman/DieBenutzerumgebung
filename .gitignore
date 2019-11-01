@@ -1,0 +1,4 @@
+*.retry
+logs/*
+!logs/.gitkeep
+inventories/default.yml

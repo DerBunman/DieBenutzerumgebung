@@ -1,0 +1,40 @@
+# basic host setup
+---
+- name: "Adding/Modifying users."
+  block:
+    - name: install zsh
+      package:
+        name: "zsh"
+        state: present
+      when: 'ansible_become == True'
+
+    - name: Add the real users
+      user:
+        home: '{{ item.home }}'
+        name: '{{ item.name }}'
+        comment: '{{ item.comment | default("") }}'
+        group: '{{ item.group }}'
+        groups: '{{ item.groups | default("") }}'
+        shell: '{{ item.shell }}'
+        update_password: on_create
+        password: "{{ lookup('password', '/tmp/passwordfile.{{ item.name }} chars=ascii_letters,digits,hexdigits,punctuation') }}"
+        append: yes
+      loop: '{{ users }}'
+  when: 'ansible_become == True'
+
+- name: Add this users key to authorized_keys
+  authorized_key:
+    state: present
+    user: '{{ item.name }}'
+    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_ed25519.pub') }}"
+  when: 'ansible_become == True or item.name == ansible_user'
+  loop: '{{ users }}'
+
+- name: Add the user specific keys
+  ignore_errors: yes
+  authorized_key:
+    state: present
+    user: '{{ item.name }}'
+    key: "{{ ssh_keys }}"
+  when: 'ansible_become == True or item.name == ansible_user'
+  loop: '{{ users }}'

@@ -1,0 +1,49 @@
+---
+all:
+  # the roles system and common (which will setup the
+  # system and the dotfiles and packages) will be run
+  # for all hosts. you don't have to add them to a group.
+  vars:
+    ssh_keys: |
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMjCDwwHvhp3Gk/dYKWMxfn5sHE6rW+NvuekydZja2d localhorst
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFxrqRD0ab7ljvUjAYVqLH2XsdsUTEr8ZGZ/N3riZOx schleppi
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKkQisCe/gyju55eUv+22WmiRrkDUObMVOm+A3GUhSq SG-1350
+  hosts:
+    localhorst:
+      ansible_host: localhorst.lan
+      ansible_user: ichi
+
+    schleppi:
+      ansible_host: schleppi.lan
+      ansible_user: ichi
+
+    funkleitstelle:
+      ansible_host: funkleitstelle.lan
+      ansible_user: ichi
+
+    babo:
+      ansible_host: babo
+      ansible_user: ichi
+
+    # this host is a example for a non root host
+    testvm:
+      ansible_host: 192.168.122.242
+      # the following two parameters have to be set
+      # for non root hosts
+      ansible_become: no
+      ansible_user: ichi
+
+  children:
+    # the desktop group will have
+    # the desktop role applied which will install i3
+    desktop:
+      hosts:
+        localhorst:
+        schleppi:
+        testvm:
+
+    # this is a group that is not used by the playbooks
+    servers:
+      hosts:
+        funkleitstelle:
+        babo:

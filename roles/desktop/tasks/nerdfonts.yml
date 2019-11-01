@@ -1,0 +1,19 @@
+# Download and install RobotoMono Nerdfonts
+- name: "Download fonts archive"
+  get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/RobotoMono.zip
+    dest: "/tmp/RobotoMono.zip"
+
+- name: "Create font directory"
+  file:
+    path: "{{ '/usr/local/share/fonts/RobotoMono' if ansible_become else '~/.local/share/fonts/RobotoMono' }}"
+    state: directory
+
+- name: "Unpack fonts archive"
+  unarchive:
+    src: "/tmp/RobotoMono.zip"
+    dest: "{{ '/usr/local/share/fonts/RobotoMono' if ansible_become else '~/.local/share/fonts/RobotoMono' }}"
+    remote_src: yes
+
+- name: "Rebuild font cache"
+  command: fc-cache -fv

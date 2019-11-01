@@ -1,0 +1,25 @@
+# basic host setup
+---
+- name: install figlet
+  package:
+    name: "figlet"
+    state: present
+
+- name: Setup update-motd script
+  template:
+    src: 01-custom.j2
+    dest: /etc/update-motd.d/01-custom
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Remove unwanted motd files
+  file:
+    path:
+      - /etc/motd
+      - /etc/update-motd.d/00-header
+      - /etc/update-motd.d/01-screenfetch
+      - /etc/update-motd.d/10-help-text
+      - /etc/update-motd.d/50-motd-news
+      - /etc/update-motd.d/10-uname
+    state: absent

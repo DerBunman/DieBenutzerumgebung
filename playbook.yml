@@ -1,0 +1,21 @@
+# all hosts have a cli and this role will
+# setup the zshell environment including
+# multiple applications.
+#
+# this role is mandatory for
+# all other roles.
+- hosts: all
+  tags:
+    - common
+    - system
+  roles:
+    - system
+    - common
+
+# this role setups the i3 desktop including
+# polybar and rofi (these will be build)
+- hosts: desktop
+  tags:
+    - desktop
+  roles:
+    - desktop

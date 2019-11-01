@@ -1,0 +1,41 @@
+# basic host setup
+---
+- name: "Setup apt and upgrade"
+  block:
+    - name: Install aptitude using apt
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: yes
+        force_apt_get: yes
+        autoclean: yes
+        autoremove: yes
+      tags:
+        - upgrade
+
+    - name: Upgrade system using apt
+      apt:
+        update_cache: no
+        upgrade: full
+      tags:
+        - upgrade
+
+    - name: "Disallow root SSH access"
+      lineinfile:
+        dest=/etc/ssh/sshd_config
+        regexp="^PermitRootLogin"
+        line="PermitRootLogin no"
+        state=present
+      notify: restart_ssh
+
+    - name: "Setup motd"
+      import_tasks: motd.yml
+
+  when: 'ansible_become == True'
+
+  # Create/Modify users
+- name: "Setup users"
+  import_tasks: users.yml
+
+- name: Making the users a fact
+  set_fact: users={{ users }}

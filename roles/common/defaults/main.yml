@@ -1,0 +1,28 @@
+# these packages will be installed by default
+# on all target hosts
+# be aware that most of them are beeing depended on
+common__default_packages:
+  - apt-file
+  - bc
+  - curl
+  - detox
+  - exuberant-ctags
+  - figlet
+  - git
+  - grc
+  - mc
+  - net-tools
+  - p7zip-full
+  - pass
+  - powerline
+  - pv
+  - ranger
+  - shellcheck
+  - silversearcher-ag
+  - sysfsutils
+  - tmux
+  - unp
+  - unzip
+  - vim
+  - wget
+  - zsh

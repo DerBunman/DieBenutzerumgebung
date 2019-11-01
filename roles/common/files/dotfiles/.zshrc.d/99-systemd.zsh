@@ -1,0 +1,2 @@
+export SYSTEMD_PAGER=
+export SYSTEMD_LESS=

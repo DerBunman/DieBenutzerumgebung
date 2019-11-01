@@ -1,0 +1,56 @@
+---
+- name: "Create dotfiles directories for {{ user.name }}"
+  file:
+    path: "{{ user.home }}/{{ item.path }}"
+    state: directory
+    mode: '{{ item.mode }}'
+    force: yes
+    owner: "{{ user.name }}"
+    # group: '{{ user.group }}'
+  with_filetree: dotfiles/
+  when: item.state == 'directory'
+
+- name: "Copy dotfiles for {{ user.name }}"
+  copy:
+    src: "dotfiles/{{ item.path }}"
+    dest: "{{ user.home }}/{{ item.path }}"
+    owner: "{{ user.name }}"
+    # group: '{{ user.group }}'
+    mode: '{{ item.mode }}'
+  with_filetree: dotfiles/
+  when: item.state == 'file'
+
+- name: "Install VIM Plugins for {{ user.name }}"
+  command: "{{ item }}"
+  become_user: "{{ user.name }}"
+  loop:
+    - vim -X +PlugClean! +qall -u ~/.vim/vimrc_plug.vim
+    - vim -X +PlugInstall! +qall -u ~/.vim/vimrc_plug.vim
+    - vim -X +PlugUpdate! +qall -u ~/.vim/vimrc_plug.vim
+  changed_when: false
+
+- name: "Cloning DieOberflaechengestaltung theme and icons for {{ user.name }}"
+  git:
+    repo: https://github.com/DerBunman/DieOberflaechengestaltung
+    dest: "{{ user.home }}/.DieOberflaechengestaltung"
+    update: yes
+    clone: yes
+    force: yes
+  become_user: "{{ user.name }}"
+  changed_when: false
+  when: "'desktop' in group_names and 'root' != user.name"
+
+- name: "Create a symbolic link for {{ user.name }}"
+  become_user: "{{ user.name }}"
+  changed_when: false
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ user.name }}"
+    # group: '{{ user.group }}'
+    state: link
+    force: yes
+  loop:
+    - { dest: ~/.icons, src: ~/.DieOberflaechengestaltung/icons }
+    - { dest: ~/.themes/oomox-DieOberflaechengestaltung, src: ~/.DieOberflaechengestaltung/themes/oomox-DieOberflaechengestaltung }
+  when: "'desktop' in group_names and 'root' != user.name"

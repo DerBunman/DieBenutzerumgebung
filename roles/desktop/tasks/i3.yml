@@ -1,0 +1,29 @@
+# basic host setup
+---
+- name: 'Build and install rofi and polybar'
+  block:
+    - name: 'Build and install rofi'
+      import_role:
+        name: derbunman.debuild_rofi
+      tags:
+        - rofi
+
+    - name: 'Build and install polybar'
+      import_role:
+        name: derbunman.debuild_polybar
+      tags:
+        - polybar
+  when: 'ansible_become == True'
+
+- name: 'Check whether nerdfonts are installed'
+  stat:
+    path: "{{ '/usr/local/share/fonts/RobotoMono' if ansible_become else '~/.local/share/fonts/RobotoMono' }}"
+  register: file_details
+  tags:
+    - fonts
+
+- name: 'Install RobotoMono nerdfonts'
+  include: nerdfonts.yml
+  when: file_details.stat.isdir is undefined
+  tags:
+    - fonts

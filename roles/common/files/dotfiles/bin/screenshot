@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+notify_info(){
+	notify-send -i ~/.icons/screenshot_clipboard.svg "Screenshot ($1)" "Selection has been copied to clipboard."
+}
+
+[ $+commands[slop] -ne 0 ] \
+	&& slop=$(slop -f "%g") \
+	&& read -r G < <(echo $slop) \
+	&& import -window root -crop $G png:- | xclip -selection c -t image/png \
+	&& notify_info "using slop" \
+	&& exit 0
+
+# if slop failed retry without it
+echo "error using slop. using the inferior select."
+import png:- | xclip -selection c -t image/png \
+	&& notify_info "without slop" \
+	&& exit 0
+
+notify-send -i ~/.icons/status/error.png "Screenshot error" "Error while creating screenshot."
+exit 1
