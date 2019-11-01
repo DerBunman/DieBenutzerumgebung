@@ -8,7 +8,7 @@ all:
     # place ssh keys here
   hosts:
     localhost:
-      ansible_host: localhorst.lan
+      ansible_host: localhost
       ansible_user: your_user
 
   children:
