@@ -7,9 +7,9 @@ all:
     # these users will be managed by ansible
     # it is mandatory to add the user you have set as ansible user to this list
     users:
-      - name: "ichi"
-        comment: "numero ichi"
-        home: /home/ichi
+      - name: "your_user"
+        comment: "your_user"
+        home: /home/your_user
         group: users
         groups: adm,sudo
         shell: /bin/zsh
