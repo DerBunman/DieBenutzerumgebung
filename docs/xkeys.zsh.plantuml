@@ -1,0 +1,22 @@
+@startuml
+
+start
+while (read)
+if (WM_CLASS changed?) then (yes)
+	if(file exists:\n$HOME/.xkeys/str2lower(WM_CLASS).xmodmap) then (yes)
+		:load xmodmap configguration;
+	else (no)
+		:skip xmodmap;
+	endif
+	if(file exists:\n$HOME/.xkeys/str2lower(WM_CLASS).xbindkeys) then (yes)
+		:load xbindkeys configguration;
+	else (no)
+		:skip xbindkeys;
+	endif
+else (no)
+
+endif
+endwhile
+stop
+
+@enduml
