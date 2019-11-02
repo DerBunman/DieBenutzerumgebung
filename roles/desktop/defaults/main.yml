@@ -15,6 +15,7 @@ default_packages:
   - pavucontrol
   - slop
   - udiskie
+  - urxvt
   - vlc
   - x11-xserver-utils
   - xbindkeys
