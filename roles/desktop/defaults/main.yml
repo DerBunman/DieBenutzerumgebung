@@ -13,9 +13,9 @@ default_packages:
   - lxappearance
   - mpv
   - pavucontrol
+  - rxvt-unicode-256color
   - slop
   - udiskie
-  - urxvt
   - vlc
   - x11-xserver-utils
   - xbindkeys
