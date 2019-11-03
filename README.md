@@ -74,7 +74,7 @@ These instructions have been tested on Ubuntu 19.10.
 ```sh
 sudo apt-get install ssh sshpass ansible git
 cd ~
-git clone https://github.com/DerBunman/DieBenutzerumgebung
+git clone https://github.com/DerBunman/DieBenutzerumgebung --branch=master --single-branch
 cd ~/DieBenutzerumgebung/inventories/
 cp localhost.yml default.yml
 # edit default.yml according your needs
