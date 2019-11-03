@@ -20,6 +20,11 @@
       tags:
         - upgrade
 
+    - name: "Check that /etc/ssh/sshd_config exists"
+      stat:
+        path: /etc/ssh/sshd_config
+      register: stat_result
+
     - name: "Disallow root SSH access"
       lineinfile:
         dest=/etc/ssh/sshd_config
@@ -27,6 +32,7 @@
         line="PermitRootLogin no"
         state=present
       notify: restart_ssh
+      when: stat_result.stat.exists == True
 
     - name: "Setup motd"
       import_tasks: motd.yml
