@@ -72,17 +72,16 @@ Also note, that the oomox sources are included so you are able to customize the 
 These instructions have been tested on Ubuntu 19.10.
 
 ```sh
-sudo apt-get install ssh sshpass ansible git
 cd ~
+sudo apt-get install ansible git
 git clone https://github.com/DerBunman/DieBenutzerumgebung --branch=master --single-branch
 cd ~/DieBenutzerumgebung/inventories/
 cp localhost.yml default.yml
 # edit default.yml according your needs
-vi default.yml
+# eg:
+sed "s/your_user/$USER/" -i default.yml
 cd ..
 ansible-galaxy install -r requirements.yml
-ssh-keygen -t ed25519
-cat ~/.ssh/id_ed25519.pub >> ~/.ssh/authorized_keys
 ansible-playbook playbook.yml --ask-become-pass
 ```
 

@@ -18,8 +18,7 @@ all:
     # place ssh keys here
   hosts:
     localhost:
-      ansible_host: localhost
-      ansible_user: your_user
+      ansible_connection: local
 
   children:
     # the desktop group will have
