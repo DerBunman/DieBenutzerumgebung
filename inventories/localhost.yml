@@ -18,6 +18,7 @@ all:
     # place ssh keys here
   hosts:
     localhost:
+      ansible_become: yes
       ansible_connection: local
 
   children:
