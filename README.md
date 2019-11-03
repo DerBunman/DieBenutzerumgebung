@@ -92,11 +92,7 @@ Done. Just logout and login again using the i3 session.
 ## Videos:
 Example installation process on a fresh installed Ubuntu 19.10 VM.
 
-**Please note:**
-
-This video is not yet editet. Some parts (building polybar and rofi) may be a bit long, so feel free to skip a bit ahead. You won't miss anything.
-
-<a href="https://www.youtube.com/watch?v=nTEopbwnSUM" target="_blank">
+<a href="https://www.youtube.com/watch?v=7hVhLeYWQhE" target="_blank">
 <img src="docs/images/video_installation.png" />
 </a>  
 
