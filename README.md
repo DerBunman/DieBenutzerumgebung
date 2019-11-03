@@ -68,11 +68,38 @@ Also note, that the oomox sources are included so you are able to customize the 
 - Other Debian based distributions should work too. You may have to change the sources.
 
 ## Examples
-TODO
+### Basic install (like in the video)
+These instructions have been tested on Ubuntu 19.10.
+
+```sh
+sudo apt-get install ssh sshpass ansible git
+cd ~
+git clone https://github.com/DerBunman/DieBenutzerumgebung
+cd ~/DieBenutzerumgebung/inventories/
+cp localhost.yml default.yml
+# edit default.yml according your needs
+vi default.yml
+cd ..
+ansible-galaxy install -r requirements.yml
+ssh-keygen -t ed25519
+cat ~/.ssh/id_ed25519.pub >> ~/.ssh/authorized_keys
+ansible-playbook playbook.yml --ask-become-pass
+```
+
+Done. Just logout and login again using the i3 session.
 
 # Media
 ## Videos:
-TODO
+Example installation process on a fresh installed Ubuntu 19.10 VM.
+
+**Please note:**
+
+This video is not yet editet. Some parts (building polybar and rofi) may be a bit long, so feel free to skip a bit ahead. You won't miss anything.
+
+<a href="https://www.youtube.com/watch?v=nTEopbwnSUM" target="_blank">
+<img src="docs/images/video_installation.png" />
+</a>  
+
 
 ## Screenshots:
 <a href="docs/images/screenshot1.png" target="_blank">
