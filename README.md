@@ -6,7 +6,7 @@ The project now aims to provide a (somewhat) consistent desktop environment expe
 - You can track the current progress
   * [in this project](https://github.com/users/DerBunman/projects/1)
   * [the next milestone (first beta)](https://github.com/DerBunman/DieBenutzerumgebung/milestone/1)
-  * [planned features (after 0.0.1 release)](https://github.com/DerBunman/DieBenutzerumgebung/milestone/2)
+  * [planned features (after 0.0.2 release)](https://github.com/DerBunman/DieBenutzerumgebung/milestone/2)
 
 If you have comments, ideas or requests, feel free to get involved.
 
