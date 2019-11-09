@@ -51,7 +51,7 @@ Also note, that the oomox sources are included so you are able to customize the 
 
 ### Primary used applications:
 * [i3wm](https://i3wm.org/)
-* [zsh](https://www.zsh.org/) powered by [zplug](https://github.com/zplug/zplug) and the plugins listed [here](roles/common/files/dotfiles/.zshrc).
+* [zsh](https://www.zsh.org/) powered by [zgen](https://github.com/tarjoilija/zgen) and the plugins listed [here](roles/common/files/dotfiles/.zshrc).
 * [vim](https://www.vim.org/) powered by [vim-plug](https://github.com/junegunn/vim-plug) and the plugins listed [here](roles/common/files/dotfiles/.vim/vimrc_plug.vim).
 * [polybar](https://github.com/jaagr/polybar)
 * [nerdfonts](https://nerdfonts.com/)
