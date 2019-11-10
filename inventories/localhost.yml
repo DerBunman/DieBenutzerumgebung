@@ -19,7 +19,8 @@ all:
       setxkbmap -option caps:none
 
     ssh_keys: |
-    # place ssh keys here
+      # place ssh keys here
+
   hosts:
     localhost:
       ansible_become: yes

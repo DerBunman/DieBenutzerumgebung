@@ -29,6 +29,7 @@ all:
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMjCDwwHvhp3Gk/dYKWMxfn5sHE6rW+NvuekydZja2d localhorst
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFxrqRD0ab7ljvUjAYVqLH2XsdsUTEr8ZGZ/N3riZOx schleppi
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKkQisCe/gyju55eUv+22WmiRrkDUObMVOm+A3GUhSq SG-1350
+
   hosts:
     localhorst:
       ansible_host: localhorst.lan
