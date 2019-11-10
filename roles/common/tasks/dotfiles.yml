@@ -18,14 +18,6 @@
     dest: "{{ user.home }}/"
   become_user: "{{ user.name }}"
 
-- name: "Generate rofi_media_menu.conf"
-  template:
-    src:  rofi_media_menu.conf.j2
-    dest: "{{ item.home }}/.config/rofi_media_menu.conf"
-    mode: 0755
-  become_user: "{{ item.name }}"
-  loop: '{{ users }}'
-
 - name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
   file:
     path: "{{ user.home }}/.zgen"
