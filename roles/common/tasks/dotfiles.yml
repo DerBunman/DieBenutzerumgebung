@@ -16,6 +16,8 @@
   copy:
     src: "dotfiles/"
     dest: "{{ user.home }}/"
+    mode: preserve
+    force: yes
   become_user: "{{ user.name }}"
 
 - name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
