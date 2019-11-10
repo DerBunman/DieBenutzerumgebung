@@ -7,27 +7,65 @@
 		<script src="qrc:/scripts/rangy-cssclassapplier.js"></script>
 		<script src="qrc:/scripts/htmleditor.js"></script>
 		<style>
-		body {
-			height: 880px;
-			background-color: #303030;
-			background-image: url("logo_new.png");
-			background-position: 20px bottom;
-			background-repeat: no-repeat;
+			body {
+				background-color: #303030;
+				padding-left: 25px;
+				color: #a4a4a4;
+				font-size: 26pt;
+				font-family: 'Roboto medium';
+			}
+			h1 {
+				font-size: 48pt;
+				font-family: 'Roboto condensed medium';
+			}
+			table {
+				font-family: 'Roboto light';
+			}
+			table th {
+				text-align: left;
+				padding-right: 15px;
+				font-size: 26pt;
+			}
 		</style>
 	</head>
 
 	<body>
-		<div style="padding-top: 130px; font-size: 32pt;font-size: 18pt; color: #a4a4a4; font-family: 'RobotoMono Nerd Font Mono';">
-			<span style="font-size: 32pt;font-weight:bold" class="">Rofi based mediamenu</span><br>
-<pre>
-Quelle:  https://github.com/DerBunman/DieBenutzerumgebung/
-Version: v0.0.2-alpha2
+		<h1>Local installation process</h1>
+		This video demonstrates the installation process on a fresh Ubuntu 19.10.<br />
+		Other Debian based distributions (eg Debian, Mint, ...) should be the same.<br />
+		<br />
+		The installation performed in this video is the minimal configuration you can setup right now.<br />
+		There are some more config options that are not in this video.<br />
+		You can find these options when you read the playbook.yml and the inventory examples.<br />
+		A detailed documentation will follow at some point.
+		<br /><br /><br />
+		<br />
+		<small>
+			Please note, that the install process is a bit slower than usual, because it runs in a VM and is being recorded at the same time.<br />
+			Also my provider seems to have some issues, as there are some really slow downloads happening.<br />
+			For example the Nerdfonts download came in with whooping 30KB/sec from github.
+		</small>
 
-Distri:  Ubuntu 19.10
-Datum:   2019-11-10
-
-This video showcases the integrated screen recording features.
-</pre>
+		<div style="position: fixed; bottom: 20px; z-index: 100">
+			<img src="logo_new.png" style="float: left; padding-right: 100px" />
+			<table>
+				<tr>
+					<th>Version:</th>
+					<td>v0.0.2-alpha2</td>
+				</tr>
+				<tr>
+					<th>Linux:</th>
+					<td>Ubuntu 19.10</td>
+				</tr>
+				<tr>
+					<th>Date:</th>
+					<td>2019-11-10</td>
+				</tr>
+				<tr>
+					<th>URL:</th>
+					<td>https://github.com/DerBunman/DieBenutzerumgebung/</td>
+				</tr>
+			</table>
 		</div>
 	</body>
 </html>
