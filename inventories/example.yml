@@ -41,7 +41,7 @@ all:
 
     khadas:
       ansible_host: 192.168.178.95
-      ansible_user: khadas
+      ansible_user: ichi
 
     funkleitstelle:
       ansible_host: funkleitstelle.lan
