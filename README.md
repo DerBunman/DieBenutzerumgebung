@@ -94,7 +94,13 @@ Example installation process on a fresh installed Ubuntu 19.10 VM.
 <a href="https://www.youtube.com/watch?v=7hVhLeYWQhE" target="_blank">
 <img src="docs/images/video_installation.png" />
 </a>  
+<br>
 
+Demonstration of the integrated screen recording features.
+
+<a href="https://www.youtube.com/watch?v=TX9MOrnscxs" target="_blank">
+<img src="docs/images/video_mediamenu.png" />
+</a>  
 
 ## Screenshots:
 <a href="docs/images/screenshot1.png" target="_blank">
