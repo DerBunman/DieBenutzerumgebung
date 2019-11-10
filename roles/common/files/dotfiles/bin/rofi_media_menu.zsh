@@ -6,8 +6,8 @@ VIDEO_PATH="$HOME/Videos"
 VIDEO_EXT="mp4"
 
 # include local config
-test -f ~/.config/rofi_media_menu.zsh \
-	&& . ~/.config/rofi_media_menu.zsh
+test -f ~/.config/rofi_media_menu.conf \
+	&& . ~/.config/rofi_media_menu.conf
 
 FFMPEG_RUNNING=false
 test -f "$FFMPEG_PIDFILE" && {
@@ -17,16 +17,22 @@ test -f "$FFMPEG_PIDFILE" && {
 output="$VIDEO_PATH/screencast.$(date +%Y-%m-%d_%H-%M-%S).$VIDEO_EXT"
 
 streamupload() {
-	code=$(curl --ignore-content-length --http1.0 \
-		--request POST \
-		--url https://api.streamable.com/upload \
-		--user "$STREAMABLEUSER:$STREAMABLEPASSWORD" \
-		--form file=@$1 -v \
-		| jq '.shortcode' --raw-output)
-	notify-send -i ~/.icons/screenshot_clipboard.svg \
-		"Uploaded video" \
-		"Added https://streamable.com/$code to your clipboard"
-	echo https://streamable.com/$code | xclip -selection c
+	if [[ "$STREAMABLEUSER" == "false" ]]; then
+		notify-send -i ~/.icons/screenshot_clipboard.svg \
+			"Streamable integration disabled." \
+			"to enable have a look at the ansible playbook"
+	else
+		code=$(curl --ignore-content-length --http1.0 \
+			--request POST \
+			--url https://api.streamable.com/upload \
+			--user "$STREAMABLEUSER:$STREAMABLEPASSWORD" \
+			--form file=@$1 -v \
+			| jq '.shortcode' --raw-output)
+		notify-send -i ~/.icons/screenshot_clipboard.svg \
+			"Uploaded video" \
+			"Added https://streamable.com/$code to your clipboard"
+			echo https://streamable.com/$code | xclip -selection c
+	fi
 }
 
 if [ $# -eq 0 ]; then

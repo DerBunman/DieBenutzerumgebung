@@ -10,7 +10,6 @@
 #
 skip_global_compinit=1
 
-
 # needed for gpg-agent. (man gpg-agent)
 export GPG_TTY=$(tty)
 
@@ -30,7 +29,4 @@ export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-export LEXICON_HETZNER_AUTH_USERNAME="lw200552@googlemail.com"
-export LEXICON_HETZNER_AUTH_PASSWORD="L94fVz8BnYqmxn"
-export LEXICON_HETZNER_AUTH_ACCOUNT="robot"
-
+[ ! -f "${HOME}/.zshenv.local" ] || source "${HOME}/.zshenv.local"

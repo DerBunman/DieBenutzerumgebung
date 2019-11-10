@@ -2,9 +2,14 @@
 ---
 - name: "Setup apt and upgrade"
   block:
-    - name: Install aptitude using apt
+    - name: Install aptitude, figlet and zsh using apt
       apt:
-        name: aptitude
+        name:
+          - aptitude
+          # figlet is needed for the motd task
+          - figlet
+          # zsh is needed for the users task
+          - zsh
         state: latest
         update_cache: yes
         force_apt_get: yes

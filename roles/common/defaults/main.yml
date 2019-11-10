@@ -26,3 +26,9 @@ common__default_packages:
   - vim
   - wget
   - zsh
+
+# the user/pw for Streamable should be added to secrets.yml
+rofi_media_menu:
+  ffmpeg_pidfile: /tmp/rofimedia.ffmpeg.pid
+  video_path: $HOME/Videos
+  video_ext: mp4

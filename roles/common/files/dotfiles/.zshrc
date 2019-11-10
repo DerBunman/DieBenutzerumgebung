@@ -105,40 +105,16 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 #   / / (_| |  __/ | | |
 #  /___\__, |\___|_| |_|
 #      |___/
-test -d "${HOME}/.zgen" || git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
-source "${HOME}/.zgen/zgen.zsh"
+source "${HOME}/.zshrc.zgen"
 
-# if the init script doesn't exist
-if ! zgen saved; then
-	zgen oh-my-zsh
-	zgen oh-my-zsh plugins/colorize
-	zgen oh-my-zsh plugins/history
-	zgen oh-my-zsh plugins/tmux
-	zgen oh-my-zsh plugins/systemd
-	zgen oh-my-zsh plugins/docker
-	zgen oh-my-zsh plugins/ssh-agent
-
-	zgen load "DerBunman/colorize.zsh"
-	zgen load "zlsun/solarized-man"
-	zgen load "romkatv/powerlevel10k" powerlevel10k
-	zgen load "zdharma/fast-syntax-highlighting"
-	zgen load "zsh-users/zsh-completions"
-	zgen load "zsh-users/zsh-history-substring-search"
-	zgen load "zsh-users/zsh-autosuggestions"
-	zgen load "jreese/zsh-titles"
-	zgen load "marzocchi/zsh-notify"
-
-	# generate the init script from plugins above
-	zgen save
+# load zsh notify only on desktops
+if [ ! -z "$DISPLAY" ]; then
+	zstyle ':notify:*' error-title "Command failed (in #{time_elapsed} seconds)"
+	zstyle ':notify:*' success-title "Command finished (in #{time_elapsed} seconds)"
+	# the icons have to be a real path, not some symlink or shit like that
+	zstyle ':notify:*' error-icon "$HOME/.repos/dotfiles/data/icons/status/dialog-error.png"
+	zstyle ':notify:*' success-icon "$HOME/.repos/dotfiles/data/icons/status/dialog-info.png"
 fi
-
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-
-zstyle ':notify:*' error-title "Command failed (in #{time_elapsed} seconds)"
-zstyle ':notify:*' success-title "Command finished (in #{time_elapsed} seconds)"
-# the icons have to be a real path, not some symlink or shit like that
-zstyle ':notify:*' error-icon "$HOME/.repos/dotfiles/data/icons/status/dialog-error.png"
-zstyle ':notify:*' success-icon "$HOME/.repos/dotfiles/data/icons/status/dialog-info.png"
 
 #                                _                _ _  ___  _
 #   _ __   _____      _____ _ __| | _____   _____| / |/ _ \| | __

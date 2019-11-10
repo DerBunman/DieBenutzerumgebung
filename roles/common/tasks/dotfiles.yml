@@ -1,24 +1,46 @@
 ---
-- name: "Create dotfiles directories for {{ user.name }}"
-  file:
-    path: "{{ user.home }}/{{ item.path }}"
-    state: directory
-    mode: '{{ item.mode }}'
-    force: yes
+- name: "Register ~/.zshrc.zgen stat for {{ user.name }}"
+  stat:
+    path: "{{ user.home }}/.zshrc.zgen"
+  register: zgen_stat
+
+- name: "Copy ~/.zshrc.zgen for {{ user.name }}"
+  copy:
+    src: "dotfiles/.zshrc.zgen"
+    dest: "{{ user.home }}/.zshrc.zgen"
     owner: "{{ user.name }}"
-    # group: '{{ user.group }}'
-  with_filetree: dotfiles/
-  when: item.state == 'directory'
+    mode: '644'
+  register: zgen_copy
 
 - name: "Copy dotfiles for {{ user.name }}"
   copy:
-    src: "dotfiles/{{ item.path }}"
-    dest: "{{ user.home }}/{{ item.path }}"
-    owner: "{{ user.name }}"
-    # group: '{{ user.group }}'
-    mode: '{{ item.mode }}'
-  with_filetree: dotfiles/
-  when: item.state == 'file'
+    src: "dotfiles/"
+    dest: "{{ user.home }}/"
+  become_user: "{{ user.name }}"
+
+- name: "Generate rofi_media_menu.conf"
+  template:
+    src:  rofi_media_menu.conf.j2
+    dest: "{{ item.home }}/.config/rofi_media_menu.conf"
+    mode: 0755
+  become_user: "{{ item.name }}"
+  loop: '{{ users }}'
+
+- name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
+  file:
+    path: "{{ user.home }}/.zgen"
+    state: absent
+  when: "zgen_stat.stat.exists == false or zgen_copy.checksum != zgen_stat.stat.checksum"
+
+- name: "Install zgen packages for {{ user.name }}"
+  command: "zsh ~/.zshrc"
+  become_user: "{{ user.name }}"
+  when: "zgen_stat.stat.exists == false or zgen_copy.checksum != zgen_stat.stat.checksum"
+
+- name: "Update zgen packages for {{ user.name }}"
+  command: "zsh -c 'source ~/.zshrc; zgen update'"
+  become_user: "{{ user.name }}"
+  when: "zgen_stat.stat.exists == true and zgen_copy.checksum == zgen_stat.stat.checksum"
 
 - name: "Install VIM Plugins for {{ user.name }}"
   command: "{{ item }}"
@@ -32,7 +54,7 @@
 - name: "Cloning DieOberflaechengestaltung theme and icons for {{ user.name }}"
   git:
     repo: https://github.com/DerBunman/DieOberflaechengestaltung
-    dest: "{{ user.home }}/.DieOberflaechengestaltung"
+    dest: "{{ user.home }}/.local/share/DieBenutzerumgebung/DieOberflaechengestaltung"
     update: yes
     clone: yes
     force: yes
@@ -47,10 +69,9 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: "{{ user.name }}"
-    # group: '{{ user.group }}'
     state: link
     force: yes
   loop:
-    - { dest: ~/.icons, src: ~/.DieOberflaechengestaltung/icons }
-    - { dest: ~/.themes/oomox-DieOberflaechengestaltung, src: ~/.DieOberflaechengestaltung/themes/oomox-DieOberflaechengestaltung }
+    - { dest: ~/.icons, src: ~/.local/share/DieBenutzerumgebung/DieOberflaechengestaltung/icons }
+    - { dest: ~/.themes/oomox-DieOberflaechengestaltung, src: ~/.local/share/DieBenutzerumgebung/DieOberflaechengestaltung/themes/oomox-DieOberflaechengestaltung }
   when: "'desktop' in group_names and 'root' != user.name"

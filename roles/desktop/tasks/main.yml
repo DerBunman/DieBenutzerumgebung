@@ -1,5 +1,13 @@
 # basic host setup
 ---
+- name: "Generate setxkbmap_script"
+  template:
+    src:  setxkbmap_script.j2
+    dest: "{{ item.home }}/bin/autostart/always/setxkbmap_script"
+    mode: 0755
+  become_user: "{{ item.name }}"
+  loop: '{{ users }}'
+
 - name: Setup default x11 packages
   include: default-packages.yml
 

@@ -20,6 +20,10 @@ all:
         group: root
         shell: /bin/zsh
 
+    setxkbmap_script: |
+      setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
+      setxkbmap -option caps:none
+
     # the following ssh pubkeys will be added to all users above.
     ssh_keys: |
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMjCDwwHvhp3Gk/dYKWMxfn5sHE6rW+NvuekydZja2d localhorst
@@ -33,6 +37,10 @@ all:
     schleppi:
       ansible_host: schleppi.lan
       ansible_user: ichi
+
+    khadas:
+      ansible_host: 192.168.178.95
+      ansible_user: khadas
 
     funkleitstelle:
       ansible_host: funkleitstelle.lan
@@ -55,6 +63,7 @@ all:
     # the desktop role applied which will install i3
     desktop:
       hosts:
+        khadas:
         localhorst:
         schleppi:
         testvm:

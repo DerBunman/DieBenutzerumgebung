@@ -8,6 +8,10 @@
   tags:
     - common
     - system
+  pre_tasks:
+    - name: "Loading passwords and other secrets."
+      include_vars:
+        file: secrets.yml
   roles:
     - system
     - common

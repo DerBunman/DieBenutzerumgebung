@@ -2,12 +2,6 @@
 ---
 - name: "Adding/Modifying users."
   block:
-    - name: install zsh
-      package:
-        name: "zsh"
-        state: present
-      when: 'ansible_become == True'
-
     - name: Add the real users
       user:
         home: '{{ item.home }}'

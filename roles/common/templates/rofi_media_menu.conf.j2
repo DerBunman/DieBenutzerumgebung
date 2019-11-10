@@ -1,0 +1,7 @@
+{{ managed_by_ansible_header }}
+
+STREAMABLEUSER="{{ rofi_media_menu.streamable.user | default('false') }}"
+STREAMABLEPASSWORD="{{ rofi_media_menu.streamable.password | default('false') }}"
+FFMPEG_PIDFILE="{{ rofi_media_menu.ffmpeg_pidfile | default('/tmp/rofimedia.ffmpeg.pid') }}"
+VIDEO_PATH="{{ rofi_media_menu.video_path | default('$HOME/Videos') }}"
+VIDEO_EXT="{{ rofi_media_menu.video_ext | default('mp4') }}"

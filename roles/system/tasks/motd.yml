@@ -1,10 +1,5 @@
 # basic host setup
 ---
-- name: install figlet
-  package:
-    name: "figlet"
-    state: present
-
 - name: Setup update-motd script
   template:
     src: 01-custom.j2

@@ -1,0 +1,22 @@
+test -d "${HOME}/.zgen" || git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
+source "${HOME}/.zgen/zgen.zsh"
+
+# if the init script doesn't exist
+if ! zgen saved; then
+	zgen load "docker/cli" "contrib/completion/zsh"
+	zgen load "zlsun/solarized-man"
+	zgen load "romkatv/powerlevel10k" powerlevel10k
+	zgen load "zdharma/fast-syntax-highlighting" && fast-theme free
+	zgen load "zsh-users/zsh-completions"
+	zgen load "zsh-users/zsh-history-substring-search"
+	zgen load "zsh-users/zsh-autosuggestions"
+	zgen load "jreese/zsh-titles"
+	zgen load "bobsoppe/zsh-ssh-agent" "ssh-agent.zsh"
+	zgen load "DerBunman/colorize.zsh"
+
+	# load zsh notify only on desktops
+	[ -z "$DISPLAY" ] || zgen load "marzocchi/zsh-notify"
+
+	# generate the init script from plugins above
+	zgen save
+fi
