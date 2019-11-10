@@ -91,7 +91,7 @@ Done. Just logout and login again using the i3 session.
 ## Videos:
 Example installation process on a fresh installed Ubuntu 19.10 VM.
 
-<a href="https://www.youtube.com/watch?v=7hVhLeYWQhE" target="_blank">
+<a href="https://www.youtube.com/watch?v=hHKy1tsied8" target="_blank">
 <img src="docs/images/video_installation.png" />
 </a>  
 <br>
