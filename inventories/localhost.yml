@@ -14,6 +14,10 @@ all:
         groups: adm,sudo
         shell: /bin/zsh
 
+    setxkbmap_script: |
+      setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
+      setxkbmap -option caps:none
+
     ssh_keys: |
     # place ssh keys here
   hosts:
