@@ -9,9 +9,15 @@
     - common
     - system
   pre_tasks:
+    - name: "Checking for secrets.yml."
+      local_action: stat path=secrets.yml
+      register: secrets_stat
+
     - name: "Loading passwords and other secrets."
       include_vars:
         file: secrets.yml
+      when: secrets_stat.stat.exists == true
+
   roles:
     - system
     - common
