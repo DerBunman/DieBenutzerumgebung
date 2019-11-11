@@ -16,6 +16,7 @@ default_packages:
   - rxvt-unicode-256color
   - slop
   - udiskie
+  - vim-gtk3
   - vlc
   - x11-xserver-utils
   - xbindkeys
