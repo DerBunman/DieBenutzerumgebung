@@ -6,3 +6,7 @@ users:
     group: users
     groups: adm,sudo
     shell: /bin/zsh
+    # the no_usermod parameter is optional.
+    # if set to True, the users will not be added or managed by ansible.
+    # this is useful, when your user isn't local. eg: ldap/active directory
+    no_usermod: False
