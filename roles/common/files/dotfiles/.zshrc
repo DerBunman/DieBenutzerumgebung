@@ -177,7 +177,7 @@ bindkey -M vicmd "j" down-line-or-beginning-search
 #  |_|_| |_| .__/ \__,_|\__| /_/    |_|\_\___|\__, |___/
 
 zle -N zle-line-init
-zle -N zle-keymap-select
+#zle -N zle-keymap-select
 
 # these are for backward-kill-word
 backward-kill-dir () {
