@@ -73,7 +73,7 @@ These instructions have been tested on Ubuntu 19.10.
 
 #### Before you start, you'll need to setup a password for the ansible-vault.
 ```sh
-test -e ~/.ansible_vault_password || openssl rand -base64 20 > /home/ichi/.ansible_vault_password
+test -e ~/.ansible_vault_password || openssl rand -base64 20 > ~/.ansible_vault_password
 chmod 400 ~/.ansible_vault_password
 ```
 
