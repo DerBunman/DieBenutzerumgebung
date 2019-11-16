@@ -71,17 +71,35 @@ Also note, that the oomox sources are included so you are able to customize the 
 ### Basic install (like in the video)
 These instructions have been tested on Ubuntu 19.10.
 
+#### Before you start, you'll need to setup a password for the ansible-vault.
 ```sh
-cd ~
+test -e ~/.ansible_vault_password || openssl rand -base64 20 > /home/ichi/.ansible_vault_password
+chmod 400 ~/.ansible_vault_password
+```
+
+#### Then you can clone the repository.
+```sh
 sudo apt-get install ansible git
-git clone https://github.com/DerBunman/DieBenutzerumgebung --branch=master --single-branch
+git clone https://github.com/DerBunman/DieBenutzerumgebung --branch=master --single-branch ~/DieBenutzerumgebung
+```
+
+#### And then you'll setup your environment.
+```sh
 cd ~/DieBenutzerumgebung/inventories/
 cp localhost.yml default.yml
-# edit default.yml according your needs
+# edit default.yml according your needs.
+# the minimal change would be to replace your_user with the current user.
 # eg:
 sed "s/your_user/$USER/" -i default.yml
 cd ..
+cp secrets.example.yml secrets.yml
+ansible-vault encrypt secrets.yml
+ansible-vault edit secrets.yml
 ansible-galaxy install -r requirements.yml
+```
+
+#### Finally run the ansible playbook.
+```sh
 ansible-playbook playbook.yml --ask-become-pass
 ```
 
@@ -89,17 +107,16 @@ Done. Just logout and login again using the i3 session.
 
 # Media
 ## Videos:
-Example installation process on a fresh installed Ubuntu 19.10 VM.
+### Example installation process on a fresh installed Ubuntu 19.10 VM.
 
-<a href="https://www.youtube.com/watch?v=hHKy1tsied8" target="_blank">
+<a href="https://www.youtube.com/watch?v=lV1Vl4LM4Bo" target="_blank">
 <img src="docs/images/video_installation.png" />
 </a>  
-<br>
 
-Demonstration of the integrated screen recording features.
+### Demonstration of some basic features.
 
-<a href="https://www.youtube.com/watch?v=TX9MOrnscxs" target="_blank">
-<img src="docs/images/video_mediamenu.png" />
+<a href="https://www.youtube.com/watch?v=ckCV6jqcAS4" target="_blank">
+<img src="docs/images/video_overview.png" />
 </a>  
 
 ## Screenshots:
