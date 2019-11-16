@@ -10,9 +10,10 @@
         group: '{{ item.group }}'
         groups: '{{ item.groups | default("") }}'
         shell: '{{ item.shell }}'
-        update_password: on_create
-        password: "{{ lookup('password', '/tmp/passwordfile.{{ item.name }} chars=ascii_letters,digits,hexdigits,punctuation') }}"
+        # update_password: on_create
+        # password: "{{ lookup('password', '/tmp/passwordfile.{{ item.name }} chars=ascii_letters,digits,hexdigits,punctuation') }}"
         append: yes
+      when: 'item.no_usermod is defined and item.no_usermod == True'
       loop: '{{ users }}'
   when: 'ansible_become == True'
 
