@@ -3,10 +3,12 @@
 - name: "Generate setxkbmap_script"
   template:
     src:  setxkbmap_script.j2
-    dest: "{{ item.home }}/bin/autostart/always/setxkbmap_script"
+    dest: "{{ user.home }}/bin/autostart/always/setxkbmap_script"
     mode: 0755
-  become_user: "{{ item.name }}"
+  when: 'ansible_become == True or user.name == ansible_user'
   loop: '{{ users }}'
+  loop_control:
+    loop_var: user
 
 - name: Setup default x11 packages
   include: default-packages.yml
