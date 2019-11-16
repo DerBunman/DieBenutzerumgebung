@@ -53,11 +53,17 @@ all:
 
     # this host is a example for a non root host
     testvm:
-      ansible_host: 192.168.122.242
+      # here we overwrite the users that are defined for all hosts
+      users:
+        # for non-root, only the following two keys are needed for now
+        - name: "test"
+          home: /home/test
+
+      ansible_host: 192.168.122.55
       # the following two parameters have to be set
       # for non root hosts
       ansible_become: no
-      ansible_user: ichi
+      ansible_user: test
 
   children:
     # the desktop group will have
