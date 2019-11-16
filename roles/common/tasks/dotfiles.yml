@@ -32,7 +32,7 @@
   when: "zgen_stat.stat.exists == false or zgen_copy.checksum != zgen_stat.stat.checksum"
 
 - name: "Update zgen packages for {{ user.name }}"
-  command: "zsh -c 'source ~/.zshrc; zgen update'"
+  command: "zsh -c 'umask 22; source ~/.zshrc; zgen update'"
   become_user: "{{ user.name }}"
   when: "zgen_stat.stat.exists == true and zgen_copy.checksum == zgen_stat.stat.checksum"
 
