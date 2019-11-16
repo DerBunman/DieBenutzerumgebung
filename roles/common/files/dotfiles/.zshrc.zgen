@@ -14,9 +14,7 @@ if ! zgen saved; then
 	zgen load "jreese/zsh-titles"
 	zgen load "bobsoppe/zsh-ssh-agent" "ssh-agent.zsh"
 	zgen load "DerBunman/colorize.zsh"
-
-	# load zsh notify only on desktops
-	[ -z "$DISPLAY" ] || zgen load "marzocchi/zsh-notify"
+	zgen load "marzocchi/zsh-notify"
 
 	# generate the init script from plugins above
 	zgen save
