@@ -9,4 +9,9 @@
 # allow docker to connect to the local x11 server
 xhost +local:docker
 
+# start and import the ssh-agent env because we want
+# the agent to be available for x applications like filezilla
+test -e ~/.zgen/bobsoppe/zsh-ssh-agent-master/ssh-agent.zsh \
+	&& zsh ~/.zgen/bobsoppe/zsh-ssh-agent-master/ssh-agent.zsh
+
 [[ -f ~/.zshenv ]] && source ~/.zshenv
