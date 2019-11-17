@@ -92,10 +92,10 @@ git clone https://github.com/DerBunman/DieBenutzerumgebung --branch=master --sin
 cd ~/DieBenutzerumgebung/inventories/
 cp localhost.yml default.yml
 ```
-edit default.yml according your needs.
-the minimal change would be to replace your_user with the current user.
+Edit default.yml according your needs.
+The minimal change would be to replace your_user with the current user.
 
-for example:
+For example:
 ```sh
 sed "s/your_user/$USER/" -i default.yml
 ```
