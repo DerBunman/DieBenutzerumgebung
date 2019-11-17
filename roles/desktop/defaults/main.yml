@@ -15,6 +15,7 @@ default_packages:
   - pavucontrol
   - rxvt-unicode-256color
   - slop
+  - ssh-askpass
   - udiskie
   - vim-gtk3
   - vlc
