@@ -71,6 +71,11 @@ Also note, that the oomox sources are included so you are able to customize the 
 ### Basic install (like in the video)
 These instructions have been tested on Ubuntu 19.10.
 
+#### First we ensure that ansible and git are installed.
+```sh
+sudo apt-get install ansible git
+```
+
 #### Before you start, you'll need to setup a password for the ansible-vault.
 ```sh
 test -e ~/.ansible_vault_password || openssl rand -base64 20 > ~/.ansible_vault_password
@@ -79,7 +84,6 @@ chmod 400 ~/.ansible_vault_password
 
 #### Then you can clone the repository.
 ```sh
-sudo apt-get install ansible git
 git clone https://github.com/DerBunman/DieBenutzerumgebung --branch=master --single-branch ~/DieBenutzerumgebung
 ```
 
@@ -87,10 +91,16 @@ git clone https://github.com/DerBunman/DieBenutzerumgebung --branch=master --sin
 ```sh
 cd ~/DieBenutzerumgebung/inventories/
 cp localhost.yml default.yml
-# edit default.yml according your needs.
-# the minimal change would be to replace your_user with the current user.
-# eg:
+```
+edit default.yml according your needs.
+the minimal change would be to replace your_user with the current user.
+
+for example:
+```sh
 sed "s/your_user/$USER/" -i default.yml
+```
+then continue here:
+```sh
 cd ..
 cp secrets.example.yml secrets.yml
 ansible-vault encrypt secrets.yml
@@ -107,16 +117,19 @@ Done. Just logout and login again using the i3 session.
 
 # Media
 ## Videos:
+### Official YouTube channel
+The newest videos can always be found in the [___official YouTube channel___](https://www.youtube.com/channel/UC9JQ_zd0TFrX8pKJucOKTGQ/).
+
+### Demonstration of some basic features.
+
+<a href="https://www.youtube.com/watch?v=8RWfljLYXvw" target="_blank">
+<img src="docs/images/video_overview.png" />
+</a>  
+
 ### Example installation process on a fresh installed Ubuntu 19.10 VM.
 
 <a href="https://www.youtube.com/watch?v=lV1Vl4LM4Bo" target="_blank">
 <img src="docs/images/video_installation.png" />
-</a>  
-
-### Demonstration of some basic features.
-
-<a href="https://www.youtube.com/watch?v=ckCV6jqcAS4" target="_blank">
-<img src="docs/images/video_overview.png" />
 </a>  
 
 ## Screenshots:
