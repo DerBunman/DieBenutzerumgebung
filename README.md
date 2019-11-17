@@ -115,6 +115,13 @@ ansible-playbook playbook.yml --ask-become-pass
 
 Done. Just logout and login again using the i3 session.
 
+### Upgrade basic install
+```sh
+cd ~/DieBenutzerumgebung/
+git pull
+ansible-playbook playbook.yml --ask-become-pass
+```
+
 # Media
 ## Videos:
 The the source files for all official videos will be released in the [___DieGebrauchsanweisung___](https://github.com/DerBunman/DieGebrauchsanweisung) repository.
