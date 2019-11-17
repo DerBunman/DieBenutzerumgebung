@@ -1,0 +1,203 @@
+device_config:
+  - device_file: /dev/loop0
+    ignore: true
+  - device_file: /dev/loop1
+    ignore: true
+  - device_file: /dev/loop2
+    ignore: true
+  - device_file: /dev/loop3
+    ignore: true
+  - device_file: /dev/loop4
+    ignore: true
+  - device_file: /dev/loop5
+    ignore: true
+  - device_file: /dev/loop6
+    ignore: true
+  - device_file: /dev/loop7
+    ignore: true
+  - device_file: /dev/loop8
+    ignore: true
+  - device_file: /dev/loop9
+    ignore: true
+  - device_file: /dev/loop10
+    ignore: true
+  - device_file: /dev/loop11
+    ignore: true
+  - device_file: /dev/loop12
+    ignore: true
+  - device_file: /dev/loop13
+    ignore: true
+  - device_file: /dev/loop14
+    ignore: true
+  - device_file: /dev/loop15
+    ignore: true
+  - device_file: /dev/loop16
+    ignore: true
+  - device_file: /dev/loop17
+    ignore: true
+  - device_file: /dev/loop18
+    ignore: true
+  - device_file: /dev/loop19
+    ignore: true
+  - device_file: /dev/loop20
+    ignore: true
+  - device_file: /dev/loop21
+    ignore: true
+  - device_file: /dev/loop22
+    ignore: true
+  - device_file: /dev/loop23
+    ignore: true
+  - device_file: /dev/loop24
+    ignore: true
+  - device_file: /dev/loop25
+    ignore: true
+  - device_file: /dev/loop26
+    ignore: true
+  - device_file: /dev/loop27
+    ignore: true
+  - device_file: /dev/loop28
+    ignore: true
+  - device_file: /dev/loop29
+    ignore: true
+  - device_file: /dev/loop30
+    ignore: true
+  - device_file: /dev/loop31
+    ignore: true
+  - device_file: /dev/loop32
+    ignore: true
+  - device_file: /dev/loop33
+    ignore: true
+  - device_file: /dev/loop34
+    ignore: true
+  - device_file: /dev/loop35
+    ignore: true
+  - device_file: /dev/loop36
+    ignore: true
+  - device_file: /dev/loop37
+    ignore: true
+  - device_file: /dev/loop38
+    ignore: true
+  - device_file: /dev/loop39
+    ignore: true
+  - device_file: /dev/loop40
+    ignore: true
+  - device_file: /dev/loop41
+    ignore: true
+  - device_file: /dev/loop42
+    ignore: true
+  - device_file: /dev/loop43
+    ignore: true
+  - device_file: /dev/loop44
+    ignore: true
+  - device_file: /dev/loop45
+    ignore: true
+  - device_file: /dev/loop46
+    ignore: true
+  - device_file: /dev/loop47
+    ignore: true
+  - device_file: /dev/loop48
+    ignore: true
+  - device_file: /dev/loop49
+    ignore: true
+  - device_file: /dev/loop50
+    ignore: true
+  - device_file: /dev/loop51
+    ignore: true
+  - device_file: /dev/loop52
+    ignore: true
+  - device_file: /dev/loop53
+    ignore: true
+  - device_file: /dev/loop54
+    ignore: true
+  - device_file: /dev/loop55
+    ignore: true
+  - device_file: /dev/loop56
+    ignore: true
+  - device_file: /dev/loop57
+    ignore: true
+  - device_file: /dev/loop58
+    ignore: true
+  - device_file: /dev/loop59
+    ignore: true
+  - device_file: /dev/loop60
+    ignore: true
+  - device_file: /dev/loop61
+    ignore: true
+  - device_file: /dev/loop62
+    ignore: true
+  - device_file: /dev/loop63
+    ignore: true
+  - device_file: /dev/loop64
+    ignore: true
+  - device_file: /dev/loop65
+    ignore: true
+  - device_file: /dev/loop66
+    ignore: true
+  - device_file: /dev/loop67
+    ignore: true
+  - device_file: /dev/loop68
+    ignore: true
+  - device_file: /dev/loop69
+    ignore: true
+  - device_file: /dev/loop70
+    ignore: true
+  - device_file: /dev/loop71
+    ignore: true
+  - device_file: /dev/loop72
+    ignore: true
+  - device_file: /dev/loop73
+    ignore: true
+  - device_file: /dev/loop74
+    ignore: true
+  - device_file: /dev/loop75
+    ignore: true
+  - device_file: /dev/loop76
+    ignore: true
+  - device_file: /dev/loop77
+    ignore: true
+  - device_file: /dev/loop78
+    ignore: true
+  - device_file: /dev/loop79
+    ignore: true
+  - device_file: /dev/loop80
+    ignore: true
+  - device_file: /dev/loop81
+    ignore: true
+  - device_file: /dev/loop82
+    ignore: true
+  - device_file: /dev/loop83
+    ignore: true
+  - device_file: /dev/loop84
+    ignore: true
+  - device_file: /dev/loop85
+    ignore: true
+  - device_file: /dev/loop86
+    ignore: true
+  - device_file: /dev/loop87
+    ignore: true
+  - device_file: /dev/loop88
+    ignore: true
+  - device_file: /dev/loop89
+    ignore: true
+  - device_file: /dev/loop90
+    ignore: true
+  - device_file: /dev/loop91
+    ignore: true
+  - device_file: /dev/loop92
+    ignore: true
+  - device_file: /dev/loop93
+    ignore: true
+  - device_file: /dev/loop94
+    ignore: true
+  - device_file: /dev/loop95
+    ignore: true
+  - device_file: /dev/loop96
+    ignore: true
+  - device_file: /dev/loop97
+    ignore: true
+  - device_file: /dev/loop98
+    ignore: true
+  - device_file: /dev/loop99
+    ignore: true
+  - device_file: /dev/loop100
+    ignore: true
