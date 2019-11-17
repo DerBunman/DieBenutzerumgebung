@@ -29,6 +29,6 @@
         msg: '{{ pkg_status.stdout }}'
       when: 'pkg_status.stdout != ""'
 
-  when: 'ansible_become == False'
+  when: 'ansible_become == False and ignore_packages is not defined or ignore_packages == False'
 
 # - meta: end_play
