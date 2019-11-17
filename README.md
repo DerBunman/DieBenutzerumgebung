@@ -117,6 +117,8 @@ Done. Just logout and login again using the i3 session.
 
 # Media
 ## Videos:
+The the source files for all official videos will be released in the [___DieGebrauchsanweisung___](https://github.com/DerBunman/DieGebrauchsanweisung) repository.
+
 ### Official YouTube channel
 The newest videos can always be found in the [___official YouTube channel___](https://www.youtube.com/channel/UC9JQ_zd0TFrX8pKJucOKTGQ/).
 
