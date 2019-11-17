@@ -348,6 +348,8 @@ for_window [class="feh"] floating enable
 for_window [class="copyq"] floating enable
 for_window [class="Easystroke"] floating enable
 for_window [class="Emulator"] floating enable
+for_window [class="Pavucontrol"] floating enable
+
 
 #                 _
 #    __ _ ___ ___(_) __ _ _ __
