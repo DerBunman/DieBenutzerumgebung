@@ -202,6 +202,10 @@ let g:shebang#shebangs = {
 	\ 'php': '',
 	\ }
 
+" remap increment/decrement before mapping the original keys
+nnoremap <A-a> <C-a>
+nnoremap <A-x> <C-x>
+
 " run last command in vim-companion
 map <C-x> :exec "!tmux send-keys -t vim-companion C-p C-j" <CR><CR>
 map <C-a> <Home>
