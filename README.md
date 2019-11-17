@@ -180,5 +180,13 @@ The newest videos can always be found in the [___official YouTube channel___](ht
 <br>
 <a href="docs/images/screenshot5.png" target="_blank">
 	gVIM (GTK3), Firefox, and urxvt running ranger
+</a><br>
+<a href="docs/images/screenshot6.png" target="_blank">
+	<img src="docs/images/screenshot6.thumb.png" />
+</a>  
+<br>
+<a href="docs/images/screenshot6.png" target="_blank">
+	Firefox and two shells
 </a>
+
 
