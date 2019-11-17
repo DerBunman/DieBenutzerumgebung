@@ -203,8 +203,8 @@ let g:shebang#shebangs = {
 	\ }
 
 " remap increment/decrement before mapping the original keys
-nnoremap <A-a> <C-a>
-nnoremap <A-x> <C-x>
+nnoremap <leader>a <C-a>
+nnoremap <leader>x <C-x>
 
 " run last command in vim-companion
 map <C-x> :exec "!tmux send-keys -t vim-companion C-p C-j" <CR><CR>
