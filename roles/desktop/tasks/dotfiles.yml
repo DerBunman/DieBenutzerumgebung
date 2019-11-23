@@ -1,0 +1,32 @@
+- name: "Cloning DieOberflaechengestaltung theme and icons for {{ user.name }}"
+  git:
+    repo: https://github.com/DerBunman/DieOberflaechengestaltung
+    dest: "{{ user.home }}/.local/share/DieBenutzerumgebung/DieOberflaechengestaltung"
+    update: yes
+    clone: yes
+    force: yes
+  become_user: "{{ user.name }}"
+  changed_when: false
+  when: "'root' != user.name"
+
+- name: "Create a symbolic link for {{ user.name }}"
+  become_user: "{{ user.name }}"
+  changed_when: false
+  file:
+    src: "{{ link.src }}"
+    dest: "{{ link.dest }}"
+    owner: "{{ user.name }}"
+    state: link
+    force: yes
+  loop:
+    - { dest: ~/.icons, src: ~/.local/share/DieBenutzerumgebung/DieOberflaechengestaltung/icons }
+    - { dest: ~/.themes/oomox-DieOberflaechengestaltung, src: ~/.local/share/DieBenutzerumgebung/DieOberflaechengestaltung/themes/oomox-DieOberflaechengestaltung }
+  loop_control:
+    loop_var: link
+
+- name: "Generate rofi_media_menu.conf"
+  template:
+    src:  rofi_media_menu.conf.j2
+    dest: "{{ user.home }}/.config/rofi_media_menu.conf"
+    mode: 0600
+  become_user: "{{ user.name }}"

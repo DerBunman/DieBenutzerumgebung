@@ -1,8 +1,8 @@
 # basic host setup
 ---
 # install all packages needed for the shell
-- name: "Setup default shell packages"
-  include: default-packages.yml
+- name: "Setup shell packages"
+  include: packages.yml
 
 - include_tasks: dotfiles.yml
   # only include the dotfiles for the ansible_user, when

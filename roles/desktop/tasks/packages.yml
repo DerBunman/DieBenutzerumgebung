@@ -1,0 +1,72 @@
+---
+- name: 'Install desktop packages'
+  block:
+    - name: 'Install mandatory desktop packages'
+      package:
+        name: '{{ desktop__mandatory_packages }}'
+        state: present
+
+    - name: 'Install optional desktop packages'
+      package:
+        name: '{{ desktop__default_packages }}'
+        state: present
+
+    - name: 'Install additional user defined packages'
+      package:
+        name: '{{ additional_packages }}'
+        state: present
+      when: 'additional_packages is defined'
+
+  when: 'ansible_become == True'
+
+# the following tasks are to ensure that the needed packages are installed,
+# when we are running in non root mode.
+- name: 'Check default desktop packages'
+  block:
+    - name: 'Remove old tempfile'
+      file:
+        path: /tmp/ansible_check_pkg
+        state: absent
+      changed_when: false
+
+    - name: 'Check install status'
+      raw: >
+        for pkg in {{ desktop__default_packages|join(" ")}};
+          do dpkg -l $pkg | grep "^ii" || echo $pkg >> /tmp/ansible_check_pkg;
+        done >/dev/null 2>&1;
+        if [ -f /tmp/ansible_check_pkg ]; then echo $(cat /tmp/ansible_check_pkg); fi
+      register: pkg_status
+      changed_when: false
+
+    - name: 'The following packages need to be installed: "{{ pkg_status.stdout }}" to skip this check set ignore_packages = True'
+      fail:
+        msg: '{{ pkg_status.stdout }}'
+      when: 'pkg_status.stdout != ""'
+
+  when: 'ansible_become == False and ignore_packages is not defined or ignore_packages == False'
+
+# the following tasks are to ensure that the needed packages are installed,
+# when we are running in non root mode.
+- name: 'Check mandatory desktop packages'
+  block:
+    - name: 'Remove old tempfile'
+      file:
+        path: /tmp/ansible_check_pkg
+        state: absent
+      changed_when: false
+
+    - name: 'Check install status'
+      raw: >
+        for pkg in {{ desktop__mandatory_packages|join(" ")}};
+          do dpkg -l $pkg | grep "^ii" || echo $pkg >> /tmp/ansible_check_pkg;
+        done >/dev/null 2>&1;
+        if [ -f /tmp/ansible_check_pkg ]; then echo $(cat /tmp/ansible_check_pkg); fi
+      register: pkg_status
+      changed_when: false
+
+    - name: 'The following packages need to be installed: "{{ pkg_status.stdout }}" ask your administrator to instal them.'
+      fail:
+        msg: '{{ pkg_status.stdout }}'
+      when: 'pkg_status.stdout != ""'
+
+  when: 'ansible_become == False'

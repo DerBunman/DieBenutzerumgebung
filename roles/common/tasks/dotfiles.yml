@@ -9,7 +9,7 @@
     src: "dotfiles/.zshrc.zgen"
     dest: "{{ user.home }}/.zshrc.zgen"
     owner: "{{ user.name }}"
-    mode: '644'
+    mode: 0600
   register: zgen_copy
 
 - name: "Copy dotfiles for {{ user.name }}"
@@ -17,8 +17,16 @@
     src: "dotfiles/"
     dest: "{{ user.home }}/"
     mode: preserve
+    directory_mode: 0700
     force: yes
+  register: dotfiles
   become_user: "{{ user.name }}"
+
+- name: asd
+  debug:
+    msg: "{{ dotfiles }}"
+
+- meta: end_play
 
 - name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
   file:
@@ -44,28 +52,3 @@
     - vim -X +PlugInstall! +qall -u ~/.vim/vimrc_plug.vim
     - vim -X +PlugUpdate! +qall -u ~/.vim/vimrc_plug.vim
   changed_when: false
-
-- name: "Cloning DieOberflaechengestaltung theme and icons for {{ user.name }}"
-  git:
-    repo: https://github.com/DerBunman/DieOberflaechengestaltung
-    dest: "{{ user.home }}/.local/share/DieBenutzerumgebung/DieOberflaechengestaltung"
-    update: yes
-    clone: yes
-    force: yes
-  become_user: "{{ user.name }}"
-  changed_when: false
-  when: "'desktop' in group_names and 'root' != user.name"
-
-- name: "Create a symbolic link for {{ user.name }}"
-  become_user: "{{ user.name }}"
-  changed_when: false
-  file:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: "{{ user.name }}"
-    state: link
-    force: yes
-  loop:
-    - { dest: ~/.icons, src: ~/.local/share/DieBenutzerumgebung/DieOberflaechengestaltung/icons }
-    - { dest: ~/.themes/oomox-DieOberflaechengestaltung, src: ~/.local/share/DieBenutzerumgebung/DieOberflaechengestaltung/themes/oomox-DieOberflaechengestaltung }
-  when: "'desktop' in group_names and 'root' != user.name"

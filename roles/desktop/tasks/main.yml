@@ -5,15 +5,23 @@
     src:  setxkbmap_script.j2
     dest: "{{ user.home }}/bin/autostart/always/setxkbmap_script"
     mode: 0755
-  when: 'ansible_become == True or user.name == ansible_user'
+  when: 'user.name != "root" and (ansible_become == True or user.name == ansible_user)'
   loop: '{{ users }}'
   loop_control:
     loop_var: user
 
-- name: Setup default x11 packages
-  include: default-packages.yml
+- name: "Setup desktop dotfiles"
+  include: dotfiles.yml
+  when: 'user.name != "root"'
+  loop: '{{ users }}'
+  loop_control:
+    loop_var: user
 
-- name: Setup i3 and needed tools
+
+- name: "Setup default x11 packages"
+  include: packages.yml
+
+- name: "Setup i3 and needed tools"
   tags:
     i3
   include: i3.yml

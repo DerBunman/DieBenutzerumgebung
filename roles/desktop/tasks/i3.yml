@@ -15,13 +15,6 @@
         - polybar
   when: 'ansible_become == True'
 
-- name: "Generate rofi_media_menu.conf"
-  template:
-    src:  rofi_media_menu.conf.j2
-    dest: "{{ item.home }}/.config/rofi_media_menu.conf"
-    mode: 0755
-  become_user: "{{ item.name }}"
-  loop: '{{ users }}'
 
 - name: 'Check whether nerdfonts are installed'
   stat:

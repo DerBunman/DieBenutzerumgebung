@@ -3,13 +3,19 @@
   block:
     - name: 'Install mandatory shell packages'
       package:
-        name: '{{ common.mandatory_packages }}'
+        name: '{{ common__mandatory_packages }}'
         state: present
 
     - name: 'Install optional shell packages'
       package:
-        name: '{{ common.default_packages }}'
+        name: '{{ common__default_packages }}'
         state: present
+
+    - name: 'Install additional user defined packages'
+      package:
+        name: '{{ additional_packages }}'
+        state: present
+      when: 'additional_packages is defined'
 
   when: 'ansible_become == True'
 
@@ -25,7 +31,7 @@
 
     - name: 'Check install status'
       raw: >
-        for pkg in {{ common.default_packages|join(" ")}};
+        for pkg in {{ common__default_packages|join(" ")}};
           do dpkg -l $pkg | grep "^ii" || echo $pkg >> /tmp/ansible_check_pkg;
         done >/dev/null 2>&1;
         if [ -f /tmp/ansible_check_pkg ]; then echo $(cat /tmp/ansible_check_pkg); fi
@@ -41,7 +47,7 @@
 
 # the following tasks are to ensure that the needed packages are installed,
 # when we are running in non root mode.
-- name: 'Check default shell packages'
+- name: 'Check mandatory shell packages'
   block:
     - name: 'Remove old tempfile'
       file:
@@ -51,7 +57,7 @@
 
     - name: 'Check install status'
       raw: >
-        for pkg in {{ common.default_packages|join(" ")}};
+        for pkg in {{ common__mandatory_packages|join(" ")}};
           do dpkg -l $pkg | grep "^ii" || echo $pkg >> /tmp/ansible_check_pkg;
         done >/dev/null 2>&1;
         if [ -f /tmp/ansible_check_pkg ]; then echo $(cat /tmp/ansible_check_pkg); fi

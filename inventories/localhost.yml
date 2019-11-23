@@ -13,8 +13,9 @@ all:
         group: users
         groups: adm,sudo
         shell: /bin/zsh
+        usermod: True
 
-    desktop.setxkbmap_script: |
+    desktop__setxkbmap_script: |
       setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
       setxkbmap -option caps:none
 

@@ -13,7 +13,7 @@
         # update_password: on_create
         # password: "{{ lookup('password', '/tmp/passwordfile.{{ item.name }} chars=ascii_letters,digits,hexdigits,punctuation') }}"
         append: yes
-      when: 'item.no_usermod is not defined or item.no_usermod == False'
+      when: 'item.usermod is defined and item.usermod == True'
       loop: '{{ users }}'
   when: 'ansible_become == True'
 

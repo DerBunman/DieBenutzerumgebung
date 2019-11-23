@@ -6,10 +6,9 @@ all:
   vars:
     # host var overview
     # ignore_packages = False | ignores missing default packages (common+desktop)
-    # desktop:
-    #   setxkbmap_script: |
-    #     setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
-    #     setxkbmap -option caps:none
+    # desktop__setxkbmap_script: |
+    #   setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
+    #   setxkbmap -option caps:none
 
     # these users will be managed by ansible
     # it is mandatory to add the user you have set as ansible user to this list
@@ -20,9 +19,9 @@ all:
         group: users
         groups: adm,sudo
         shell: /bin/zsh
+        usermod: True
 
-    desktop:
-      setxkbmap_script: |
+    desktop__setxkbmap_script: |
         setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
         setxkbmap -option caps:none
 
