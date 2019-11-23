@@ -16,17 +16,10 @@
   copy:
     src: "dotfiles/"
     dest: "{{ user.home }}/"
-    mode: preserve
+    mode: g=-rwx,o=-rwx
     directory_mode: 0700
     force: yes
-  register: dotfiles
   become_user: "{{ user.name }}"
-
-- name: asd
-  debug:
-    msg: "{{ dotfiles }}"
-
-- meta: end_play
 
 - name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
   file:
