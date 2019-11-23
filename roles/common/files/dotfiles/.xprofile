@@ -13,14 +13,10 @@ xhost +local:docker
 if [ -f $HOME/.ssh/environment-$HOST ] ; then
 	. $HOME/.ssh/environment-$HOST > /dev/null
 	if ! kill -0 $SSH_AGENT_PID > /dev/null 2>&1; then
-		echo "Stale agent file found. Spawning new agent… "
 		eval $(ssh-agent | tee $HOME/.ssh/environment-$HOST)
-		ssh-add
 	fi
 else
-	echo "Starting ssh-agent"
 	eval $(ssh-agent | tee $HOME/.ssh/environment-$HOST)
-	ssh-add
 fi
 
 # include zshenv
