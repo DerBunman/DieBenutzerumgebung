@@ -1,15 +1,1 @@
-# these users will be created
-# the users object is not within the system role, since it is
-# used in all roles.
-users:
-  - name: "testus"
-    comment: "numero testus"
-    home: /home/testus
-    group: users
-    groups: adm,sudo
-    shell: /bin/zsh
-    # the usermod parameter is optional.
-    # if set to True, the users will not be added or managed by ansible.
-    # this is useful, when your user isn't local. eg: ldap/active directory
-    # default is False
-    usermod: False
+

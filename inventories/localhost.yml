@@ -14,6 +14,7 @@ all:
         groups: adm,sudo
         shell: /bin/zsh
         usermod: True
+        manage_ssh_keys: True
 
     desktop__setxkbmap_script: |
       setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl

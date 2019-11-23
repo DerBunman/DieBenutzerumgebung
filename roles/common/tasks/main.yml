@@ -4,6 +4,13 @@
 - name: "Setup shell packages"
   include: packages.yml
 
+# Create/Modify users
+- name: "Setup users"
+  include_tasks: users.yml
+  loop: '{{ users }}'
+  loop_control:
+    loop_var: user
+
 - include_tasks: dotfiles.yml
   # only include the dotfiles for the ansible_user, when
   # ansible_become is not True

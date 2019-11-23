@@ -44,9 +44,3 @@
 
   when: 'ansible_become == True'
 
-  # Create/Modify users
-- name: "Setup users"
-  import_tasks: users.yml
-
-- name: Making the users a fact
-  set_fact: users={{ users }}
