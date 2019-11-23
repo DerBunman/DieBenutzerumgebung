@@ -1,3 +1,24 @@
+- name: "Generate oomox colorscheme"
+  template:
+    src:  oomox-colors-DieOberflaechengestaltung.j2
+    dest: "{{ user.home }}/.config/oomox/colors/DieOberflaechengestaltung"
+    mode: 0600
+  become_user: "{{ user.name }}"
+
+- name: "Generate ~/.Xresources"
+  template:
+    src:  Xressources.j2
+    dest: "{{ user.home }}/.Xresources"
+    mode: 0600
+  become_user: "{{ user.name }}"
+
+- name: "Generate {{ user.home }}/.config/i3/config"
+  template:
+    src:  i3_conf.j2
+    dest: "{{ user.home }}/.config/i3/config"
+    mode: 0600
+  become_user: "{{ user.name }}"
+
 - name: "Cloning DieOberflaechengestaltung theme and icons for {{ user.name }}"
   git:
     repo: https://github.com/DerBunman/DieOberflaechengestaltung

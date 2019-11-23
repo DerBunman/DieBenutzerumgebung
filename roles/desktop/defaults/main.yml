@@ -38,6 +38,28 @@ desktop__mandatory_packages:
   - xdg-utils
   - xdotool
 
+colors:
+  yellow1: dea65f
+  yellow2: f0c674
+  red1: a54242
+  red2: cc6666
+  magenta1: 85678f
+  magenta2: b294bb
+  blue1: 8abeb7
+  blue2: 417cae
+  cyan1: 5e8d87
+  cyan2: 8abeb7
+  green1: 8c9440
+  green2: b5bd68
+  black1: 181818
+  black2: 484848
+  white1: e5e5e5
+  white2: d5d5d5
+  foreground: d5d5d5
+  background: 282828
+  cursor: d5d5d5
+  highlight: 1e3d37
+  border: 8abeb7
 
 # the user/pw for Streamable should be added to secrets.yml
 rofi_media_menu:
