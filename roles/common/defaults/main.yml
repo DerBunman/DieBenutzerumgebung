@@ -1,34 +1,30 @@
 # these packages will be installed by default
 # on all target hosts
 # be aware that most of them are beeing depended on
-common__default_packages:
-  - apt-file
-  - bc
-  - curl
-  - detox
-  - exuberant-ctags
-  - figlet
-  - git
-  - grc
-  - mc
-  - net-tools
-  - p7zip-full
-  - pass
-  - powerline
-  - pv
-  - ranger
-  - shellcheck
-  - silversearcher-ag
-  - sysfsutils
-  - tmux
-  - unp
-  - unzip
-  - vim
-  - wget
-  - zsh
+common:
+  default_packages:
+    - apt-file
+    - bc
+    - curl
+    - detox
+    - exuberant-ctags
+    - figlet
+    - net-tools
+    - p7zip-full
+    - pass
+    - powerline
+    - pv
+    - ranger
+    - shellcheck
+    - silversearcher-ag
+    - sysfsutils
+    - tmux
+    - unp
+    - unzip
+    - vim
+    - wget
 
-# the user/pw for Streamable should be added to secrets.yml
-rofi_media_menu:
-  ffmpeg_pidfile: /tmp/rofimedia.ffmpeg.pid
-  video_path: $HOME/Videos
-  video_ext: mp4
+  mandatory_packages:
+    - git
+    - grc
+    - zsh

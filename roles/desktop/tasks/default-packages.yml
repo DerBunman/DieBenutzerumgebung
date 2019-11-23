@@ -1,7 +1,7 @@
 ---
 - name: 'Install default packages'
   package:
-    name: '{{ default_packages }}'
+    name: '{{ desktop.default_packages }}'
     state: present
   when: 'ansible_become == True'
 
@@ -17,7 +17,7 @@
 
     - name: 'Check install status'
       raw: >
-        for pkg in {{ default_packages|join(" ")}};
+        for pkg in {{ desktop.default_packages|join(" ")}};
           do dpkg -l $pkg | grep "^ii" || echo $pkg >> /tmp/ansible_check_pkg;
         done >/dev/null 2>&1;
         if [ -f /tmp/ansible_check_pkg ]; then echo $(cat /tmp/ansible_check_pkg); fi

@@ -4,6 +4,13 @@ all:
   # system and the dotfiles and packages) will be run
   # for all hosts. you don't have to add them to a group.
   vars:
+    # host var overview
+    # ignore_packages = False | ignores missing default packages (common+desktop)
+    # desktop:
+    #   setxkbmap_script: |
+    #     setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
+    #     setxkbmap -option caps:none
+
     # these users will be managed by ansible
     # it is mandatory to add the user you have set as ansible user to this list
     users:
@@ -14,15 +21,10 @@ all:
         groups: adm,sudo
         shell: /bin/zsh
 
-      - name: "root"
-        comment: "root"
-        home: /root
-        group: root
-        shell: /bin/zsh
-
-    setxkbmap_script: |
-      setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
-      setxkbmap -option caps:none
+    desktop:
+      setxkbmap_script: |
+        setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
+        setxkbmap -option caps:none
 
     # the following ssh pubkeys will be added to all users above.
     ssh_keys: |
