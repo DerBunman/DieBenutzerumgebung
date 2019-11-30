@@ -17,6 +17,10 @@
         state: present
       when: 'additional_packages is defined'
 
+    - name: Install oomox.
+      apt:
+        deb: https://github.com/themix-project/oomox/releases/download/1.12.5/oomox_1.12.5_18.10+.deb
+
   when: 'ansible_become == True'
 
 # the following tasks are to ensure that the needed packages are installed,
