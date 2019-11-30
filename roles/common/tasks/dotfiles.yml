@@ -21,19 +21,15 @@
     force: yes
   become_user: "{{ user.name }}"
 
-- name: "Make ~/bin/* executable"
+- name: "Setting executable permissions for some dotfiles"
   file:
     state: touch
-    path: "{{ item }}"
-    mode: u+rw,g-wx,o-rwx
-  with_fileglob: "{{ user.home }}/bin/*"
-
-- name: "Make ~/bin/*/* executable"
-  file:
-    state: touch
-    path: "{{ item }}"
-    mode: u+rw,g-wx,o-rwx
-  with_fileglob: "{{ user.home }}/bin/*/*"
+    path: "~/{{ item }}"
+    mode: u+rwx
+    modification_time: preserve
+    access_time: preserve
+  become_user: "{{ user.name }}"
+  loop: "{{ dotfiles_executable }}"
 
 - name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
   file:
