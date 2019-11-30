@@ -1,33 +1,38 @@
-- name: "Generate oomox colorscheme"
-  template:
-    src:  oomox-colors-DieOberflaechengestaltung.j2
-    dest: "{{ user.home }}/.config/oomox/colors/DieOberflaechengestaltung"
-    mode: 0600
-  become_user: "{{ user.name }}"
+- name: "Deploying desktop dotfiles for {{ user.name }}"
+  block:
+    - name: "Generate oomox colorscheme"
+      template:
+        src:  oomox-colors-DieOberflaechengestaltung.j2
+        dest: "{{ user.home }}/.config/oomox/colors/DieOberflaechengestaltung"
+        mode: 0600
 
-- name: "Generate ~/.Xresources"
-  template:
-    src:  Xressources.j2
-    dest: "{{ user.home }}/.Xresources"
-    mode: 0600
-  become_user: "{{ user.name }}"
+    - name: "Generate ~/.Xresources"
+      template:
+        src:  Xressources.j2
+        dest: "{{ user.home }}/.Xresources"
+        mode: 0600
 
-- name: "Generate {{ user.home }}/.config/i3/config"
-  template:
-    src:  i3_conf.j2
-    dest: "{{ user.home }}/.config/i3/config"
-    mode: 0600
-  become_user: "{{ user.name }}"
+    - name: "Mkdir {{ user.home }}/.config/i3/config"
+      file:
+        path: "{{ user.home }}/.config/i3"
+        state: directory
 
-- name: "Build DieOberflaechengestaltung GTK2/3 themes"
-  command: oomox-cli --make-opts all ~/.config/oomox/colors/DieOberflaechengestaltung
+    - name: "Generate {{ user.home }}/.config/i3/config"
+      template:
+        src:  i3_conf.j2
+        dest: "{{ user.home }}/.config/i3/config"
+        mode: 0600
 
-- name: "Build DieOberflaechengestaltung icons"
-  command: oomox-gnome-colors-icons-cli ~/.config/oomox/colors/DieOberflaechengestaltung
+    - name: "Build DieOberflaechengestaltung GTK2/3 themes"
+      command: oomox-cli --make-opts all ~/.config/oomox/colors/DieOberflaechengestaltung
 
-- name: "Generate rofi_media_menu.conf"
-  template:
-    src:  rofi_media_menu.conf.j2
-    dest: "{{ user.home }}/.config/rofi_media_menu.conf"
-    mode: 0600
+    - name: "Build DieOberflaechengestaltung icons"
+      command: oomox-gnome-colors-icons-cli ~/.config/oomox/colors/DieOberflaechengestaltung
+
+    - name: "Generate rofi_media_menu.conf"
+      template:
+        src:  rofi_media_menu.conf.j2
+        dest: "{{ user.home }}/.config/rofi_media_menu.conf"
+        mode: 0600
+
   become_user: "{{ user.name }}"

@@ -21,6 +21,20 @@
     force: yes
   become_user: "{{ user.name }}"
 
+- name: "Make ~/bin/* executable"
+  file:
+    state: touch
+    path: "{{ item }}"
+    mode: u+rw,g-wx,o-rwx
+  with_fileglob: "{{ user.home }}/bin/*"
+
+- name: "Make ~/bin/*/* executable"
+  file:
+    state: touch
+    path: "{{ item }}"
+    mode: u+rw,g-wx,o-rwx
+  with_fileglob: "{{ user.home }}/bin/*/*"
+
 - name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
   file:
     path: "{{ user.home }}/.zgen"
