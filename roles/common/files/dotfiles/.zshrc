@@ -103,6 +103,17 @@ zstyle ':completion:*:approximate:*' max-errors 1 numeric
 # Ignore completion functions for commands you don’t have:
 zstyle ':completion:*:functions' ignored-patterns '_*'
 
+# autocomplete hosts from ~/.ssh and /etc/hosts
+zstyle -e ':completion:*:hosts' hosts 'reply=(
+  ${=${${${${(@M)${(f)"$(cat ~/.ssh/config ~/.ssh/conf.d/* 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+  ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2>/dev/null)"}%%[#|\]]*}//\[/}
+  ${=${(f)"$(cat /etc/hosts(|)(N))"}%%\#*}
+)'
+zstyle -e ':completion:*:(ping|host):*' hosts 'reply=(
+  ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2>/dev/null)"}%%[#|\]]*}//\[/}
+  ${=${(f)"$(cat /etc/hosts(|)(N))"}%%\#*}
+  ${=${${${${(@M)${(f)"$(cat ~/.ssh/config ~/.ssh/conf.d/* 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+)'
 
 #   ______ _  ___ _ __
 #  |_  / _` |/ _ \ '_ \
