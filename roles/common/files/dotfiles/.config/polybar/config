@@ -111,11 +111,6 @@ content-foreground = #fff
 ; "click-(left|middle|right)" will be executed using "/usr/bin/env sh -c $COMMAND"
 click-left = ~/bin/rofi_startmenu.zsh
 
-[module/openvpn_gw]
-type = custom/script
-exec = ~/bin/polybar-scripts/openvpn_gw_chk
-interval = 10
-
 [module/docker]
 type = custom/script
 exec = docker ps -q | wc -l
