@@ -17,9 +17,20 @@
         state: present
       when: 'additional_packages is defined'
 
-    - name: Install oomox.
+    - name: "Checking oomox installation status"
+      shell: dpkg-query --showformat='dpkg --compare-versions "${Version}" "ge" "1.11"' -W oomox | sh
+      register: oomox_status
+      ignore_errors: true
+
+    - name: "Install oomox"
       apt:
         deb: https://github.com/themix-project/oomox/releases/download/1.12.5/oomox_1.12.5_18.10+.deb
+      when: "oomox_status.rc != 0 and ansible_distribution_version != '18.04'"
+
+    - name: "Install oomox"
+      apt:
+        deb: https://github.com/themix-project/oomox/releases/download/1.12.5/oomox_1.12.5_17.04+.deb
+      when: "oomox_status.rc != 0 and ansible_distribution_version == '18.04'"
 
   when: 'ansible_become == True'
 
