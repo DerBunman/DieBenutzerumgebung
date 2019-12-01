@@ -10,16 +10,15 @@
   loop_control:
     loop_var: user
 
+- name: "Setup default x11 packages"
+  include: packages.yml
+
 - name: "Setup desktop dotfiles"
   include: dotfiles.yml
   when: 'user.name != "root"'
   loop: '{{ users }}'
   loop_control:
     loop_var: user
-
-
-- name: "Setup default x11 packages"
-  include: packages.yml
 
 - name: "Setup i3 and needed tools"
   tags:

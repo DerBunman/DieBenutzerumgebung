@@ -21,6 +21,16 @@
     force: yes
   become_user: "{{ user.name }}"
 
+- name: "Setting executable permissions for some dotfiles"
+  file:
+    state: touch
+    path: "~/{{ item }}"
+    mode: u+rwx
+    modification_time: preserve
+    access_time: preserve
+  become_user: "{{ user.name }}"
+  loop: "{{ dotfiles_executable }}"
+
 - name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
   file:
     path: "{{ user.home }}/.zgen"
