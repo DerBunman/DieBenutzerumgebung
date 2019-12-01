@@ -76,6 +76,10 @@ setopt AUTOCD AUTOPUSHD PUSHDIGNOREDUPS
 # completion slower but avoids false reports of spelling errors.
 setopt HASH_LIST_ALL
 
+# If no matching file is found, the pattern is removed from the argument list
+# instead of generationg an error.
+setopt NULL_GLOB
+
 #               _                                  _      _
 #    __ _ _   _| |_ ___   ___ ___  _ __ ___  _ __ | | ___| |_ ___
 #   / _` | | | | __/ _ \ / __/ _ \| '_ ` _ \| '_ \| |/ _ \ __/ _ \
@@ -99,6 +103,17 @@ zstyle ':completion:*:approximate:*' max-errors 1 numeric
 # Ignore completion functions for commands you don’t have:
 zstyle ':completion:*:functions' ignored-patterns '_*'
 
+# autocomplete hosts from ~/.ssh and /etc/hosts
+zstyle -e ':completion:*:hosts' hosts 'reply=(
+  ${=${${${${(@M)${(f)"$(cat ~/.ssh/config ~/.ssh/conf.d/* 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+  ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2>/dev/null)"}%%[#|\]]*}//\[/}
+  ${=${(f)"$(cat /etc/hosts(|)(N))"}%%\#*}
+)'
+zstyle -e ':completion:*:(ping|host):*' hosts 'reply=(
+  ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2>/dev/null)"}%%[#|\]]*}//\[/}
+  ${=${(f)"$(cat /etc/hosts(|)(N))"}%%\#*}
+  ${=${${${${(@M)${(f)"$(cat ~/.ssh/config ~/.ssh/conf.d/* 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+)'
 
 #   ______ _  ___ _ __
 #  |_  / _` |/ _ \ '_ \
@@ -143,6 +158,9 @@ done
 #
 autoload -U colors vcs_info
 colors
+
+fpath=(~/.zshfunctions $fpath)
+autoload ${$(echo ~/.zshfunctions/*(@)):t} ${$(echo ~/.zshfunctions/*(.)):t}
 
 
 #         _   __  __           _

@@ -21,7 +21,12 @@ if ! zgen saved; then
 	zgen load "jreese/zsh-titles"
 	zgen load "DerBunman/colorize.zsh"
 	zgen load "marzocchi/zsh-notify"
+	zgen load "unixorn/autoupdate-zgen"
 
 	# generate the init script from plugins above
 	zgen save
 fi
+
+# remove "zsh-notify: unsupported environment" message on hosts without X
+sed -i "/zsh-notify: unsupported environment/d" \
+	"${HOME}/.zgen/marzocchi/zsh-notify-master/notify.plugin.zsh"
