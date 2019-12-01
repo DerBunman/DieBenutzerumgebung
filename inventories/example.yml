@@ -5,7 +5,7 @@ all:
   # for all hosts. you don't have to add them to a group.
   vars:
     # host var overview
-    # ignore_packages = False | ignores missing default packages (common+desktop)
+    # ignore_packages = False    | ignores missing default packages (common+desktop)
     # desktop__setxkbmap_script: |
     #   setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
     #   setxkbmap -option caps:none
