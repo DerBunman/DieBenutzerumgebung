@@ -76,6 +76,10 @@ setopt AUTOCD AUTOPUSHD PUSHDIGNOREDUPS
 # completion slower but avoids false reports of spelling errors.
 setopt HASH_LIST_ALL
 
+# If no matching file is found, the pattern is removed from the argument list
+# instead of generationg an error.
+setopt NULL_GLOB
+
 #               _                                  _      _
 #    __ _ _   _| |_ ___   ___ ___  _ __ ___  _ __ | | ___| |_ ___
 #   / _` | | | | __/ _ \ / __/ _ \| '_ ` _ \| '_ \| |/ _ \ __/ _ \
