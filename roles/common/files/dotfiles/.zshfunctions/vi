@@ -1,0 +1,5 @@
+if [ -e "$1" ] && [ -w "$1" ]; then
+	command vi "$@";
+else
+	sudo vi "$@";
+fi
