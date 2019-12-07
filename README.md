@@ -49,22 +49,27 @@ The GTK themes and icons are located in [DerBunman/DieOberflaechengestaltung](ht
 
 Also note, that the oomox sources are included so you are able to customize the theme.
 
-### Primary used applications:
+### Preconfigured applications and packages:
 * [i3wm](https://i3wm.org/)
-* [zsh](https://www.zsh.org/) powered by [zgen](https://github.com/tarjoilija/zgen) and the plugins listed [here](roles/common/files/dotfiles/.zshrc).
+* [zsh](https://www.zsh.org/) powered by [zgen](https://github.com/tarjoilija/zgen) and the plugins listed [here](roles/common/files/dotfiles/.zshrc.zgen).
 * [vim](https://www.vim.org/) powered by [vim-plug](https://github.com/junegunn/vim-plug) and the plugins listed [here](roles/common/files/dotfiles/.vim/vimrc_plug.vim).
 * [polybar](https://github.com/jaagr/polybar)
 * [nerdfonts](https://nerdfonts.com/)
 * [dunst](https://dunst-project.org/)
 * [gtk3 theme](https://www.gtk.org/)
-
+* [feh](https://github.com/derf/feh)
+* [ranger](https://github.com/ranger/ranger)
+* [udiskie](https://github.com/coldfix/udiskie)
+* [urxvt](https://sourceforge.net/projects/rxvt/)
+* [compton](https://github.com/chjj/compton)
+* ssh-client including ssh-agent
+* top
 
 # Installation
 
 ## Compatible distributions
-- Debian >=10 (9 should also work but is untested)
-- Ubuntu >=19.04
-- Ubuntu 18.04 and Linux Mint 19.1 Tessa (which uses Ubuntu 18.04 as base):
+- Debian >=10
+- Ubuntu >=18.04 and Linux Mint 19.1 Tessa (which uses Ubuntu 18.04 as base) should also work.
 - Other Debian based distributions should work too. You may have to change the sources.
 
 ## Examples
