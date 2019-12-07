@@ -36,7 +36,7 @@ all:
     polybar__email_indicator_url: imaps://emailfuermich.de/INBOX
     polybar__modules_left: "i3 startmenu xwindow"
     polybar__modules_center: ""
-    polybar__modules_right: "docker email eth wlan memory temperature cpu system-cpu-loadavg system-cpu-frequency filesystem battery xkeyboard pulseaudio date"
+    polybar__modules_right: "docker email eth wlan memory temperature cpu system-cpu-loadavg system-cpu-frequency filesystem battery xkeyboard pulseaudio date powermenu"
     polybar__temperature_thermal_zone: 0
 
   hosts:
@@ -50,7 +50,7 @@ all:
       ansible_user: ichi
       polybar__modules_left: "i3 xwindow"
       polybar__modules_center: ""
-      polybar__modules_right: "docker email memory temperature cpu battery pulseaudio date powermenu"
+      polybar__modules_right: "docker email memory temperature cpu battery pulseaudio date"
       polybar__temperature_thermal_zone: 0
       polybar__battery_adapter: "AC"
       polybar__battery_device: "BAT0"
