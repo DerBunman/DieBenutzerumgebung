@@ -46,7 +46,6 @@ users:
     manage_ssh_keys: False
 
 common__dotfiles_executable:
-  - bin/autostart/ssh-add.zsh
   - bin/serve_via_http.sh
   - bin/ssh_send_terminfo.zsh
   - .config/ranger/scope.sh

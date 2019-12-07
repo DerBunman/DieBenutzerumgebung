@@ -15,6 +15,16 @@
 # for ssh logins, install and configure the libpam-umask package.
 umask 022
 
+# start ssh-agent
+if [ -f "$HOME/.ssh/environment" ] ; then
+	. "$HOME/.ssh/environment" > /dev/null
+	if ! kill -0 "$SSH_AGENT_PID" > /dev/null 2>&1; then
+		eval $(ssh-agent | tee "$HOME/.ssh/environment")
+	fi
+else
+	eval $(ssh-agent | tee $HOME/.ssh/environment)
+fi
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
 	# include .bashrc if it exists
