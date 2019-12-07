@@ -68,3 +68,46 @@ rofi_media_menu:
     ffmpeg_pidfile: /tmp/rofimedia.ffmpeg.pid
     video_path: $HOME/Videos
     video_ext: mp4
+
+desktop__dotfiles_executable:
+  - bin/autostart/always/applets.sh
+  - bin/autostart/always/udiskie.zsh
+  - bin/autostart/always/wallpaper.sh
+  - bin/autostart/always/xrdb_reload.sh
+  - bin/autostart/compton-invert
+  - bin/autostart/i3-scratchpad-vim.zsh
+  - bin/autostart/xkeys.zsh
+  - bin/bosd_cat
+  - bin/compton-invert
+  - bin/i3-applet-wrapper
+  - bin/i3-autostart.zsh
+  - bin/i3keys
+  - bin/i3subscribe
+  - bin/layout_manager.sh
+  - bin/polybar-scripts/inbox-imap-shellnetrc.sh
+  - bin/polybar-scripts/openvpn_gw_chk
+  - bin/polybar-scripts/polybar_wrapper.sh
+  - bin/polybar-scripts/system-cpu-frequency.sh
+  - bin/polybar-scripts/system-cpu-loadavg.sh
+  - bin/rofi_media_menu.zsh
+  - bin/rofi_startmenu.zsh
+  - bin/screenshot
+  - bin/tint_screen.zsh
+  - bin/xkeys.zsh
+  - .config/ranger/scope.sh
+
+polybar__email_indicator_url: "undefined"
+polybar__modules_left: "i3 startmenu xwindow"
+polybar__modules_center: ""
+polybar__modules_right: "docker email eth wlan memory temperature cpu system-cpu-frequency system-cpu-loadavg filesystem battery xkeyboard pulseaudio date"
+
+polybar__wifi_interface: "wlp3s0"
+polybar__eth_interface: "enp0s25"
+
+polybar__temperature_thermal_zone: 0
+
+polybar__battery_adapter: "AC"
+polybar__battery_device: "BAT0"
+polybar__battery_full_at: 95
+
+polybar__additional_content: ""

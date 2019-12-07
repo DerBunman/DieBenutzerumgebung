@@ -6,9 +6,6 @@ all:
   vars:
     # host var overview
     # ignore_packages = False    | ignores missing default packages (common+desktop)
-    # desktop__setxkbmap_script: |
-    #   setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
-    #   setxkbmap -option caps:none
 
     # these users will be managed by ansible
     # it is mandatory to add the user you have set as ansible user to this list
@@ -22,24 +19,42 @@ all:
         usermod: True
         manage_ssh_keys: True
 
-    desktop__setxkbmap_script: |
-        setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
-        setxkbmap -option caps:none
-
     # the following ssh pubkeys will be added to all users above.
     ssh_keys: |
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMjCDwwHvhp3Gk/dYKWMxfn5sHE6rW+NvuekydZja2d localhorst
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFxrqRD0ab7ljvUjAYVqLH2XsdsUTEr8ZGZ/N3riZOx schleppi
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKkQisCe/gyju55eUv+22WmiRrkDUObMVOm+A3GUhSq SG-1350
 
+    desktop__setxkbmap_script: |
+        setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
+        setxkbmap -option caps:none
+
+    # You have to create a ~/.netrc file in the following format:
+    # machine mail.example.com
+    #  login my@example.com
+    #  password s3cret
+    polybar__email_indicator_url: imaps://emailfuermich.de/INBOX
+    polybar__modules_left: "i3 startmenu xwindow"
+    polybar__modules_center: ""
+    polybar__modules_right: "docker email eth wlan memory temperature cpu system-cpu-loadavg system-cpu-frequency filesystem battery xkeyboard pulseaudio date"
+    polybar__temperature_thermal_zone: 0
+
   hosts:
     localhorst:
       ansible_host: localhorst.lan
       ansible_user: ichi
+      polybar__temperature_thermal_zone: 2
 
     schleppi:
       ansible_host: schleppi.lan
       ansible_user: ichi
+      polybar__modules_left: "i3 xwindow"
+      polybar__modules_center: ""
+      polybar__modules_right: "docker email memory temperature cpu battery pulseaudio date powermenu"
+      polybar__temperature_thermal_zone: 0
+      polybar__battery_adapter: "AC"
+      polybar__battery_device: "BAT0"
+      polybar__battery_full_at: 95
 
     khadas:
       ansible_host: 192.168.178.95
