@@ -13,9 +13,9 @@
 
     - name: 'Install additional user defined packages'
       package:
-        name: '{{ additional_packages }}'
+        name: '{{ desktop__additional_packages }}'
         state: present
-      when: 'additional_packages is defined'
+      when: 'desktop__additional_packages is defined'
 
     - name: "Checking oomox installation status"
       shell: dpkg-query --showformat='dpkg --compare-versions "${Version}" "ge" "1.11"' -W oomox | sh
@@ -23,14 +23,18 @@
       ignore_errors: true
 
     - name: "Install oomox"
-      apt:
-        deb: https://github.com/themix-project/oomox/releases/download/1.12.5/oomox_1.12.5_18.10+.deb
-      when: "oomox_status.rc != 0 and ansible_distribution_version != '18.04'"
+      block:
+      - name: "Install oomox for anything that is not Ubuntu 18.04"
+        apt:
+          deb: https://github.com/themix-project/oomox/releases/download/1.12.5/oomox_1.12.5_18.10+.deb
+        when: "ansible_distribution_version != '18.04'"
 
-    - name: "Install oomox"
-      apt:
-        deb: https://github.com/themix-project/oomox/releases/download/1.12.5/oomox_1.12.5_17.04+.deb
-      when: "oomox_status.rc != 0 and ansible_distribution_version == '18.04'"
+      - name: "Install oomox for Ubuntu 18.04"
+        apt:
+          deb: https://github.com/themix-project/oomox/releases/download/1.12.5/oomox_1.12.5_17.04+.deb
+        when: "ansible_distribution_version == '18.04'"
+
+      when: 'oomox_status.rc != 0 or "no packages found" in oomox_status.stderr'
 
   when: 'ansible_become == True'
 
