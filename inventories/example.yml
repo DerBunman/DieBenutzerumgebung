@@ -40,6 +40,10 @@ all:
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFxrqRD0ab7ljvUjAYVqLH2XsdsUTEr8ZGZ/N3riZOx schleppi
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKkQisCe/gyju55eUv+22WmiRrkDUObMVOm+A3GUhSq SG-1350
 
+    # these values will be set in the environment as $BROWSER and $EDITOR
+    default_browser: firefox
+    default_editor: vim
+
     #      _           _    _
     #   __| | ___  ___| | _| |_ ___  _ __
     #  / _` |/ _ \/ __| |/ / __/ _ \| '_ \
@@ -54,8 +58,8 @@ all:
     # the following lines will be written to ~/bin/autostart/always/setxkbmap_script
     # while it is only semantics, you should only put keyboard commands here.
     desktop__setxkbmap_script: |
-        setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
-        setxkbmap -option caps:none
+      setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
+      setxkbmap -option caps:none
 
     # In addition to the url defined here, you have to create a ~/.netrc file in the following format:
     # machine mail.example.com
@@ -66,7 +70,7 @@ all:
     # this defines which modules are loaded into the polybar
     polybar__modules_left: "i3 startmenu xwindow"
     polybar__modules_center: ""
-    polybar__modules_right: "docker email eth wlan memory temperature cpu system-cpu-loadavg system-cpu-frequency filesystem battery xkeyboard pulseaudio date powermenu"
+    polybar__modules_right: "docker email eth wlan memory cpu system-cpu-frequency temperature system-cpu-loadavg filesystem battery xkeyboard pulseaudio date powermenu"
 
     # thermal zone for acpi temperature display
     polybar__temperature_thermal_zone: 0
@@ -109,19 +113,9 @@ all:
       ansible_host: babo
       ansible_user: ichi
 
-    # this host is a example for a non root host
     testvm:
-      # here we overwrite the users that are defined for all hosts
-      users:
-        # for non-root, only the following two keys are needed for now
-        - name: "test"
-          home: /home/test
-
-      ansible_host: 192.168.122.55
-      # the following two parameters have to be set
-      # for non root hosts
-      ansible_become: no
-      ansible_user: test
+      ansible_host: 192.168.122.8
+      ansible_user: ichi
 
   #       _     _ _     _
   #   ___| |__ (_) | __| |_ __ ___ _ __  _
