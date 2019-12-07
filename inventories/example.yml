@@ -30,7 +30,11 @@ all:
         group: users
         groups: adm,sudo
         shell: /bin/zsh
+        # usermod defines whether the user may be modified if you set
+        # this to false, ensure that the login shell is set to zsh.
         usermod: True
+        # manage_ssh_keys defines whether the local ssh keys and the ssh keys
+        # defined in the ssh_keys variable should be deployed for this user.
         manage_ssh_keys: True
 
     # if the user has set manage_ssh_keys=True
