@@ -99,7 +99,7 @@ desktop__dotfiles_executable:
 polybar__email_indicator_url: "undefined"
 polybar__modules_left: "i3 startmenu xwindow"
 polybar__modules_center: ""
-polybar__modules_right: "docker email eth wlan memory temperature cpu system-cpu-frequency system-cpu-loadavg filesystem battery xkeyboard pulseaudio date"
+polybar__modules_right: "docker email eth wlan memory cpu system-cpu-frequency temperature system-cpu-loadavg filesystem battery xkeyboard pulseaudio date powermenu"
 
 polybar__wifi_interface: "wlp3s0"
 polybar__eth_interface: "enp0s25"
