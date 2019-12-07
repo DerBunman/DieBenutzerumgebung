@@ -13,9 +13,9 @@
 
     - name: 'Install additional user defined packages'
       package:
-        name: '{{ additional_packages }}'
+        name: '{{ common__additional_packages }}'
         state: present
-      when: 'additional_packages is defined'
+      when: 'common__additional_packages is defined'
 
   when: 'ansible_become == True'
 

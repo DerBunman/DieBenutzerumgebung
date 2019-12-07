@@ -45,38 +45,10 @@ users:
     usermod: False
     manage_ssh_keys: False
 
-dotfiles_executable:
-  - bin/autostart/always/applets.sh
-  - bin/autostart/always/udiskie.zsh
-  - bin/autostart/always/wallpaper.sh
-  - bin/autostart/always/xrdb_reload.sh
-  - bin/autostart/compton-invert
-  - bin/autostart/copyq
-  - bin/autostart/dropboxd
-  - bin/autostart/i3-scratchpad-vim.zsh
-  - bin/autostart/ssh-add.zsh
-  - bin/autostart/xkeys.zsh
-  - bin/bosd_cat
-  - bin/compton-invert
-  - bin/conf
-  - bin/dropboxd
-  - bin/i3-applet-wrapper
-  - bin/i3-autostart.zsh
-  - bin/i3keys
-  - bin/i3subscribe
-  - bin/layout_manager.sh
-  - bin/polybar-scripts/inbox-imap-shellnetrc.sh
-  - bin/polybar-scripts/openvpn_gw_chk
-  - bin/polybar-scripts/polybar_wrapper.sh
-  - bin/polybar-scripts/system-cpu-frequency.sh
-  - bin/polybar-scripts/system-cpu-loadavg.sh
-  - bin/rofi_media_menu.zsh
-  - bin/rofi_startmenu.zsh
-  - bin/screenshot
+common__dotfiles_executable:
   - bin/serve_via_http.sh
   - bin/ssh_send_terminfo.zsh
-  - bin/tint_screen.zsh
-  - bin/wrap_ssh.zsh
-  - bin/xkeys.zsh
   - .config/ranger/scope.sh
 
+default_browser: firefox
+default_editor: vim

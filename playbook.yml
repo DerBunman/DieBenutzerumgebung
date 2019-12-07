@@ -5,6 +5,10 @@
 # this role is mandatory for
 # all other roles.
 - hosts: all
+  pre_tasks:
+    - name: "Installing/Updating galaxy roles."
+      local_action:
+        command ansible-galaxy install -r requirements.yml --force
   tags:
     - system
   roles:

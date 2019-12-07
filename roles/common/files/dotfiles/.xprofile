@@ -9,15 +9,5 @@
 # allow docker to connect to the local x11 server
 xhost +local:docker
 
-# start ssh-agent
-if [ -f $HOME/.ssh/environment-$HOST ] ; then
-	. $HOME/.ssh/environment-$HOST > /dev/null
-	if ! kill -0 $SSH_AGENT_PID > /dev/null 2>&1; then
-		eval $(ssh-agent | tee $HOME/.ssh/environment-$HOST)
-	fi
-else
-	eval $(ssh-agent | tee $HOME/.ssh/environment-$HOST)
-fi
-
 # include zshenv
 [[ -f ~/.zshenv ]] && source ~/.zshenv

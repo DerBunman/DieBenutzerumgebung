@@ -29,7 +29,13 @@
     modification_time: preserve
     access_time: preserve
   become_user: "{{ user.name }}"
-  loop: "{{ dotfiles_executable }}"
+  loop: "{{ common__dotfiles_executable }}"
+
+- name: "Generate {{ user.home }}/.zshenv"
+  template:
+    src:  zshenv.j2
+    dest: "{{ user.home }}/.zshenv"
+    mode: 0600
 
 - name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
   file:
