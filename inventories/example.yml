@@ -106,6 +106,8 @@ all:
       polybar__battery_adapter: "AC"
       polybar__battery_device: "BAT0"
       polybar__battery_full_at: 95
+      polybar__wifi_interface: "wlp3s0"
+      polybar__eth_interface: "enp0s25"
 
     # funkleitstelle is a router/accesspoint
     funkleitstelle:
