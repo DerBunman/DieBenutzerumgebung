@@ -9,6 +9,7 @@
     - name: "Installing/Updating galaxy roles."
       local_action:
         command ansible-galaxy install -r requirements.yml --force
+      run_once: true
   tags:
     - system
   roles:
