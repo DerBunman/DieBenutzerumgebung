@@ -259,11 +259,11 @@ format-mounted-prefix-font = 5
 type = internal/bspwm
 ; ws-icon-[0-9]+ = label;icon
 ; Note that the label needs to correspond with the bspwm workspace name
-ws-icon-0 = code;♚
-ws-icon-1 = office;♛
-ws-icon-2 = graphics;♜
-ws-icon-3 = mail;♝
-ws-icon-4 = web;♞
+ws-icon-0 = 1;♚
+ws-icon-1 = 2;♛
+ws-icon-2 = 3;♜
+ws-icon-3 = 4;♝
+ws-icon-4 = 5;♞
 ws-icon-default = ♟
 
 ; Available tags:
@@ -294,35 +294,35 @@ label-dimmed-focused-background = #f00
 ;   %icon%
 ;   %index%
 ; Default: %icon%  %name%
-label-focused = %name%
-label-focused-foreground = #ffffff
-label-focused-background = #3f3f3f
-label-focused-underline = #fba922
+label-focused = " %name% %icon% "
+label-focused-foreground = ${colors.foreground-alt}
+label-focused-background = ${colors.background}
+label-focused-underline = ${colors.foreground-alt}
 
 ; Available tokens:
 ;   %name%
 ;   %icon%
 ;   %index%
 ; Default: %icon%  %name%
-label-occupied = %name%
-label-occupied-underline = #555555
+label-occupied = " %name% %icon% "
+label-occupied-underline = ${colors.blue}
 
 ; Available tokens:
 ;   %name%
 ;   %icon%
 ;   %index%
 ; Default: %icon%  %name%
-label-urgent = %icon%
-label-urgent-foreground = #000000
-label-urgent-background = #bd2c40
-label-urgent-underline = #9b0a20
+label-urgent = " %name% %icon% "
+label-urgent-foreground = ${colors.foreground}
+label-urgent-background = ${colors.alert}
+label-urgent-underline = ${colors.foreground}
 
 ; Available tokens:
 ;   %name%
 ;   %icon%
 ;   %index%
 ; Default: %icon%  %name%
-label-empty = %name%
+label-empty = " %name% %icon% "
 label-empty-foreground = #55
 
 ; The following labels will be used to indicate the layout/mode
@@ -344,7 +344,7 @@ label-empty-foreground = #55
 ;label-marked = M
 
 ; Separator in between workspaces
-label-separator = |
+label-separator =
 label-separator-padding = 2
 label-separator-foreground = #ffb52a
 
