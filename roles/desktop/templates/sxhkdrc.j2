@@ -41,6 +41,18 @@ super + y
 super + g
 	bspc node -s biggest
 
+
+#
+# scratchpads
+#
+super + q
+	~/bin/bsp_scratch.zsh scratchad_gvim
+super + a
+	~/bin/bsp_scratch.zsh pavucontrol
+super + z
+	~/bin/bsp_scratch.zsh scratchpad
+
+
 #
 # state/flags
 #
@@ -134,3 +146,6 @@ super + alt + shift + {Left,Down,Up,Right}
 # move a floating window
 #super + {Left,Down,Up,Right}
 #	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+
+# vim:ft=sxhkdrc

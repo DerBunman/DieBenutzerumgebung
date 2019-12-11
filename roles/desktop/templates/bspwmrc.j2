@@ -31,7 +31,16 @@ bspc rule -a Screenkey manage=off
 bspc rule -a mpv state=floating
 bspc rule -a mplayer2 state=floating
 
-"$HOME/bin/compton-invert"
+bspc rule -a scratchpad_gvim sticky=on state=floating hidden=on
+bspc rule -a scratchpad sticky=on state=floating hidden=on
+bspc rule -a pavucontrol sticky=on state=floating hidden=on
+
+# for the scratchpads
+pavucontrol &
+gvim --class scratchpad_gvim &
+
+
+"$HOME/bin/compton-invert" &
 
 eval $(gnome-keyring-daemon) &
 xscreensaver -nosplash &
