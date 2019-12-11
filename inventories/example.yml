@@ -72,9 +72,9 @@ all:
     polybar__email_indicator_url: imaps://emailfuermich.de/INBOX
 
     # this defines which modules are loaded into the polybar
-    polybar__modules_left: "i3 startmenu xwindow"
+    polybar__modules_left: "xwindow"
     polybar__modules_center: ""
-    polybar__modules_right: "docker email eth wlan memory cpu system-cpu-frequency temperature system-cpu-loadavg filesystem battery xkeyboard pulseaudio date powermenu"
+    polybar__modules_right: "docker email eth wlan memory cpu system-cpu-frequency temperature system-cpu-loadavg filesystem battery xkeyboard pulseaudio date"
 
     # thermal zone for acpi temperature display
     polybar__temperature_thermal_zone: 0
