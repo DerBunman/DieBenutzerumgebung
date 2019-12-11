@@ -95,6 +95,9 @@ all:
       ansible_host: localhorst.lan
       ansible_user: ichi
       polybar__temperature_thermal_zone: 2
+      ifrename:
+        - mac: "ac:22:0b:82:2e:67"
+          name: "eth0"
 
     # schleppi a somewhat old thinkpad
     schleppi:
