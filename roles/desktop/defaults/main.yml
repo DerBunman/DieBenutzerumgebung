@@ -84,8 +84,6 @@ desktop__dotfiles_executable:
   - bin/i3keys
   - bin/i3subscribe
   - bin/layout_manager.sh
-  - bin/polybar-scripts/inbox-imap-shellnetrc.sh
-  - bin/polybar-scripts/openvpn_gw_chk
   - bin/polybar-scripts/polybar_wrapper.sh
   - bin/polybar-scripts/system-cpu-frequency.sh
   - bin/polybar-scripts/system-cpu-loadavg.sh
