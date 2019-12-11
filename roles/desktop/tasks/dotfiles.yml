@@ -58,7 +58,5 @@
         src:  polybar/config.j2
         dest: "{{ user.home }}/.config/polybar/config"
         mode: 0600
-      vars:
-        windowmanager: i3
 
   become_user: "{{ user.name }}"

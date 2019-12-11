@@ -33,11 +33,14 @@ bspc rule -a mplayer2 state=floating
 
 "$HOME/bin/compton-invert"
 
-eval $(gnome-keyring-daemon)
+eval $(gnome-keyring-daemon) &
 xscreensaver -nosplash &
-xset m 0 0
+xset m 0 0 &
 /usr/lib/gnome-settings-daemon &
 ~/bin/autostart/000_100hz.sh &
 ~/bin/i3-autostart.zsh ~/bin/autostart/always &
+~/bin/xkeys.zsh &
 
-polybar --reload bottom --config="$HOME/.config/polybar/config_bspwm" &
+polybar --reload bspwm --config="$HOME/.config/polybar/config" &
+
+# vim:ft=sh

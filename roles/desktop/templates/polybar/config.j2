@@ -40,7 +40,7 @@ alert = ${xrdb:color1:#f00}
 color-underline-cpu = ${colors.blue}
 outer-border = ${xrdb:color0:#ff0000}
 
-[bar/bottom]
+[bar/bspwm]
 width = 100%
 height = 28
 ;offset-x = 1%
@@ -78,7 +78,7 @@ font-6 = "RobotoMono Nerd Font:style=Solid:size=12:antialias=true;1"
 
 monitor = ${env:MONITOR:}
 
-modules-left = {{ windowmanager }} {{ polybar__modules_left }}
+modules-left = bspwm {{ polybar__modules_left }}
 modules-center = {{ polybar__modules_center }}
 modules-right = {{ polybar__modules_right }}
 
@@ -86,15 +86,65 @@ tray-position = right
 tray-padding = 1
 tray-background = ${colors.background}
 
-wm-restack = {{ windowmanager | default("i3") }}
+wm-restack = bspwm
 
-{% if windowmanager == "i3" %}
-scroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
-{% else %}
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
-{% endif %}
+
+cursor-click = pointer
+cursor-scroll = default
+
+
+[bar/i3]
+width = 100%
+height = 28
+;offset-x = 1%
+;offset-y = 1%
+radius = 0
+fixed-center = false
+
+bottom = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = ${colors.red}
+
+border-size = 1
+border-color = ${colors.outer-border}
+border-left-size = 0
+border-right-size = 0
+border-bottom-size = 0
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = "Roboto:style=Regular:size=10"
+font-1 = "Roboto:style=Italic:size=10"
+font-2 = "Roboto:style=Bold:size=10"
+font-3 = "Roboto:style=Black:size=10"
+font-4 = "RobotoMono:size=10"
+font-5 = "RobotoMono Nerd Font:style=Regular:size=12:antialias=true;1"
+font-6 = "RobotoMono Nerd Font:style=Solid:size=12:antialias=true;1"
+
+monitor = ${env:MONITOR:}
+
+modules-left = i3 {{ polybar__modules_left }}
+modules-center = {{ polybar__modules_center }}
+modules-right = {{ polybar__modules_right }}
+
+tray-position = right
+tray-padding = 1
+tray-background = ${colors.background}
+
+wm-restack = i3
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
 
 cursor-click = pointer
 cursor-scroll = default

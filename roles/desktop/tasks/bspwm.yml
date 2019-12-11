@@ -26,12 +26,4 @@
       dest: "{{ user.home }}/.config/sxhkd/sxhkdrc"
       mode: 0600
 
-  - name: "Generate {{ user.home }}/.config/polybar/config_bspwm"
-    template:
-      src:  polybar/config.j2
-      dest: "{{ user.home }}/.config/polybar/config_bspwm"
-      mode: 0600
-    vars:
-      windowmanager: bspwm
-
   become_user: "{{ user.name }}"
