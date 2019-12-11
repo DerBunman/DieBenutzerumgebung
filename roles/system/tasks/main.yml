@@ -46,6 +46,7 @@
       lineinfile:
         path: /etc/udev/rules.d/70-persistent-net.rules
         state: present
+        create: yes
         regexp: '{{ dev.mac }}'
         line: 'SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="{{ dev.mac }}", NAME="{{ dev.name }}"'
       loop: "{{ ifrename }}"
