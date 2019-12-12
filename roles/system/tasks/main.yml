@@ -2,7 +2,7 @@
 ---
 - name: "Setup apt and upgrade"
   block:
-    - name: Install aptitude, figlet and zsh using apt
+    - name: "Install aptitude, figlet and zsh using apt"
       apt:
         name:
           - aptitude
@@ -42,5 +42,16 @@
     - name: "Setup motd"
       import_tasks: motd.yml
 
-  when: 'ansible_become == True'
+    - name: "Rename network interfaces (reboot needed when changed)"
+      lineinfile:
+        path: /etc/udev/rules.d/70-persistent-net.rules
+        state: present
+        create: yes
+        regexp: '{{ dev.mac }}'
+        line: 'SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="{{ dev.mac }}", NAME="{{ dev.name }}"'
+      loop: "{{ ifrename }}"
+      loop_control:
+        loop_var: dev
+      when: "ifrename is defined and ifrename != False"
 
+  when: 'ansible_become == True'

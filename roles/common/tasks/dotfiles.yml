@@ -51,6 +51,7 @@
 - name: "Update zgen packages for {{ user.name }}"
   command: "zsh -c 'umask 22; source ~/.zshrc; zgen update'"
   become_user: "{{ user.name }}"
+  changed_when: False
   when: "zgen_stat.stat.exists == true and zgen_copy.checksum == zgen_stat.stat.checksum"
 
 - name: "Install VIM Plugins for {{ user.name }}"

@@ -40,7 +40,7 @@ alert = ${xrdb:color1:#f00}
 color-underline-cpu = ${colors.blue}
 outer-border = ${xrdb:color0:#ff0000}
 
-[bar/bottom]
+[bar/bspwm]
 width = 100%
 height = 28
 ;offset-x = 1%
@@ -48,7 +48,7 @@ height = 28
 radius = 0
 fixed-center = false
 
-bottom = true
+bottom = {{ polybar__bottom | default(true) }}
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -78,7 +78,62 @@ font-6 = "RobotoMono Nerd Font:style=Solid:size=12:antialias=true;1"
 
 monitor = ${env:MONITOR:}
 
-modules-left = {{ polybar__modules_left }}
+modules-left = bspwm {{ polybar__modules_left }}
+modules-center = {{ polybar__modules_center }}
+modules-right = {{ polybar__modules_right }}
+
+tray-position = right
+tray-padding = 1
+tray-background = ${colors.background}
+
+wm-restack = bspwm
+
+scroll-up = bspwm-desknext
+scroll-down = bspwm-deskprev
+
+cursor-click = pointer
+cursor-scroll = default
+
+
+[bar/i3]
+width = 100%
+height = 28
+;offset-x = 1%
+;offset-y = 1%
+radius = 0
+fixed-center = false
+
+bottom = {{ polybar__bottom | default(true) }}
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = ${colors.red}
+
+border-size = 1
+border-color = ${colors.outer-border}
+border-left-size = 0
+border-right-size = 0
+border-bottom-size = 0
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = "Roboto:style=Regular:size=10"
+font-1 = "Roboto:style=Italic:size=10"
+font-2 = "Roboto:style=Bold:size=10"
+font-3 = "Roboto:style=Black:size=10"
+font-4 = "RobotoMono:size=10"
+font-5 = "RobotoMono Nerd Font:style=Regular:size=12:antialias=true;1"
+font-6 = "RobotoMono Nerd Font:style=Solid:size=12:antialias=true;1"
+
+monitor = ${env:MONITOR:}
+
+modules-left = i3 {{ polybar__modules_left }}
 modules-center = {{ polybar__modules_center }}
 modules-right = {{ polybar__modules_right }}
 
@@ -200,6 +255,110 @@ format-mounted-prefix = " "
 format-mounted-prefix-foreground = ${colors.foreground-alt}
 format-mounted-prefix-font = 5
 
+[module/bspwm]
+type = internal/bspwm
+; ws-icon-[0-9]+ = label;icon
+; Note that the label needs to correspond with the bspwm workspace name
+; ws-icon-0 = 1;♚
+; ws-icon-1 = 2;♛
+; ws-icon-2 = 3;♜
+; ws-icon-3 = 4;♝
+; ws-icon-4 = 5;♞
+; ws-icon-default = ♟
+
+; Available tags:
+;   <label-monitor>
+;   <label-state> - gets replaced with <label-(focused|urgent|occupied|empty)>
+;   <label-mode> - gets replaced with <label-(monocle|tiled|fullscreen|floating|locked|sticky|private)>
+; Default: <label-state>
+format = <label-state> <label-mode>
+
+; Available tokens:
+;   %name%
+; Default: %name%
+label-monitor = %name%
+
+; If any values for label-dimmed-N are defined, the workspace/mode
+; colors will get overridden with those values if the monitor is out of focus
+; To only override workspaces in a specific state, use:
+;   label-dimmed-focused
+;   label-dimmed-occupied
+;   label-dimmed-urgent
+;   label-dimmed-empty
+label-dimmed-foreground = #555
+label-dimmed-underline = #f00
+label-dimmed-focused-background = #f00
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-focused = " %name% "
+label-focused-foreground = ${colors.background}
+label-focused-background = ${colors.blue}
+label-focused-underline = ${colors.blue}
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-occupied = " %name% "
+label-occupied-underline = ${colors.foreground-alt}
+
+; Available tokens:
+;   %name%
+`
+;   %index%
+; Default: %icon%  %name%
+label-urgent = " %name% "
+label-urgent-foreground = ${colors.foreground}
+label-urgent-background = ${colors.alert}
+label-urgent-underline = ${colors.foreground}
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-empty = " %name% "
+label-empty-foreground = #55
+
+; The following labels will be used to indicate the layout/mode
+; for the focused workspace. Requires <label-mode>
+;
+; Available tokens:
+;   None
+label-monocle = 
+label-tiled = T
+label-fullscreen = 
+label-floating = 
+label-pseudotiled = P
+label-locked = 
+label-locked-foreground = ${colors.alert}
+label-sticky = 車
+label-sticky-foreground = ${colors.foreground-alt}
+label-private = 﫸
+label-private-foreground = ${colors.alert}
+label-marked = 
+
+; Separator in between workspaces
+label-separator =
+
+[module/mpd]
+type = internal/mpd
+format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+
+label-song-maxlen = 25
+label-song-ellipsis = true
+
 [module/i3]
 type = internal/i3
 format = <label-state> <label-mode> |
@@ -247,19 +406,6 @@ ws-icon-7 = 8;
 ws-icon-8 = 9; 
 ws-icon-9 = 10;
 ws-icon-default = 
-
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
-
-label-song-maxlen = 25
-label-song-ellipsis = true
 
 [module/cpu]
 type = internal/cpu

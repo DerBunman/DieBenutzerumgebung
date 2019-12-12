@@ -38,7 +38,6 @@ Plug 'evidens/vim-twig'
 Plug 'ap/vim-css-color'
 Plug 'sjl/gundo.vim'
 Plug 'mileszs/ack.vim'
-Plug 'ajh17/VimCompletesMe'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sbdchd/vim-shebang'
@@ -48,9 +47,5 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'vim-scripts/EnhCommentify.vim' " dependency for my figlet script
 
 Plug 'pearofducks/ansible-vim'
-
-"if v:version > 704
-"	Plug 'ludovicchabant/vim-gutentags'
-"endif
 
 call plug#end()

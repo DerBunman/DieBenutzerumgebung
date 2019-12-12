@@ -22,6 +22,7 @@ if ! zgen saved; then
 	zgen load "DerBunman/colorize.zsh"
 	zgen load "marzocchi/zsh-notify"
 	zgen load "unixorn/autoupdate-zgen"
+	zgen load "zsh-users/zsh-completions"
 
 	# generate the init script from plugins above
 	zgen save

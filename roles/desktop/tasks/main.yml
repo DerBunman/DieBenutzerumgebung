@@ -24,3 +24,13 @@
   tags:
     i3
   include: i3.yml
+
+- name: "Setup bspwm and sxhkd"
+  tags:
+    bspwm
+  include: bspwm.yml
+  when: 'user.name != "root"'
+  loop: '{{ users }}'
+  loop_control:
+    loop_var: user
+

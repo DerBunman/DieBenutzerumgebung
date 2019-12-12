@@ -203,8 +203,9 @@ let g:shebang#shebangs = {
 	\ }
 
 " remap increment/decrement before mapping the original keys
-nnoremap <leader>a <C-a>
-nnoremap <leader>x <C-x>
+" doesn't work yet in the terminal
+nnoremap <M-a> <C-a>
+nnoremap <M-x> <C-x>
 
 " run last command in vim-companion
 map <C-x> :exec "!tmux send-keys -t vim-companion C-p C-j" <CR><CR>
@@ -219,6 +220,10 @@ map <CR> :nohl<CR>
 " remap F1 to ESC because I keep hitting F1 instead of ESC
 map <F1> <Esc>
 imap <F1> <Esc>
+
+" delete word under cursor
+map <C-del> <C-[>diw
+imap <C-del> <C-[>diwi
 
 "  ___           _            _        _   _
 " |_ _|_ __   __| | ___ _ __ | |_ __ _| |_(_) ___  _ __

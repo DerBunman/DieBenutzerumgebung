@@ -72,9 +72,9 @@ all:
     polybar__email_indicator_url: imaps://emailfuermich.de/INBOX
 
     # this defines which modules are loaded into the polybar
-    polybar__modules_left: "i3 startmenu xwindow"
+    polybar__modules_left: "xwindow"
     polybar__modules_center: ""
-    polybar__modules_right: "docker email eth wlan memory cpu system-cpu-frequency temperature system-cpu-loadavg filesystem battery xkeyboard pulseaudio date powermenu"
+    polybar__modules_right: "docker email eth wlan memory cpu system-cpu-frequency temperature system-cpu-loadavg filesystem battery xkeyboard pulseaudio date"
 
     # thermal zone for acpi temperature display
     polybar__temperature_thermal_zone: 0
@@ -95,6 +95,9 @@ all:
       ansible_host: localhorst.lan
       ansible_user: ichi
       polybar__temperature_thermal_zone: 2
+      ifrename:
+        - mac: "ac:22:0b:82:2e:67"
+          name: "eth0"
 
     # schleppi a somewhat old thinkpad
     schleppi:
@@ -102,10 +105,18 @@ all:
       ansible_user: ichi
       # since schleppi is a old laptop with a small resolution, we won't load all modules
       polybar__modules_right: "docker email memory cpu battery pulseaudio date"
+      polybar__bottom: false
       polybar__temperature_thermal_zone: 0
       polybar__battery_adapter: "AC"
       polybar__battery_device: "BAT0"
       polybar__battery_full_at: 95
+      polybar__wifi_interface: "wlan0"
+      polybar__eth_interface: "eth0"
+      ifrename:
+        - mac: "60:67:20:5e:05:38"
+          name: "wlan0"
+        - mac: "3c:97:0e:2e:cd:b8"
+          name: "eth0"
 
     # funkleitstelle is a router/accesspoint
     funkleitstelle:

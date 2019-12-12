@@ -63,11 +63,11 @@ colors:
 
 # the user/pw for Streamable should be added to secrets.yml
 rofi_media_menu:
-    user: False
-    password: False
-    ffmpeg_pidfile: /tmp/rofimedia.ffmpeg.pid
-    video_path: $HOME/Videos
-    video_ext: mp4
+  user: False
+  password: False
+  ffmpeg_pidfile: /tmp/rofimedia.ffmpeg.pid
+  video_path: $HOME/Videos
+  video_ext: mp4
 
 desktop__dotfiles_executable:
   - bin/autostart/always/applets.sh
@@ -84,8 +84,6 @@ desktop__dotfiles_executable:
   - bin/i3keys
   - bin/i3subscribe
   - bin/layout_manager.sh
-  - bin/polybar-scripts/inbox-imap-shellnetrc.sh
-  - bin/polybar-scripts/openvpn_gw_chk
   - bin/polybar-scripts/polybar_wrapper.sh
   - bin/polybar-scripts/system-cpu-frequency.sh
   - bin/polybar-scripts/system-cpu-loadavg.sh
@@ -94,6 +92,8 @@ desktop__dotfiles_executable:
   - bin/screenshot
   - bin/tint_screen.zsh
   - bin/xkeys.zsh
+  - bin/bsp_scratch.zsh
+  - bin/bspwm_rules.zsh
   - .config/ranger/scope.sh
 
 polybar__email_indicator_url: "undefined"
@@ -101,8 +101,8 @@ polybar__modules_left: "i3 startmenu xwindow"
 polybar__modules_center: ""
 polybar__modules_right: "docker email eth wlan memory cpu system-cpu-frequency temperature system-cpu-loadavg filesystem battery xkeyboard pulseaudio date powermenu"
 
-polybar__wifi_interface: "wlp3s0"
-polybar__eth_interface: "enp0s25"
+polybar__wifi_interface: "wlan0"
+polybar__eth_interface: "eth0"
 
 polybar__temperature_thermal_zone: 0
 
