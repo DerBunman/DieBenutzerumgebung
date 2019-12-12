@@ -1,21 +1,21 @@
 # basic host setup
 ---
-- name: "Generate setxkbmap_script"
-  template:
-    src:  setxkbmap_script.j2
-    dest: "{{ user.home }}/bin/autostart/always/setxkbmap_script"
-    mode: 0755
-  when: 'user.name != "root" and (ansible_become == True or user.name == ansible_user)'
-  loop: '{{ users }}'
-  loop_control:
-    loop_var: user
-
 - name: "Setup default x11 packages"
   include: packages.yml
 
 - name: "Setup desktop dotfiles"
   include: dotfiles.yml
   when: 'user.name != "root"'
+  loop: '{{ users }}'
+  loop_control:
+    loop_var: user
+
+- name: "Generate setxkbmap_script"
+  template:
+    src:  setxkbmap_script.j2
+    dest: "{{ user.home }}/bin/autostart/always/setxkbmap_script"
+    mode: 0755
+  when: 'user.name != "root" and (ansible_become == True or user.name == ansible_user)'
   loop: '{{ users }}'
   loop_control:
     loop_var: user
