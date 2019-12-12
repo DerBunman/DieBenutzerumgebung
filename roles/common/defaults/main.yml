@@ -50,5 +50,5 @@ common__dotfiles_executable:
   - bin/ssh_send_terminfo.zsh
   - .config/ranger/scope.sh
 
-default_browser: firefox
-default_editor: vim
+env_BROWSER: firefox
+env_EDITOR: vim
