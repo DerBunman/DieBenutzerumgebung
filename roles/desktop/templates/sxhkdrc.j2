@@ -41,12 +41,25 @@ super + y
 super + g
 	bspc node -s biggest
 
+# lock screen
+super + x
+	xscreensaver-command -lock
+
+XF86Audio{Raise,Lower}Volume
+	pactl set-sink-volume 0 {+,-}5%
+
+XF86AudioMute
+	pactl set-sink-mute 0 toggle
+
+# Sreen brightness controls
+XF86MonBrightness{Up,Down}
+	xbacklight -{inc,dec} 20
 
 #
 # scratchpads
 #
 super + q
-	~/bin/bsp_scratch.zsh scratchad_gvim
+	~/bin/bsp_scratch.zsh scratchpad_gvim
 super + a
 	~/bin/bsp_scratch.zsh pavucontrol
 super + z

@@ -93,6 +93,7 @@ desktop__dotfiles_executable:
   - bin/tint_screen.zsh
   - bin/xkeys.zsh
   - bin/bsp_scratch.zsh
+  - bin/bspwm_rules.zsh
   - .config/ranger/scope.sh
 
 polybar__email_indicator_url: "undefined"
