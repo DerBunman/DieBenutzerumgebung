@@ -5,20 +5,9 @@ The project now aims to provide a (somewhat) consistent desktop environment expe
 
 - You can track the current progress
   * [in this project](https://github.com/users/DerBunman/projects/1)
-  * [the next milestone (first beta)](https://github.com/DerBunman/DieBenutzerumgebung/milestone/1)
   * [planned features (after 0.0.2 release)](https://github.com/DerBunman/DieBenutzerumgebung/milestone/2)
 
 If you have comments, ideas or requests, feel free to get involved.
-
-# Migration to ansible
-When I recently started working with ansible I realized, that it provides all features needed for this project.
-So I discarded the idea of using a custon zsh install script in the favor of ansible.
-(However, you can always browse the legacy branch.)
-
-Right now, the ansible branch (master) is not feature complete, but it installs all features the old installer installed.
-Also it is now possible, to install hosts where you have no root permissions.
-
-The documentation also needs to be changed to represent the new changes.
 
 # Main Features
 
@@ -42,10 +31,9 @@ More informations on [xkeys.zsh can be found here](docs/xkeys.zsh.md).
   - GTK3 (based on oomox and Numix)
   - Shell/Terminal
 
-
 More informations on [theming and styling can be found here](docs/style.md).
 
-The GTK themes and icons are located in [DerBunman/DieOberflaechengestaltung](https://github.com/DerBunman/DieOberflaechengestaltung).
+The GTK themes and icons are generated on the fly using oomox.
 
 Also note, that the oomox sources are included so you are able to customize the theme.
 
