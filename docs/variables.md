@@ -47,18 +47,14 @@ users:
     # usermod defines whether the user may be modified if you set
     # this to false, ensure that the login shell is set to zsh.
     usermod: True
-    # manage_ssh_keys defines whether the local ssh keys and the ssh keys
-    # defined in the ssh_keys variable should be deployed for this user.
-    manage_ssh_keys: True
+    # the following ssh pubkeys will be added to this user.
+    ssh_keys: |
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMjCDwwHvhp3Gk/dYKWMxfn5aekc22+NvuekydZja2d localhorst
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFxrqRD0ab7ljvUjAYVqLH211dsUssr8ZGZ/N3riZOx schleppi
 ```
 
 ### ssh_keys
-When the user has set manage_ssh_keys flag set to True,
-the following ssh pubkeys will be added to the users defined above.
 ```yaml
-ssh_keys: |
-  ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMjCDwwHvhp3Gk/dYKWMxfn5aekc22+NvuekydZja2d localhorst
-  ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFxrqRD0ab7ljvUjAYVqLH211dsUssr8ZGZ/N3riZOx schleppi
 ```
 
 ### env_BROWSER
