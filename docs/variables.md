@@ -158,3 +158,10 @@ You can use xrandr -q or bspc query -M to find the monitor names.
 The total number of desktops were maintained at ten in the above example.
 This is so that each desktop can still be addressed with super + {1-9,0} in the sxhkdrc.
 
+### bspwm__bspwmrc_additional_scripts
+Additional commands that should be run on bspwm startup.
+```yaml
+bspwm__bspwmrc_additional_scripts: |
+  # disable mouse accelleration
+  xset m 0 0 &
+```
