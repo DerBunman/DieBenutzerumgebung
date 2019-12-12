@@ -86,6 +86,8 @@ cd ~/DieBenutzerumgebung/inventories/
 cp localhost.yml default.yml
 ```
 Edit default.yml according your needs.
+More information on how to configure the hosts can be found [here](docs/variables.md).
+
 The minimal change would be to replace your_user with the current user.
 
 For example:
