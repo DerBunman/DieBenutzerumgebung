@@ -88,8 +88,9 @@ bspc config external_rules_command "$HOME/bin/bspwm_rules.zsh"
 # launch screensaver
 xscreensaver -nosplash &
 
-~/bin/i3-autostart.zsh ~/bin/autostart/ &
-~/bin/i3-autostart.zsh ~/bin/autostart/always &
+for script in ~/bin/autostart/**/*(*); do
+	"${script}" &|
+done
 
 pkill -u $UID -f xkeys.zsh && : || sleep 1; ~/bin/xkeys.zsh &|
 
