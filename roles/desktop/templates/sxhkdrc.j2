@@ -55,8 +55,16 @@ XF86AudioMute
 XF86MonBrightness{Up,Down}
 	xbacklight -{inc,dec} 20
 
-super + i
+# invert current active window
+super + shift + i
 	~/bin/compton-invert -ts | bosd_cat
+
+# make a screenshot
+super + shift + s
+	~/bin/screenshot
+
+super + {button4,button5}
+	GAP=$(bspc config window_gap); [ $(( $GAP -1 )) -ge 0 ] || GAP=1; bspc config window_gap $(( ${GAP} {+,-} 1 ))
 
 #
 # scratchpads
