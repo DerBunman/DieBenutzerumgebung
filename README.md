@@ -26,7 +26,7 @@ More informations on [xkeys.zsh can be found here](docs/xkeys.zsh.md).
 
 ## Unified themes and style for:
 
-  - i3 & polybar
+  - bspwm & polybar
   - GTK2 (based on oomox and Numix)
   - GTK3 (based on oomox and Numix)
   - Shell/Terminal
@@ -38,7 +38,7 @@ The GTK themes and icons are generated on the fly using oomox.
 Also note, that the oomox sources are included so you are able to customize the theme.
 
 ### Preconfigured applications and packages:
-* [i3wm](https://i3wm.org/)
+* [bspwm](https://github.com/baskerville/bspwm)
 * [zsh](https://www.zsh.org/) powered by [zgen](https://github.com/tarjoilija/zgen) and the plugins listed [here](roles/common/files/dotfiles/.zshrc.zgen).
 * [vim](https://www.vim.org/) powered by [vim-plug](https://github.com/junegunn/vim-plug) and the plugins listed [here](roles/common/files/dotfiles/.vim/vimrc_plug.vim).
 * [polybar](https://github.com/jaagr/polybar)
@@ -108,7 +108,7 @@ ansible-galaxy install -r requirements.yml
 ansible-playbook playbook.yml --ask-become-pass
 ```
 
-Done. Just logout and login again using the i3 session.
+Done. Just logout and login again using the bspwm session.
 
 ### Upgrade basic install
 ```sh

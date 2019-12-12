@@ -88,8 +88,10 @@ tray-background = ${colors.background}
 
 wm-restack = bspwm
 
-scroll-up = bspwm-desknext
-scroll-down = bspwm-deskprev
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+scroll-up = bspc desktop -f prev.occupied
+scroll-down = bspc desktop -f next.occupied
 
 cursor-click = pointer
 cursor-scroll = default
@@ -156,7 +158,7 @@ content = 
 ; "content" has the same properties as "format-NAME"
 content-foreground = #fff
 
-; "click-(left|middle|right)" will be executed using "/usr/bin/env sh -c $COMMAND"
+; "click-(left|middle|right)" will be executed using "/usr/bin/env sh -c $COMMAN"
 click-left = ~/bin/rofi_startmenu.zsh
 
 [module/docker]
@@ -173,7 +175,7 @@ format-prefix-foreground = ${colors.blue}
 type = custom/script
 exec = ~/bin/polybar-scripts/inbox-imap-shellnetrc.sh
 interval = 60
-format-prefix = " "
+format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-font = 4
 format-underline = ${colors.foreground-alt}
@@ -330,18 +332,18 @@ label-empty-foreground = #55
 ;
 ; Available tokens:
 ;   None
-label-monocle = 
-label-tiled = T
-label-fullscreen = 
-label-floating = 
-label-pseudotiled = P
-label-locked = 
+label-monocle = " "
+label-tiled = "ﱖ "
+label-fullscreen = " "
+label-floating = "F "
+label-pseudotiled = "t "
+label-locked = " "
 label-locked-foreground = ${colors.alert}
-label-sticky = 車
-label-sticky-foreground = ${colors.foreground-alt}
-label-private = 﫸
+label-sticky = "車 "
+;label-sticky-foreground = ${colors.foreground-alt}
+label-private = "﫸 "
 label-private-foreground = ${colors.alert}
-label-marked = 
+label-marked = "M "
 
 ; Separator in between workspaces
 label-separator =
@@ -350,11 +352,11 @@ label-separator =
 type = internal/mpd
 format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
 
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
+icon-prev = 玲
+icon-stop = 栗
+icon-play = 契
+icon-pause = 
+icon-next = 怜
 
 label-song-maxlen = 25
 label-song-ellipsis = true
@@ -522,24 +524,24 @@ format-charging-underline = ${colors.foreground-alt}
 format-discharging = <animation-discharging> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
-format-full-prefix = "⚡ "
+format-full-prefix = 
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
 ramp-capacity-foreground = ${colors.foreground-alt}
 
-animation-charging-0 = ⚡
-animation-charging-1 = ⚡
-animation-charging-2 = ⚡
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
 animation-charging-foreground = ${colors.foreground-alt}
 animation-charging-framerate = 750
 
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
 animation-discharging-foreground = ${colors.foreground-alt}
 animation-discharging-framerate = 750
 

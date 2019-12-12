@@ -81,25 +81,18 @@ bspc config external_rules_command "$HOME/bin/bspwm_rules.zsh"
 # \__ \ || (_| | |  | |_| |_| | |_) |
 # |___/\__\__,_|_|   \__|\__,_| .__/
 #                             |_|
-# for the scratchpads
-gvim --class scratchpad_gvim &
 
 # start compton and apply invert rules
 "$HOME/bin/compton-invert" &
 
-# start gnome helper daemons
-eval "$(gnome-keyring-daemon)" &
-/usr/lib/gnome-settings-daemon &
-
 # launch screensaver
 xscreensaver -nosplash &
-
-# disable mouse accelleration
-xset m 0 0 &
 
 ~/bin/i3-autostart.zsh ~/bin/autostart/ &
 ~/bin/i3-autostart.zsh ~/bin/autostart/always &
 
 pkill -u $UID -f xkeys.zsh && : || sleep 1; ~/bin/xkeys.zsh &|
+
+{{ bspwm__bspwmrc_additional_scripts | default('') }}
 
 # vim:ft=zsh
