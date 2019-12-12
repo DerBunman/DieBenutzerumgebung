@@ -58,6 +58,7 @@ Also note, that the oomox sources are included so you are able to customize the 
 ## Compatible distributions
 - Debian >=10
 - Ubuntu >=18.04 and Linux Mint 19.1 Tessa (which uses Ubuntu 18.04 as base) should also work.
+  - When using Ubuntu 18.04 you'll have to install ansible via PIP, because the one shipped with 18.04 is too old.
 - Other Debian based distributions should work too. You may have to change the sources.
 
 ## Examples

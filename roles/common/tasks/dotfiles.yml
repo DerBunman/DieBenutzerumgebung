@@ -11,6 +11,7 @@
       src: "dotfiles/.zshrc.zgen"
       dest: "{{ user.home }}/.zshrc.zgen"
       owner: "{{ user.name }}"
+      group: "{{ user.group }}"
       mode: 0600
     register: zgen_copy
 
@@ -19,6 +20,7 @@
       src: "dotfiles/"
       dest: "{{ user.home }}/"
       owner: "{{ user.name }}"
+      group: "{{ user.group }}"
       mode: 0600
       directory_mode: 0700
       force: yes
@@ -36,6 +38,8 @@
     template:
       src:  zshenv.j2
       dest: "{{ user.home }}/.zshenv"
+      owner: "{{ user.name }}"
+      group: "{{ user.group }}"
       mode: 0600
 
   - name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
@@ -47,11 +51,13 @@
   - name: "Install zgen packages for {{ user.name }}"
     command: "zsh ~/.zshrc"
     when: "zgen_stat.stat.exists == false or zgen_copy.checksum != zgen_stat.stat.checksum"
+    become_user: "{{ user.name }}"
 
   - name: "Update zgen packages for {{ user.name }}"
     command: "zsh -c 'umask 22; source ~/.zshrc; zgen update'"
     changed_when: False
     when: "zgen_stat.stat.exists == true and zgen_copy.checksum == zgen_stat.stat.checksum"
+    become_user: "{{ user.name }}"
 
   - name: "Install VIM Plugins for {{ user.name }}"
     command: "{{ item }}"
@@ -60,3 +66,4 @@
       - vim -X +PlugInstall! +qall -u ~/.vim/vimrc_plug.vim
       - vim -X +PlugUpdate! +qall -u ~/.vim/vimrc_plug.vim
     changed_when: false
+    become_user: "{{ user.name }}"

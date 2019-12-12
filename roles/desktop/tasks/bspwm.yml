@@ -7,23 +7,31 @@
       path: "{{ user.home }}/.config/bspwm"
       state: directory
       mode: 0700
+      owner: "{{ user.name }}"
+      group: "{{ user.group }}"
 
   - name: "Generate {{ user.home }}/.config/bspwm/bspwmrc"
     template:
       src:  bspwmrc.j2
       dest: "{{ user.home }}/.config/bspwm/bspwmrc"
       mode: 0700
+      owner: "{{ user.name }}"
+      group: "{{ user.group }}"
 
   - name: "Mkdir {{ user.home }}/.config/sxhkd"
     file:
       path: "{{ user.home }}/.config/sxhkd"
       state: directory
       mode: 0700
+      owner: "{{ user.name }}"
+      group: "{{ user.group }}"
 
   - name: "Generate {{ user.home }}/.config/sxhkd/sxhkdrc"
     template:
       src:  sxhkdrc.j2
       dest: "{{ user.home }}/.config/sxhkd/sxhkdrc"
       mode: 0600
+      owner: "{{ user.name }}"
+      group: "{{ user.group }}"
 
   become_user: "{{ user.name }}"

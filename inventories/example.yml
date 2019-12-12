@@ -98,6 +98,7 @@ all:
     bspwm__monitor: |
       bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 
+    # these shell commands will be run on bspwm startup
     bspwm__bspwmrc_additional_scripts: |
       # disable mouse accelleration
       xset m 0 0 &

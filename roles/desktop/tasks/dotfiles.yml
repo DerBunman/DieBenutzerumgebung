@@ -4,6 +4,8 @@
       copy:
         src: "dotfiles/"
         dest: "{{ user.home }}/"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
         mode: g=-rwx,o=-rwx
         directory_mode: 0700
         force: yes
@@ -12,23 +14,32 @@
       template:
         src:  oomox-colors-DieOberflaechengestaltung.j2
         dest: "{{ user.home }}/.config/oomox/colors/DieOberflaechengestaltung"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
         mode: 0600
 
     - name: "Generate ~/.Xresources"
       template:
         src:  Xressources.j2
         dest: "{{ user.home }}/.Xresources"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
         mode: 0600
 
     - name: "Mkdir {{ user.home }}/.config/i3/config"
       file:
         path: "{{ user.home }}/.config/i3"
         state: directory
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
+        mode: 0700
 
     - name: "Generate {{ user.home }}/.config/i3/config"
       template:
         src:  i3_conf.j2
         dest: "{{ user.home }}/.config/i3/config"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
         mode: 0600
 
     - name: "Build DieOberflaechengestaltung GTK2/3 themes"
@@ -43,12 +54,16 @@
       template:
         src:  rofi_media_menu.conf.j2
         dest: "{{ user.home }}/.config/rofi_media_menu.conf"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
         mode: 0600
 
     - name: "Generate {{ user.home }}/bin/polybar-scripts/inbox-imap-shellnetrc.sh"
       template:
         src:  inbox-imap-shellnetrc.sh.j2
         dest: "{{ user.home }}/bin/polybar-scripts/inbox-imap-shellnetrc.sh"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
         mode: 0700
 
     - name: "Setting executable permissions for some dotfiles"
@@ -58,6 +73,8 @@
         mode: u+rwx
         modification_time: preserve
         access_time: preserve
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
       become_user: "{{ user.name }}"
       loop: "{{ desktop__dotfiles_executable }}"
 
@@ -65,6 +82,8 @@
       template:
         src:  polybar/config.j2
         dest: "{{ user.home }}/.config/polybar/config"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
         mode: 0600
 
   become_user: "{{ user.name }}"
