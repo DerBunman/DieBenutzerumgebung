@@ -18,6 +18,7 @@
     copy:
       src: "dotfiles/"
       dest: "{{ user.home }}/"
+      owner: "{{ user.name }}"
       mode: 0600
       directory_mode: 0700
       force: yes
@@ -59,4 +60,3 @@
       - vim -X +PlugInstall! +qall -u ~/.vim/vimrc_plug.vim
       - vim -X +PlugUpdate! +qall -u ~/.vim/vimrc_plug.vim
     changed_when: false
-  become_user: "{{ user.name }}"

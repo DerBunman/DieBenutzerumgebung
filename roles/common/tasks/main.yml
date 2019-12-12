@@ -14,6 +14,7 @@
 - include_tasks: dotfiles.yml
   # only include the dotfiles for the ansible_user, when
   # ansible_become is not True
+  become_user: "{{ user.name }}"
   when: 'ansible_become == True or user.name == ansible_user'
   loop: '{{ users }}'
   loop_control:
