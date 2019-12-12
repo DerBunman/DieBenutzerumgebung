@@ -5,12 +5,6 @@
 # this role is mandatory for
 # all other roles.
 - hosts: all
-  pre_tasks:
-    - name: send a message to chat in playbook
-      telegram:
-        token: '928118923:AAFbORM0rLBuP8FpWaeobH8pkv-IszdKEPo'
-        chat_id: 303595365
-        msg: Ansible task finished
   tags:
     - system
   roles:
