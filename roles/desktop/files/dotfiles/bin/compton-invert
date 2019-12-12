@@ -67,7 +67,7 @@
 # You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 ############################################
 
-CONFIG=$HOME/.config/dotfiles/compton-invert
+CONFIG=$HOME/.config/compton-invert
 
 IFS=$'\n'
 if [ -f "$CONFIG" ]; then
@@ -84,7 +84,7 @@ select-window()
 
 COMMAND=(compton -b)
 
-while getopts "Aa:Dd:lsr" ARG; do
+while getopts "Aa:Dd:tlsr" ARG; do
     case "$ARG" in
         A)                      # add (interactive)
             OPTARG=$(select-window)
@@ -98,6 +98,17 @@ while getopts "Aa:Dd:lsr" ARG; do
         d)                      # delete
             TMP=($OPTARG)
             INVERTED=(${INVERTED:|TMP})
+            ;;
+        t)
+            CLASS=$(xprop -id $(xdotool getactivewindow) WM_CLASS | sed 's/.*"\(.*\)"/\1/')
+            if [ "$CLASS" = "${INVERTED[(r)$CLASS]}" ]; then
+                print "compton-invert: Removed class ${CLASS}"
+                TMP=($CLASS)
+                INVERTED=(${INVERTED:|TMP})
+            else
+                print "compton-invert: Added class ${CLASS}"
+                INVERTED+=$CLASS
+            fi
             ;;
         l)                      # list
             print ${(j:\n:)INVERTED}

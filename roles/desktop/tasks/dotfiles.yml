@@ -1,5 +1,13 @@
 - name: "Deploying desktop dotfiles for {{ user.name }}"
   block:
+    - name: "Copy dotfiles for {{ user.name }}"
+      copy:
+        src: "dotfiles/"
+        dest: "{{ user.home }}/"
+        mode: g=-rwx,o=-rwx
+        directory_mode: 0700
+        force: yes
+
     - name: "Generate oomox colorscheme"
       template:
         src:  oomox-colors-DieOberflaechengestaltung.j2

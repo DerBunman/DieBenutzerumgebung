@@ -37,6 +37,8 @@ desktop__mandatory_packages:
   - xclip
   - xdg-utils
   - xdotool
+  - bspwm
+  - sxhkd
 
 colors:
   yellow1: dea65f
@@ -74,9 +76,7 @@ desktop__dotfiles_executable:
   - bin/autostart/always/udiskie.zsh
   - bin/autostart/always/wallpaper.sh
   - bin/autostart/always/xrdb_reload.sh
-  - bin/autostart/compton-invert
   - bin/autostart/i3-scratchpad-vim.zsh
-  - bin/autostart/xkeys.zsh
   - bin/bosd_cat
   - bin/compton-invert
   - bin/i3-applet-wrapper
@@ -97,7 +97,7 @@ desktop__dotfiles_executable:
   - .config/ranger/scope.sh
 
 polybar__email_indicator_url: "undefined"
-polybar__modules_left: "i3 startmenu xwindow"
+polybar__modules_left: "startmenu xwindow"
 polybar__modules_center: ""
 polybar__modules_right: "docker email eth wlan memory cpu system-cpu-frequency temperature system-cpu-loadavg filesystem battery xkeyboard pulseaudio date powermenu"
 

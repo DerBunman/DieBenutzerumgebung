@@ -18,8 +18,8 @@ export __VDPAU_NVIDIA_SYNC_DISPLAY_DEVICE=DP-4
 
 export PATH="$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/usr/lib/ccache:$PATH:/usr/sbin:/sbin"
 
-export BROWSER="{{ default_browser | default('firefox')}}"
-export EDITOR="{{ default_editor | default('vim')}}"
+export BROWSER="{{ env_BROWSER | default('firefox')}}"
+export EDITOR="{{ env_EDITOR | default('vim')}}"
 
 export XDG_CONFIG_HOME=~/.config/
 
