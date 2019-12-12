@@ -37,6 +37,8 @@ desktop__mandatory_packages:
   - xclip
   - xdg-utils
   - xdotool
+  - bspwm
+  - sxhkd
 
 colors:
   yellow1: dea65f
