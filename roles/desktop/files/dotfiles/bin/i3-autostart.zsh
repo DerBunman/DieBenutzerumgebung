@@ -20,7 +20,7 @@ while [ $# -gt 0 ]; do
 			&& test -x "${file}" \
 			&& {
 				notify-send --icon=gtk-info "Autostart" "${file:t}"
-				exec "${file}" &!
+				exec "${file}" &|
 			}
 	done
 

@@ -57,7 +57,7 @@ bspc config presel_feedback_color "#{{ colors.blue1 }}"
 # | '_ \ / _ \| '__/ _` |/ _ \ '__/ __|
 # | |_) | (_) | | | (_| |  __/ |  \__ \
 # |_.__/ \___/|_|  \__,_|\___|_|  |___/
-bspc config border_width   2
+bspc config border_width   1
 bspc config window_gap     0
 bspc config top_padding    0
 bspc config right_padding  0
@@ -88,8 +88,9 @@ bspc config external_rules_command "$HOME/bin/bspwm_rules.zsh"
 # launch screensaver
 xscreensaver -nosplash &
 
-~/bin/i3-autostart.zsh ~/bin/autostart/ &
-~/bin/i3-autostart.zsh ~/bin/autostart/always &
+for script in ~/bin/autostart/**/*(*); do
+	"${script}" &|
+done
 
 pkill -u $UID -f xkeys.zsh && : || sleep 1; ~/bin/xkeys.zsh &|
 

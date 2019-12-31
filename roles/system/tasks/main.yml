@@ -2,7 +2,7 @@
 ---
 - name: "Setup apt and upgrade"
   block:
-    - name: "Install aptitude, figlet and zsh using apt"
+    - name: "Install aptitude, figlet, software-properties-common and zsh using apt"
       apt:
         name:
           - aptitude
@@ -10,6 +10,8 @@
           - figlet
           # zsh is needed for the users task
           - zsh
+          # software-properties-common is needed to manage repos
+          - software-properties-common
         state: latest
         update_cache: yes
         force_apt_get: yes
@@ -18,9 +20,21 @@
       tags:
         - upgrade
 
+#    - name: "Adding non-free repository"
+#      shell: "apt-add-repository non-free"
+#      when: ansible_distribution == "Debian"
+#      tags:
+#        - upgrade
+
+#    - name: "Adding universe repository"
+#      shell: "apt-add-repository universe"
+#      when: ansible_distribution == "Ubuntu"
+#      tags:
+#        - upgrade
+
     - name: Upgrade system using apt
       apt:
-        update_cache: no
+        update_cache: yes
         upgrade: full
       tags:
         - upgrade

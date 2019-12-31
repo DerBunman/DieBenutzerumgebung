@@ -16,29 +16,9 @@
       when: 'user.usermod is defined and user.usermod == True'
   when: 'ansible_become == True'
 
-- name: "Add ssh-keys to authorized_keys"
-  block:
-    - name: Add this users key to authorized_keys
-      authorized_key:
-        state: present
-        user: '{{ user.name }}'
-        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_ed25519.pub') }}"
-      ignore_errors: yes
-      when: 'ansible_become == True or user.name == ansible_user'
-
-    - name: Add this users key to authorized_keys
-      authorized_key:
-        state: present
-        user: '{{ user.name }}'
-        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
-      ignore_errors: yes
-      when: 'ansible_become == True or user.name == ansible_user'
-
-    - name: Add the user specific keys
-      ignore_errors: yes
-      authorized_key:
-        state: present
-        user: '{{ user.name }}'
-        key: "{{ ssh_keys }}"
-      when: 'ansible_become == True or user.name == ansible_user'
-  when: 'user.manage_ssh_keys is defined and user.manage_ssh_keys == True'
+- name: "Add the users authorized_keys"
+  authorized_key:
+    state: present
+    user: '{{ user.name }}'
+    key: "{{ user.ssh_keys }}"
+  when: 'user.ssh_keys is defined and user.ssh_keys != False'

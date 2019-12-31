@@ -26,7 +26,7 @@ More informations on [xkeys.zsh can be found here](docs/xkeys.zsh.md).
 
 ## Unified themes and style for:
 
-  - bspwm & polybar
+  - i3 (and experimenatal bspwm) & polybar
   - GTK2 (based on oomox and Numix)
   - GTK3 (based on oomox and Numix)
   - Shell/Terminal
@@ -38,7 +38,8 @@ The GTK themes and icons are generated on the fly using oomox.
 Also note, that the oomox sources are included so you are able to customize the theme.
 
 ### Preconfigured applications and packages:
-* [bspwm](https://github.com/baskerville/bspwm)
+* [i3](https://github.com/i3/i3)
+* [bspwm](https://github.com/baskerville/bspwm) (experimental)
 * [zsh](https://www.zsh.org/) powered by [zgen](https://github.com/tarjoilija/zgen) and the plugins listed [here](roles/common/files/dotfiles/.zshrc.zgen).
 * [vim](https://www.vim.org/) powered by [vim-plug](https://github.com/junegunn/vim-plug) and the plugins listed [here](roles/common/files/dotfiles/.vim/vimrc_plug.vim).
 * [polybar](https://github.com/jaagr/polybar)
@@ -58,6 +59,7 @@ Also note, that the oomox sources are included so you are able to customize the 
 ## Compatible distributions
 - Debian >=10
 - Ubuntu >=18.04 and Linux Mint 19.1 Tessa (which uses Ubuntu 18.04 as base) should also work.
+  - When using Ubuntu 18.04 you'll have to install ansible via PIP, because the one shipped with 18.04 is too old.
 - Other Debian based distributions should work too. You may have to change the sources.
 
 ## Examples
@@ -108,7 +110,7 @@ ansible-galaxy install -r requirements.yml
 ansible-playbook playbook.yml --ask-become-pass
 ```
 
-Done. Just logout and login again using the bspwm session.
+Done. Just logout and login again using the i3 or bspwm session.
 
 ### Upgrade basic install
 ```sh

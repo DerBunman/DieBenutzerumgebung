@@ -43,7 +43,7 @@ users:
     # this is useful, when your user isn't local. eg: ldap/active directory
     # default is False
     usermod: False
-    manage_ssh_keys: False
+    ssh_keys: False
 
 common__dotfiles_executable:
   - bin/serve_via_http.sh

@@ -14,14 +14,12 @@ all:
         groups: adm,sudo
         shell: /bin/zsh
         usermod: True
-        manage_ssh_keys: True
+        ssh_keys: |
+          # place ssh keys here
 
     desktop__setxkbmap_script: |
       setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl
       setxkbmap -option caps:none
-
-    ssh_keys: |
-      # place ssh keys here
 
   hosts:
     localhost:

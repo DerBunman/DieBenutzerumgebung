@@ -1,64 +1,69 @@
 ---
-- name: "Register ~/.zshrc.zgen stat for {{ user.name }}"
-  stat:
-    path: "{{ user.home }}/.zshrc.zgen"
-  register: zgen_stat
+- name: "Installing dotfiles for {{ user.name }}"
+  block:
+  - name: "Register ~/.zshrc.zgen stat for {{ user.name }}"
+    stat:
+      path: "{{ user.home }}/.zshrc.zgen"
+    register: zgen_stat
 
-- name: "Copy ~/.zshrc.zgen for {{ user.name }}"
-  copy:
-    src: "dotfiles/.zshrc.zgen"
-    dest: "{{ user.home }}/.zshrc.zgen"
-    owner: "{{ user.name }}"
-    mode: 0600
-  register: zgen_copy
+  - name: "Copy ~/.zshrc.zgen for {{ user.name }}"
+    copy:
+      src: "dotfiles/.zshrc.zgen"
+      dest: "{{ user.home }}/.zshrc.zgen"
+      owner: "{{ user.name }}"
+      group: "{{ user.group }}"
+      mode: 0600
+    register: zgen_copy
 
-- name: "Copy dotfiles for {{ user.name }}"
-  copy:
-    src: "dotfiles/"
-    dest: "{{ user.home }}/"
-    mode: g=-rwx,o=-rwx
-    directory_mode: 0700
-    force: yes
-  become_user: "{{ user.name }}"
+  - name: "Copy dotfiles for {{ user.name }}"
+    copy:
+      src: "dotfiles/"
+      dest: "{{ user.home }}/"
+      owner: "{{ user.name }}"
+      group: "{{ user.group }}"
+      mode: 0600
+      directory_mode: 0700
+      force: yes
 
-- name: "Setting executable permissions for some dotfiles"
-  file:
-    state: touch
-    path: "~/{{ item }}"
-    mode: u+rwx
-    modification_time: preserve
-    access_time: preserve
-  become_user: "{{ user.name }}"
-  loop: "{{ common__dotfiles_executable }}"
+  - name: "Setting executable permissions for some dotfiles"
+    file:
+      state: touch
+      path: "{{ user.home }}/{{ item }}"
+      mode: u+rwx
+      modification_time: preserve
+      access_time: preserve
+    loop: "{{ common__dotfiles_executable }}"
 
-- name: "Generate {{ user.home }}/.zshenv"
-  template:
-    src:  zshenv.j2
-    dest: "{{ user.home }}/.zshenv"
-    mode: 0600
+  - name: "Generate {{ user.home }}/.zshenv"
+    template:
+      src:  zshenv.j2
+      dest: "{{ user.home }}/.zshenv"
+      owner: "{{ user.name }}"
+      group: "{{ user.group }}"
+      mode: 0600
 
-- name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
-  file:
-    path: "{{ user.home }}/.zgen"
-    state: absent
-  when: "zgen_stat.stat.exists == false or zgen_copy.checksum != zgen_stat.stat.checksum"
+  - name: "Remove ~/.zgen directory because the plugins have changed for {{ user.name }}"
+    file:
+      path: "{{ user.home }}/.zgen"
+      state: absent
+    when: "zgen_stat.stat.exists == false or zgen_copy.checksum != zgen_stat.stat.checksum"
 
-- name: "Install zgen packages for {{ user.name }}"
-  command: "zsh ~/.zshrc"
-  become_user: "{{ user.name }}"
-  when: "zgen_stat.stat.exists == false or zgen_copy.checksum != zgen_stat.stat.checksum"
+  - name: "Install zgen packages for {{ user.name }}"
+    command: "zsh ~/.zshrc"
+    when: "zgen_stat.stat.exists == false or zgen_copy.checksum != zgen_stat.stat.checksum"
+    become_user: "{{ user.name }}"
 
-- name: "Update zgen packages for {{ user.name }}"
-  command: "zsh -c 'umask 22; source ~/.zshrc; zgen update'"
-  become_user: "{{ user.name }}"
-  changed_when: False
-  when: "zgen_stat.stat.exists == true and zgen_copy.checksum == zgen_stat.stat.checksum"
+  - name: "Update zgen packages for {{ user.name }}"
+    command: "zsh -c 'umask 22; source ~/.zshrc; zgen update'"
+    changed_when: False
+    when: "zgen_stat.stat.exists == true and zgen_copy.checksum == zgen_stat.stat.checksum"
+    become_user: "{{ user.name }}"
 
-- name: "Install VIM Plugins for {{ user.name }}"
-  command: "{{ item }}"
-  become_user: "{{ user.name }}"
-  loop:
-    - vim -X +PlugClean! +qall -u ~/.vim/vimrc_plug.vim
-    - vim -X +PlugInstall! +qall -u ~/.vim/vimrc_plug.vim
-    - vim -X +PlugUpdate! +qall -u ~/.vim/vimrc_plug.vim
-  changed_when: false
+  - name: "Install VIM Plugins for {{ user.name }}"
+    command: "{{ item }}"
+    loop:
+      - vim -X +PlugClean! +qall -u ~/.vim/vimrc_plug.vim
+      - vim -X +PlugInstall! +qall -u ~/.vim/vimrc_plug.vim
+      - vim -X +PlugUpdate! +qall -u ~/.vim/vimrc_plug.vim
+    changed_when: false
+    become_user: "{{ user.name }}"

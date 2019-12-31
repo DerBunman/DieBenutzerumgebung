@@ -33,17 +33,13 @@ all:
         # usermod defines whether the user may be modified if you set
         # this to false, ensure that the login shell is set to zsh.
         usermod: True
-        # manage_ssh_keys defines whether the local ssh keys and the ssh keys
-        # defined in the ssh_keys variable should be deployed for this user.
-        manage_ssh_keys: True
-
-    # if the user has set manage_ssh_keys=True
-    # the following ssh pubkeys will be added to the users defined above.
-    ssh_keys: |
-      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMjCDwwHvhp3Gk/dYKWMxfn5sHE6rW+NvuekydZja2d localhorst
-      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFxrqRD0ab7ljvUjAYVqLH2XsdsUTEr8ZGZ/N3riZOx schleppi
-      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKkQisCe/gyju55eUv+22WmiRrkDUObMVOm+A3GUhSq SG-1350
-      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBkogbZ3Pm/SH38QMmbI96sFbvzVonlu8TfsktCfm1DX handgeraet
+        # ssh_keys defines the ssh keys that should be deployed for this user.
+        # set to false or just don't define this key to add no keys.
+        ssh_keys: |
+          ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMjCDwwHvhp3Gk/dYKWMxfn5sHE6rW+NvuekydZja2d localhorst
+          ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFxrqRD0ab7ljvUjAYVqLH2XsdsUTEr8ZGZ/N3riZOx schleppi
+          ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKkQisCe/gyju55eUv+22WmiRrkDUObMVOm+A3GUhSq SG-1350
+          ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBkogbZ3Pm/SH38QMmbI96sFbvzVonlu8TfsktCfm1DX handgeraet
 
     # these values will be set in the environment as $BROWSER and $EDITOR
     env_BROWSER: firefox
@@ -98,6 +94,7 @@ all:
     bspwm__monitor: |
       bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 
+    # these shell commands will be run on bspwm startup
     bspwm__bspwmrc_additional_scripts: |
       # disable mouse accelleration
       xset m 0 0 &
@@ -125,7 +122,7 @@ all:
       ansible_user: ichi
       # since schleppi is a old laptop with a small resolution, we won't load all modules
       polybar__modules_right: "docker email memory cpu battery pulseaudio date"
-      polybar__bottom: false
+      polybar__bottom: true
       polybar__temperature_thermal_zone: 0
       polybar__battery_adapter: "AC"
       polybar__battery_device: "BAT0"
