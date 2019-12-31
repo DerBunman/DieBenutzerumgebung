@@ -122,7 +122,7 @@ all:
       ansible_user: ichi
       # since schleppi is a old laptop with a small resolution, we won't load all modules
       polybar__modules_right: "docker email memory cpu battery pulseaudio date"
-      polybar__bottom: false
+      polybar__bottom: true
       polybar__temperature_thermal_zone: 0
       polybar__battery_adapter: "AC"
       polybar__battery_device: "BAT0"
