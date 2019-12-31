@@ -1,5 +1,12 @@
 # basic host setup
 ---
+- name: 'Build and install bspwm'
+  import_role:
+    name: derbunman.debuild_bspwm
+  tags:
+    - bspwm
+  when: 'ansible_become == True'
+
 - name: "bspwm config"
   block:
   - name: "Mkdir {{ user.home }}/.config/bspwm"

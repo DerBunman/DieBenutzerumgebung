@@ -2,3 +2,4 @@
 - src: derbunman.debuild
 - src: derbunman.debuild_rofi
 - src: derbunman.debuild_polybar
+- src: derbunman.debuild_bspwm
