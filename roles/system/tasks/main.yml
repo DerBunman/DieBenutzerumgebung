@@ -20,17 +20,17 @@
       tags:
         - upgrade
 
-    - name: "Adding non-free repository"
-      shell: "apt-add-repository non-free"
-      when: ansible_distribution == "Debian"
-      tags:
-        - upgrade
+#    - name: "Adding non-free repository"
+#      shell: "apt-add-repository non-free"
+#      when: ansible_distribution == "Debian"
+#      tags:
+#        - upgrade
 
-    - name: "Adding universe repository"
-      shell: "apt-add-repository universe"
-      when: ansible_distribution == "Ubuntu"
-      tags:
-        - upgrade
+#    - name: "Adding universe repository"
+#      shell: "apt-add-repository universe"
+#      when: ansible_distribution == "Ubuntu"
+#      tags:
+#        - upgrade
 
     - name: Upgrade system using apt
       apt:
