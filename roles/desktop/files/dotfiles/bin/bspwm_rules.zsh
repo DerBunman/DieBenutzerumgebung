@@ -20,6 +20,9 @@ if [ "$instance" = fontforge ] ; then
 			;;
 	esac
 
+elif [ "$class" = "QjackCtl" ]; then
+	rules="state=floating ${rules}"
+
 elif [ "$class" = "copyq" ]; then
 	rules="state=floating ${rules}"
 
