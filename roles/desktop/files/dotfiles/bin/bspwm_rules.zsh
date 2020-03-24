@@ -35,8 +35,13 @@ elif [ "$class" = "Steam" ]; then
 elif [ "$class" = "usbguard-applet-qt" ]; then
 	rules="state=floating ${rules}"
 
+elif [ "$class" = "QjackCtl" ]; then
+	rules="state=floating ${rules}"
+
 elif [ "$class" = "scratchpad_gvim" ]; then
 	rules="sticky=on state=floating hidden=on ${rules}"
 fi
+
+
 
 echo "${rules}"
