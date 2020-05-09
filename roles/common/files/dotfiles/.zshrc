@@ -164,6 +164,8 @@ colors
 fpath=(~/.zshfunctions $fpath)
 autoload ${$(echo ~/.zshfunctions/*(@)):t} ${$(echo ~/.zshfunctions/*(.)):t}
 
+autoload -U compinit
+compinit
 
 #         _   __  __           _
 #  __   _(_) |  \/  | ___   __| | ___
