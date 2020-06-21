@@ -201,6 +201,12 @@ bindkey -M vicmd "j" down-line-or-beginning-search
 zle -N zle-line-init
 #zle -N zle-keymap-select
 
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
+
+
 # these are for backward-kill-word
 backward-kill-dir () {
 	#WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
