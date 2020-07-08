@@ -8,7 +8,7 @@
     owner: root
     group: root
 
--  name: Remove unwanted motd files
+- name: Remove unwanted motd files
   file:
     path:
       - /etc/motd
