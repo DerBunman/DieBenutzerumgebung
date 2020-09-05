@@ -111,3 +111,5 @@ polybar__battery_device: "BAT0"
 polybar__battery_full_at: 95
 
 polybar__additional_content: ""
+
+wallpaper_command: "feh --bg-center ~/.wallpapers/DieBenutzerumgebung_logo.png --image-bg '#484848'"

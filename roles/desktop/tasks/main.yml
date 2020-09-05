@@ -14,7 +14,17 @@
   template:
     src:  setxkbmap_script.j2
     dest: "{{ user.home }}/bin/autostart/always/setxkbmap_script"
-    mode: 0755
+    mode: 0700
+  when: 'user.name != "root" and (ansible_become == True or user.name == ansible_user)'
+  loop: '{{ users }}'
+  loop_control:
+    loop_var: user
+
+- name: "Generate wallpaper.sh"
+  template:
+    src:  wallpaper.sh.j2
+    dest: "{{ user.home }}/bin/autostart/always/wallpaper.sh"
+    mode: 0700
   when: 'user.name != "root" and (ansible_become == True or user.name == ansible_user)'
   loop: '{{ users }}'
   loop_control:

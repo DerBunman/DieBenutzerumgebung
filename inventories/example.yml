@@ -81,6 +81,9 @@ all:
     polybar__battery_device: "BAT0"
     polybar__battery_full_at: 95
 
+    # this command will be used to set the wallpaper. it will be placed in ~/bin/autostart/always/wallpaper.sh
+    wallpaper_command: "feh --bg-center ~/.wallpapers/DieBenutzerumgebung_logo.png --image-bg '#484848'"
+
     # Note for multi-monitor setups
     # The example bspwmrc configures ten desktops on one monitor like this:
     #   bspc monitor -d I II III IV V VI VII VIII IX X
@@ -129,6 +132,13 @@ all:
       polybar__battery_full_at: 95
       polybar__wifi_interface: "wlan0"
       polybar__eth_interface: "eth0"
+      # this command will be used to set the wallpaper.
+      # it will be placed in ~/bin/autostart/always/wallpaper.sh
+      # in this example we download a picture which will be used as wallpaper.
+      wallpaper_command: |
+        test -e ~/.wallpapers/weed.jpg \
+          || wget https://upload.wikimedia.org/wikipedia/commons/8/82/Marijuana_Plant_03.JPG -O ~/.wallpapers/weed.jpg
+        feh --bg-fill ~/.wallpapers/weed.jpg --image-bg '#484848'
       ifrename:
         - mac: "60:67:20:5e:05:38"
           name: "wlan0"
