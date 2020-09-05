@@ -18,7 +18,7 @@
       when: 'desktop__additional_packages is defined'
 
     - name: "Checking oomox installation status"
-      shell: dpkg-query --showformat='dpkg --compare-versions "${Version}" "ge" "1.11"' -W oomox | sh
+      shell: dpkg-query --showformat='dpkg --compare-versions "${Version}" "ge" "1.11"' -W oomox
       register: oomox_status
       ignore_errors: true
       changed_when: false
