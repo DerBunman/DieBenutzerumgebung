@@ -39,6 +39,10 @@
       tags:
         - upgrade
 
+    - name: "Setup locales"
+      include: locales.yml
+      tags: locales
+
     - name: "Check that /etc/ssh/sshd_config exists"
       stat:
         path: /etc/ssh/sshd_config
