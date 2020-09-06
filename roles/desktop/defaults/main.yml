@@ -33,7 +33,6 @@ desktop__mandatory_packages:
   - vim-gtk3
   - x11-xserver-utils
   - xbindkeys
-  - xbindkeys-config
   - xclip
   - xdg-utils
   - xdotool
