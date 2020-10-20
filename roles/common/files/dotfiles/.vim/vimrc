@@ -167,6 +167,9 @@ call MapCR()
 " allow modified buffers to be hidden
 set hidden
 
+" replace visual via <C-r>
+vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
+
 "  _   _ _   _ ____   ___
 " | | | | \ | |  _ \ / _ \
 " | | | |  \| | | | | | | |

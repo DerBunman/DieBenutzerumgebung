@@ -167,6 +167,17 @@ autoload ${$(echo ~/.zshfunctions/*(@)):t} ${$(echo ~/.zshfunctions/*(.)):t}
 autoload -U compinit
 compinit
 
+#             _                          _
+#  __ _ _   _| |_ ___   __ _ _   _  ___ | |_ ___
+# / _` | | | | __/ _ \ / _` | | | |/ _ \| __/ _ \
+#| (_| | |_| | || (_) | (_| | |_| | (_) | ||  __/
+# \__,_|\__,_|\__\___/ \__, |\__,_|\___/ \__\___|
+#                         |_|
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
+
 #         _   __  __           _
 #  __   _(_) |  \/  | ___   __| | ___
 #  \ \ / / | | |\/| |/ _ \ / _` |/ _ \

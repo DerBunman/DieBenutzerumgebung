@@ -33,7 +33,6 @@ desktop__mandatory_packages:
   - vim-gtk3
   - x11-xserver-utils
   - xbindkeys
-  - xbindkeys-config
   - xclip
   - xdg-utils
   - xdotool
@@ -111,3 +110,5 @@ polybar__battery_device: "BAT0"
 polybar__battery_full_at: 95
 
 polybar__additional_content: ""
+
+wallpaper_command: "feh --bg-center ~/.wallpapers/DieBenutzerumgebung_logo.png --image-bg '#484848'"
