@@ -349,6 +349,7 @@ let g:syntastic_check_on_wq              = 0
 let g:syntastic_php_checkers             = ['php']
 
 
+let g:gundo_prefer_python3 = 1
 " gundo mapping
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_right=1
