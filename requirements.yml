@@ -1,5 +1,7 @@
 ---
 - src: derbunman.debuild
 - src: derbunman.debuild_rofi
+  version: 1.5.4
 - src: derbunman.debuild_polybar
+  version: 3.4.3
 - src: derbunman.debuild_bspwm
