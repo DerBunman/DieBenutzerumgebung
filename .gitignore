@@ -8,3 +8,4 @@ testing
 playbook_funkleitstelle.yml
 roles/funkleitstelle
 inventories/testnet.yml
+/tmp
