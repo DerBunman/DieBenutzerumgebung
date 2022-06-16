@@ -1,0 +1,164 @@
+/*
+{{ managed_by_ansible_header }}
+*/
+
+* {
+    /* Theme settings */
+    highlight: bold italic;
+    scrollbar: true;
+
+    /* Theme colors */
+    background:                  #{{ colors.background }};
+    background-color:            @background;
+    foreground:                  #{{ colors.foreground }};
+    border-color:                #{{ colors.black1 }};
+    separatorcolor:              @border-color;
+    scrollbar-handle:            @border-color;
+
+    normal-background:           @background;
+    normal-foreground:           @foreground;
+    alternate-normal-background: #{{ colors.black1 }};
+    alternate-normal-foreground: #{{ colors.white1 }};
+    selected-normal-background:  #{{ colors.blue1 }};
+    selected-normal-foreground:  @background;
+
+    active-background:           #{{ colors.blue2 }};
+    active-foreground:           #{{ colors.white1 }};
+    alternate-active-background: #{{ colors.black1 }};
+    alternate-active-foreground: #{{ colors.green1 }};
+    selected-active-background:  #{{ colors.green1 }};
+    selected-active-foreground:  #{{ colors.background }};
+
+    urgent-background:           #{{ colors.red1 }};
+    urgent-foreground:           @background;
+    alternate-urgent-background: @urgent-background;
+    alternate-urgent-foreground: @urgent-foreground;
+    selected-urgent-background:  #{{ colors.red2 }};
+    selected-urgent-foreground:  @urgent-foreground;
+}
+
+window {
+    background-color: @background;
+    border:           5px;
+    padding:          20;
+}
+
+mainbox {
+    border:  0;
+    padding: 0px;
+}
+
+message {
+    border:       2px 0 0;
+    border-color: @separatorcolor;
+    padding:      1px;
+}
+
+textbox {
+    highlight:  @highlight;
+    text-color: @foreground;
+}
+
+listview {
+    border-color: #{{ colors.blue1 }};
+    border:       0 dash 0 dash 2px dash 0 dash;
+    padding:      2px 0 0;
+    spacing:      2px;
+    scrollbar:    @scrollbar;
+}
+
+element {
+    border:  0;
+    padding: 2px;
+}
+
+element.normal.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+
+element.normal.urgent {
+    background-color: @urgent-background;
+    text-color:       @urgent-foreground;
+}
+
+element.normal.active {
+    background-color: @active-background;
+    text-color:       @active-foreground;
+}
+
+element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+
+element.selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color:       @selected-urgent-foreground;
+}
+
+element.selected.active {
+    background-color: @selected-active-background;
+    text-color:       @selected-active-foreground;
+}
+
+element.alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color:       @alternate-normal-foreground;
+}
+
+element.alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color:       @alternate-urgent-foreground;
+}
+
+element.alternate.active {
+    background-color: @alternate-active-background;
+    text-color:       @alternate-active-foreground;
+}
+
+scrollbar {
+    width:        4px;
+    border:       0;
+    handle-color: @scrollbar-handle;
+    handle-width: 8px;
+    padding:      0;
+}
+
+mode-switcher {
+    border:       0;
+    border-color: @separatorcolor;
+}
+
+inputbar {
+    border-color: #{{ colors.blue1 }};
+    border:       0 dash 0 dash 2px dash 0 dash;
+    spacing:      0;
+    text-color:   @normal-foreground;
+    padding:      2px;
+    children:     [ prompt, textbox-prompt-sep, entry, case-indicator ];
+}
+
+case-indicator,
+entry,
+prompt,
+button {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+
+button.selected {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+
+textbox-prompt-sep {
+    expand:     false;
+    str:        ":";
+    text-color: @normal-foreground;
+    margin:     0 0.3em 0 0;
+}
+element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}

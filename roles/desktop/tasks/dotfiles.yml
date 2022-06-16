@@ -50,6 +50,27 @@
       command: oomox-gnome-colors-icons-cli ~/.config/oomox/colors/DieOberflaechengestaltung
       changed_when: False
 
+    - name: "Generate ~/.config/rofi/config.rasi"
+      template:
+        src:  config.rasi.j2
+        dest: "{{ user.home }}/.config/rofi/config.rasi"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
+        mode: 0600
+      tags:
+        - rofi
+
+    - name: "Generate ~/.config/rofi/DieBenutzerumgebung.rasi"
+      template:
+        src:  DieBenutzerumgebung.rasi.j2
+        dest: "{{ user.home }}/.config/rofi/DieBenutzerumgebung.rasi"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
+        mode: 0600
+      tags:
+        - rofi
+
+
     - name: "Generate rofi_media_menu.conf"
       template:
         src:  rofi_media_menu.conf.j2
