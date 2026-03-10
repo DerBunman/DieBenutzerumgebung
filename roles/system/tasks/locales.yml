@@ -4,10 +4,10 @@
 # This can happen, when you install Debian in german for example.
 - name: "Enable en_US.UTF8 locale"
   lineinfile:
-    dest=/etc/locale.gen
-    regexp="^en_US\.UTF-8 UTF-8$"
-    line="en_US.UTF-8 UTF-8"
-    state=present
+    path: /etc/locale.gen
+    regexp: "^en_US\.UTF-8 UTF-8$"
+    line: "en_US.UTF-8 UTF-8"
+    state: present
   register: locale_gen
 
 - name: "Generate locales."

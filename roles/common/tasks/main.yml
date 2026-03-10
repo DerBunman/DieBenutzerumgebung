@@ -2,7 +2,7 @@
 ---
 # install all packages needed for the shell
 - name: "Setup shell packages"
-  include: packages.yml
+  import_tasks: packages.yml
 
 # Create/Modify users
 - name: "Setup users"

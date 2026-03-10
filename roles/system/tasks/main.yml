@@ -40,7 +40,7 @@
         - upgrade
 
     - name: "Setup locales"
-      include: locales.yml
+      import_tasks: locales.yml
       tags: locales
 
     - name: "Check that /etc/ssh/sshd_config exists"
@@ -50,10 +50,10 @@
 
     - name: "Disallow root SSH access"
       lineinfile:
-        dest=/etc/ssh/sshd_config
-        regexp="^PermitRootLogin"
-        line="PermitRootLogin no"
-        state=present
+        path: /etc/ssh/sshd_config
+        regexp: "^PermitRootLogin"
+        line: "PermitRootLogin no"
+        state: present
       notify: restart_ssh
       when: stat_result.stat.exists == True
 

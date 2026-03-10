@@ -24,7 +24,7 @@
     - fonts
 
 - name: 'Install RobotoMono nerdfonts'
-  include: nerdfonts.yml
+  include_tasks: nerdfonts.yml
   when: file_details.stat.isdir is undefined
   tags:
     - fonts

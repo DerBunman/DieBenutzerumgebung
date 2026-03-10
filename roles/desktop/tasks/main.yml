@@ -1,10 +1,10 @@
 # basic host setup
 ---
 - name: "Setup default x11 packages"
-  include: packages.yml
+  import_tasks: packages.yml
 
 - name: "Setup desktop dotfiles"
-  include: dotfiles.yml
+  include_tasks: dotfiles.yml
   when: 'user.name != "root"'
   loop: '{{ users }}'
   loop_control:
@@ -33,14 +33,13 @@
 - name: "Setup i3 and needed tools"
   tags:
     i3
-  include: i3.yml
+  import_tasks: i3.yml
 
 - name: "Setup bspwm and sxhkd"
   tags:
     bspwm
-  include: bspwm.yml
+  include_tasks: bspwm.yml
   when: 'user.name != "root"'
   loop: '{{ users }}'
   loop_control:
     loop_var: user
-
