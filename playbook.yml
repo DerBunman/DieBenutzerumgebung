@@ -13,7 +13,10 @@
 - hosts: all
   pre_tasks:
     - name: "Checking for secrets.yml."
-      local_action: stat path=secrets.yml
+      stat:
+        path: secrets.yml
+      delegate_to: localhost
+      run_once: true
       register: secrets_stat
     - name: "Loading passwords and other secrets."
       include_vars:
@@ -29,7 +32,10 @@
 - hosts: desktop
   pre_tasks:
     - name: "Checking for secrets.yml."
-      local_action: stat path=secrets.yml
+      stat:
+        path: secrets.yml
+      delegate_to: localhost
+      run_once: true
       register: secrets_stat
     - name: "Loading passwords and other secrets."
       include_vars:
